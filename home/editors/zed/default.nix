@@ -6,6 +6,7 @@
     vscode-langservers-extracted
     nil
     typescript-language-server
+    typescript
     zed-editor
   ];
 }
