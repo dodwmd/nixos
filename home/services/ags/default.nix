@@ -18,7 +18,7 @@
     glib
     gtk3
     imagemagick
-    inputs.matugen.packages.${pkgs.system}.default
+    matugen
     networkmanager
     niri
     ripgrep

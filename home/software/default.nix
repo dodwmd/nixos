@@ -14,7 +14,7 @@
 
   home.packages = with pkgs; [
     # messaging
-    tdesktop
+    telegram-desktop
     vesktop
 
     # misc
@@ -29,8 +29,7 @@
     nodePackages.pnpm
     bun
 
-    nitch
-    maxfetch
+    fastfetch
     netscanner
 
     # gnome
@@ -48,7 +47,6 @@
     kooha
     letterpress
     loupe
-    overskride
     # paleta
     # paper-plane
     (papers.override {supportNautilus = true;})
@@ -63,8 +61,6 @@
     # gimp
     scrcpy
 
-    eww
-    evsieve
     swww
     mitmproxy
 
