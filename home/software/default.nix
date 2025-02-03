@@ -16,6 +16,7 @@
     # messaging
     telegram-desktop
     vesktop
+    discord
 
     # misc
     ps_mem
@@ -44,7 +45,7 @@
     # eyedropper
     # gnome-solanum
     keypunch
-    kooha
+    # kooha
     letterpress
     loupe
     # paleta

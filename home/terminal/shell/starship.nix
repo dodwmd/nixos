@@ -4,7 +4,6 @@
   };
   programs.starship = {
     enable = true;
-    enableZshIntegration = true;
     enableNushellIntegration = true;
     settings = {
       format = "$directory$all$cmd_duration$jobs$status$shell$line_break$env_var$username$sudo$character";

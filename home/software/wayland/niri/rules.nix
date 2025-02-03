@@ -58,8 +58,23 @@
       matches = [{app-id = "app.drey.PaperPlane";}];
       block-out-from = "screencast";
     }
+    {
+      matches = [
+        {
+          app-id = "firefox$";
+          title = "^Picture-in-Picture$";
+        }
+        {title = "^Picture in picture$";}
+        {title = "^Discord Popout$";}
+      ];
+      open-floating = true;
+      default-floating-position = {
+        x = 32;
+        y = 32;
+        relative-to = "top-right";
+      };
+    }
   ];
-
 in {
   programs.niri.settings.window-rules = windowRules ++ floatingRules;
 }

@@ -10,9 +10,7 @@
         skim
         query
         gstat
-        # dbus
         polars
-        # highlight
       ];
 
       extraConfig = let
