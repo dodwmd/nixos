@@ -16,7 +16,6 @@
     ../../software
     ../../software/wayland
 
-    
     ../../software/tools/discord.nix
 
     # system services

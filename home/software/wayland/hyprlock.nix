@@ -13,7 +13,7 @@ _: {
       background = [
         {
           monitor = "";
-          path = "~/Downloads/WALLPAPERS/wallhaven-gpgyw3.jpg";
+          path = "~/Downloads/WALLPAPERS/Ghqwgs0XkAARmfF.jpg";
           blur_passes = 3;
           blur_size = 12;
           noise = "0.1";

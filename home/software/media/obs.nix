@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   programs = {
     obs-studio = {
       enable = true;
@@ -7,6 +7,15 @@
         obs-pipewire-audio-capture
         obs-vaapi
       ];
+      package = pkgs.symlinkJoin {
+        name = "obs-studio";
+        paths = [ pkgs.obs-studio ];
+        buildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/obs \
+            --add-flags "--ozone-platform=wayland"
+        '';
+      };
     };
   };
 }

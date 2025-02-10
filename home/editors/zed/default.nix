@@ -7,6 +7,8 @@
     nil
     typescript-language-server
     typescript
+    stylua
+    lua-language-server
     zed-editor
   ];
 }
