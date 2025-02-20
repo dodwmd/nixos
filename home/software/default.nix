@@ -63,8 +63,6 @@
     scrcpy
 
     swww
-    mitmproxy
-
     inputs.ghostty.packages.${pkgs.system}.default
   ];
 }

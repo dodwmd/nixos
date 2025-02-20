@@ -7,7 +7,7 @@
       enable = true;
 
       plugins = with pkgs.nushellPlugins; [
-        skim
+        # skim
         query
         gstat
         polars
@@ -69,7 +69,7 @@
         ${completions ["git" "nix" "man" "rg"]}
 
         # use ${pkgs.nu_scripts}/share/nu_scripts/modules/background_task/task.nu
-        source ${pkgs.nu_scripts}/share/nu_scripts/modules/formats/from-env.nu
+        # source ${pkgs.nu_scripts}/share/nu_scripts/modules/formats/from-env.nu
 
         # const path = "~/.nushellrc.nu"
         # const null = "/dev/null"

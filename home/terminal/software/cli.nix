@@ -20,7 +20,8 @@
     koji
     jq
 
-    yt-dlp
+    tuicam
+    fum
   ];
 
   programs = {
