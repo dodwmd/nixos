@@ -60,6 +60,7 @@
 
     # inkscape
     # gimp
+    # krita
     scrcpy
 
     swww

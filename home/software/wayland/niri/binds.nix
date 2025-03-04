@@ -37,8 +37,10 @@
     "Mod+Q".action = close-window;
     "Mod+S".action = switch-preset-column-width;
     "Mod+F".action = maximize-column;
-    "Mod+Shift+F".action = fullscreen-window;
+    # "Mod+Shift+F".action = fullscreen-window;
+    "Mod+Shift+F".action = expand-column-to-available-width;
     "Mod+Space".action = toggle-window-floating;
+    "Mod+W".action = toggle-column-tabbed-display;
 
     "Mod+Comma".action = consume-window-into-column;
     "Mod+Period".action = expel-window-from-column;

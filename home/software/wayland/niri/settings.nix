@@ -10,10 +10,11 @@
 in {
   programs.niri = {
     enable = true;
+    package = pkgs.niri;
     settings = {
       environment = {
         CLUTTER_BACKEND = "wayland";
-        DISPLAY = ":0";
+        DISPLAY = null;
         GDK_BACKEND = "wayland,x11";
         MOZ_ENABLE_WAYLAND = "1";
         NIXOS_OZONE_WL = "1";
@@ -38,8 +39,9 @@ in {
           scroll-method = "two-finger";
           tap = true;
           tap-button-map = "left-right-middle";
+          middle-emulation = true;
           accel-profile = "adaptive";
-          # scroll-factor = 0.1;
+          # scroll-factor = 0.2;
         };
         focus-follows-mouse.enable = true;
         warp-mouse-to-focus = true;
@@ -79,14 +81,16 @@ in {
           active.color = "#16aff1";
           inactive.color = "#245b89";
         };
-
+        shadow = {
+          enable = true;
+        };
         preset-column-widths = [
-          {proportion = 1.0 / 3.0;}
-          {proportion = 1.0 / 2.0;}
-          {proportion = 2.0 / 3.0;}
+          {proportion = 0.25;}
+          {proportion = 0.5;}
+          {proportion = 0.75;}
           {proportion = 1.0;}
         ];
-        default-column-width = {proportion = 1.0 / 2.0;};
+        default-column-width = {proportion = 0.5;};
 
         gaps = 8;
         struts = {
@@ -94,6 +98,17 @@ in {
           right = 0;
           top = 0;
           bottom = 0;
+        };
+
+        tab-indicator = {
+          hide-when-single-tab = true;
+          place-within-column = true;
+          position = "left";
+          corner-radius = 10.0;
+          gap = -8.0;
+          gaps-between-tabs = 10.0;
+          width = 4.0;
+          length.total-proportion = 0.1;
         };
       };
 

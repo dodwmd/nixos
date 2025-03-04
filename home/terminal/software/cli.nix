@@ -20,7 +20,7 @@
     koji
     jq
 
-    tuicam
+    # tuicam
     fum
   ];
 
