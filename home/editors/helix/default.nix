@@ -1,13 +1,9 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [./languages.nix];
 
   programs.helix = {
     enable = true;
-    package = inputs.helix.packages.${pkgs.system}.default.overrideAttrs (self: {
+    package = pkgs.helix.overrideAttrs (self: {
       makeWrapperArgs = with pkgs;
         self.makeWrapperArgs
         or []

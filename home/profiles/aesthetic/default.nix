@@ -5,8 +5,6 @@
     ../../editors/zed
 
     # services
-    # ../../services/ags
-    # ../../services/quickshell
     ../../services/wayland/hypridle.nix
 
     # media services
@@ -26,6 +24,6 @@
     ../../services/system/syncthing.nix
 
     # terminal emulators
-    ../../terminal/emulators/foot.nix
+    # ../../terminal/emulators/foot.nix
   ];
 }

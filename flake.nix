@@ -5,7 +5,7 @@
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux"];
 
-      imports = [./home/profiles ./hosts ./lib ./modules ./pkgs];
+      imports = [./home/profiles ./hosts ./pkgs];
 
       perSystem = {
         config,
@@ -57,8 +57,6 @@
     ghostty = {
       url = "github:ghostty-org/ghostty";
     };
-
-    helix.url = "github:helix-editor/helix";
 
     hm = {
       url = "github:nix-community/home-manager";
