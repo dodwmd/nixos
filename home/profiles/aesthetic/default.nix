@@ -13,7 +13,7 @@
     # software
     ../../software
     ../../software/wayland
-    ../../software/wayland/wine.nix
+    # ../../software/wayland/wine.nix
 
     ../../software/tools/discord.nix
 

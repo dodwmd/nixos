@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs = {
     obs-studio = {
       enable = true;
@@ -9,8 +9,13 @@
       ];
       package = pkgs.symlinkJoin {
         name = "obs-studio";
-        paths = [ pkgs.obs-studio ];
-        buildInputs = [ pkgs.makeWrapper ];
+        paths = [
+          (pkgs.obs-studio.override {
+            pipewireSupport = true;
+            browserSupport = true;
+          })
+        ];
+        buildInputs = [pkgs.makeWrapper];
         postBuild = ''
           wrapProgram $out/bin/obs \
             --add-flags "--ozone-platform=wayland"

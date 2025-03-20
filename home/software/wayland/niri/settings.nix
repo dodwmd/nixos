@@ -94,18 +94,18 @@ in {
 
         gaps = 8;
         struts = {
-          left = 0;
-          right = 0;
-          top = 0;
-          bottom = 0;
+          left = 10;
+          right = 10;
+          top = 2;
+          bottom = 10;
         };
 
         tab-indicator = {
           hide-when-single-tab = true;
           place-within-column = true;
           position = "left";
-          corner-radius = 10.0;
-          gap = -8.0;
+          corner-radius = 20.0;
+          gap = -9.0;
           gaps-between-tabs = 10.0;
           width = 4.0;
           length.total-proportion = 0.1;
