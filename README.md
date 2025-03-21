@@ -102,7 +102,7 @@ mount /dev/disk/by-label/EFI /mnt/boot
 - Enable nixFlakes
 
 ```bash
-nix-shell -p nixFlakes git
+nix-shell -p nixVersions.stable git
 ```
 
 - Clone my Dotfiles
@@ -116,7 +116,7 @@ git clone --depth 1 https://github.com/linuxmobile/kaku /mnt/etc/nixos
 ### ⚠ <sup><sub><samp>DON'T FORGET IT</samp></sub></sup>
 
 ```bash
-sudo nixos-generate-config --dir --force /mnt/etc/nixos/hosts/aesthetic
+sudo nixos-generate-config --dir /mnt/etc/nixos/hosts/aesthetic --force
 
 # Remove configuration.nix
 rm -rf /mnt/etc/nixos/hosts/aesthetic/configuration.nix
