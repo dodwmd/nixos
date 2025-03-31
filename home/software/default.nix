@@ -16,7 +16,6 @@
     # messaging
     telegram-desktop
     vesktop
-    discord
 
     # misc
     ps_mem
@@ -62,6 +61,8 @@
     # gimp
     # krita
     scrcpy
+    multiviewer-for-f1
+    mitmproxy
 
     swww
     inputs.ghostty.packages.${pkgs.system}.default

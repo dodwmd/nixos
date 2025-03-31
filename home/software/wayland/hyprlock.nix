@@ -7,13 +7,12 @@ _: {
         disable_loading_bar = true;
         immediate_render = true;
         hide_cursor = false;
-        no_fade_in = true;
       };
 
       background = [
         {
           monitor = "";
-          path = "~/Downloads/WALLPAPERS/wallhaven-zy1xjw.png";
+          path = "~/Downloads/WALLPAPERS/SPIDERVERSE/greenish/SPDRVRS-5.png";
           blur_passes = 3;
           blur_size = 12;
           noise = "0.1";
@@ -34,20 +33,19 @@ _: {
 
           outline_thickness = 1;
 
-          font_color = "rgb(b6c4ff)";
-          outer_color = "rgba(180, 180, 180, 0.5)";
-          inner_color = "rgba(200, 200, 200, 0.1)";
-          check_color = "rgba(247, 193, 19, 0.5)";
-          fail_color = "rgba(255, 106, 134, 0.5)";
+          font_color = "rgb(211, 213, 202)";
+          outer_color = "rgba(29, 38, 33, 0.6)";
+          inner_color = "rgba(15, 18, 15, 0.1)";
+          check_color = "rgba(141, 186, 100, 0.5)";
+          fail_color = "rgba(229, 90, 79, 0.5)";
 
-          fade_on_empty = false;
           placeholder_text = "Enter Password";
 
           dots_spacing = 0.2;
           dots_center = true;
           dots_fade_time = 100;
 
-          shadow_color = "rgba(0, 0, 0, 0.1)";
+          shadow_color = "rgba(5, 7, 5, 0.1)";
           shadow_size = 7;
           shadow_passes = 2;
         }
@@ -57,19 +55,19 @@ _: {
         {
           monitor = "";
           text = ''
-            cmd[update:1000] echo "<span font-weight='ultralight' >$(date +'%H %M %S')</span>"
+            cmd[update:1000] echo "<span font-weight='light' >$(date +'%H %M %S')</span>"
           '';
           font_size = 300;
-          font_family = "SF Pro Text Ultralight";
+          font_family = "SF Pro Ultralight";
 
-          color = "rgb(b6c4ff)";
+          color = "rgb(8a9e6b)";
 
           position = "0%, 2%";
 
           valign = "center";
           halign = "center";
 
-          shadow_color = "rgba(0, 0, 0, 0.1)";
+          shadow_color = "rgba(5, 7, 5, 0.1)";
           shadow_size = 20;
           shadow_passes = 2;
           shadow_boost = 0.3;

@@ -14,6 +14,7 @@
     ../../software
     ../../software/wayland
     # ../../software/wayland/wine.nix
+    ../../software/wayland/caido.nix
 
     ../../software/tools/discord.nix
 

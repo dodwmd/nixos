@@ -9,7 +9,6 @@
       material-symbols
 
       # normal fonts
-      libertinus
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
@@ -19,16 +18,13 @@
 
       # nerdfonts
       nerd-fonts.symbols-only
-      nerd-fonts.geist-mono
+      nerd-fonts.departure-mono
+      departure-mono
     ];
 
     # causes more issues than it solves
     enableDefaultPackages = false;
 
-    # user defined fonts
-    # the reason there's Noto Color Emoji everywhere is to override DejaVu's
-    # B&W emojis that would sometimes show instead of some Color emojis
-    #
     fontconfig = {
       enable = true;
       antialias = true;
@@ -47,8 +43,8 @@
         addAll {
           serif = ["Noto Sans Serif"];
           sansSerif = ["SF Pro"];
-          monospace = ["PragmataPro Mono Liga"];
-          emoji = [];
+          monospace = ["Departure Mono"];
+          emoji = ["Noto Color Emoji"];
         };
     };
     fontDir = {

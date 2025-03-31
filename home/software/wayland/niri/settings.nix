@@ -78,8 +78,8 @@ in {
         border = {
           enable = true;
           width = 1;
-          active.color = "#16aff1";
-          inactive.color = "#245b89";
+          active.color = "#8a9e6b";
+          inactive.color = "#2a2e2a";
         };
         shadow = {
           enable = true;
@@ -92,12 +92,12 @@ in {
         ];
         default-column-width = {proportion = 0.5;};
 
-        gaps = 8;
+        gaps = 6;
         struts = {
-          left = 10;
-          right = 10;
-          top = 2;
-          bottom = 10;
+          left = 0;
+          right = 0;
+          top = 0;
+          bottom = 0;
         };
 
         tab-indicator = {
@@ -105,7 +105,7 @@ in {
           place-within-column = true;
           position = "left";
           corner-radius = 20.0;
-          gap = -9.0;
+          gap = -12.0;
           gaps-between-tabs = 10.0;
           width = 4.0;
           length.total-proportion = 0.1;

@@ -23,7 +23,7 @@
     "XF86MonBrightnessUp".action = brillo "-A" "5";
     "XF86MonBrightnessDown".action = brillo "-U" "5";
 
-    "Print".action = screenshot-screen;
+    "Print".action.screenshot-screen = {write-to-disk = true;};
     "Mod+Shift+Alt+S".action = screenshot-window;
     "Mod+Shift+S".action = screenshot;
     "Mod+D".action = spawn "${pkgs.anyrun}/bin/anyrun";

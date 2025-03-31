@@ -1,5 +1,4 @@
 {lib, ...}:
-# default configuration shared by all hosts
 {
   imports = [
     ./security.nix
@@ -31,9 +30,9 @@
   time.timeZone = lib.mkDefault "America/Argentina/Buenos_Aires";
   time.hardwareClockInLocalTime = lib.mkDefault true;
 
-  # compresses half the ram for use as swap
   zramSwap = {
     enable = true;
     algorithm = "zstd";
+    memoryPercent = 25;
   };
 }
