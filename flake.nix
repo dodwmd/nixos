@@ -52,11 +52,6 @@
 
     anyrun.url = "github:anyrun-org/anyrun";
 
-    astal-bar = {
-      url = "github:linuxmobile/astal-bar";
-      inputs.nixpkgs.follow = "nixpkgs";
-    };
-
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     ghostty = {
