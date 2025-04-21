@@ -12,7 +12,7 @@
         paths = [
           (pkgs.obs-studio.override {
             pipewireSupport = true;
-            browserSupport = false;
+            browserSupport = true;
           })
         ];
         buildInputs = [pkgs.makeWrapper];

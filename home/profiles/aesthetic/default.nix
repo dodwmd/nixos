@@ -16,7 +16,7 @@
     # ../../software/wayland/wine.nix
     ../../software/wayland/caido.nix
 
-    ../../software/tools/discord.nix
+    # ../../software/tools/discord.nix
 
     # system services
     ../../services/system/gpg-agent.nix

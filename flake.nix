@@ -50,7 +50,12 @@
       inputs.systems.follows = "systems";
     };
 
-    anyrun.url = "github:fufexan/anyrun/launch-prefix";
+    anyrun.url = "github:anyrun-org/anyrun";
+
+    astal-bar = {
+      url = "github:linuxmobile/astal-bar";
+      inputs.nixpkgs.follow = "nixpkgs";
+    };
 
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 

@@ -37,32 +37,25 @@
     file-roller
     nautilus
     amberol
-    # blanket
     cavalier
     (celluloid.override {youtubeSupport = true;})
-    # contrast
-    # eyedropper
-    # gnome-solanum
     keypunch
     # kooha
     letterpress
     loupe
-    # paleta
-    # paper-plane
     (papers.override {supportNautilus = true;})
     parabolic
-    # planify
+    planify
     pwvucontrol
     resources
     gnome-control-center
     newsflash
 
-    # inkscape
+    inkscape
     # gimp
     # krita
     scrcpy
     multiviewer-for-f1
-    mitmproxy
 
     swww
     inputs.ghostty.packages.${pkgs.system}.default

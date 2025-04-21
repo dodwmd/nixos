@@ -1,6 +1,6 @@
 _: {
   services = {
-    # printing.enable = true;
+    printing.enable = true;
 
     dbus.implementation = "broker";
 

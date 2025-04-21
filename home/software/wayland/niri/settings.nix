@@ -26,8 +26,8 @@ in {
         (makeCommand "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1")
         (makeCommand "hyprlock")
         (makeCommand "swww-daemon")
-        (makeCommand "wl-paste --type image --watch cliphist store")
-        (makeCommand "wl-paste --type text --watch cliphist store")
+        {command = ["wl-paste" "--watch" "cliphist" "store"];}
+        {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
       ];
       input = {
         keyboard.xkb.layout = "latam";

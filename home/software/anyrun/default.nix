@@ -3,13 +3,8 @@
   inputs,
   ...
 }: {
-  imports = [
-    inputs.anyrun.homeManagerModules.default
-  ];
-
   programs.anyrun = {
     enable = true;
-
     config = {
       plugins = with inputs.anyrun.packages.${pkgs.system}; [
         applications
@@ -31,7 +26,7 @@
         Config(
           desktop_actions: false,
           max_entries: 5,
-          terminal: Some("foot"),
+          terminal: Some("ghostty"),
         )
       '';
 
