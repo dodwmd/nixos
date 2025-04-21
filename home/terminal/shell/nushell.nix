@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs = {
     carapace.enable = true;
-    carapace.enableNushellIntegration = true;
+    carapace.enableFishIntegration = true;
 
     nushell = {
       enable = true;

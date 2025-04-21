@@ -5,7 +5,7 @@ in {
   imports = [
     ./software
     ./shell/starship.nix
-    ./shell/nushell.nix
+    ./shell/fish.nix
   ];
 
   home.sessionVariables = {

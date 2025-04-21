@@ -16,7 +16,7 @@
     enable = true;
 
     enableBashIntegration = config.programs.bash.enable;
-    enableNushellIntegration = config.programs.nushell.enable;
+    enableFishIntegration = config.programs.fish.enable;
 
     settings = {
       manager = {

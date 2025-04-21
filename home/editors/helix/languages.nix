@@ -117,13 +117,6 @@
           };
           language-servers = ["lua-language-server"];
         }
-        {
-          name = "nu";
-          language-servers = ["nushell-lsp"];
-          formatter = {
-            command = "${pkgs.nufmt}/bin/nufmt";
-          };
-        }
       ]
       ++ prettierLangs langs;
 
@@ -179,10 +172,6 @@
           css.validate.enable = true;
           scss.validate.enable = true;
         };
-      };
-      nushell-lsp = {
-        command = "${pkgs.nushell}/bin/nu";
-        args = ["--lsp"];
       };
 
       lua-language-server = {
