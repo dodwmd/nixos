@@ -9,6 +9,5 @@
     pamixer
     alsa-utils
     easyeffects
-    termusic
   ];
 }

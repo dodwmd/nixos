@@ -4,7 +4,6 @@
   imports = [
     ./niri
     ./hyprlock.nix
-    ./wlogout.nix
   ];
 
   home.packages = with pkgs; [

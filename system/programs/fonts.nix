@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   ...
 }: {
   fonts = {
@@ -12,9 +11,7 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
-
-      inputs.self.packages.${pkgs.system}.SF-Pro
-      inputs.self.packages.${pkgs.system}.SF-Pro-mono
+      adwaita-fonts
 
       # nerdfonts
       nerd-fonts.symbols-only
@@ -42,8 +39,8 @@
       in
         addAll {
           serif = ["Noto Sans Serif"];
-          sansSerif = ["SF Pro Display"];
-          monospace = ["Departure Mono"];
+          sansSerif = ["Adwaita Sans"];
+          monospace = ["Adwaita Mono"];
           emoji = ["Noto Color Emoji"];
         };
     };

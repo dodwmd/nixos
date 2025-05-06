@@ -58,7 +58,7 @@ _: {
             cmd[update:1000] echo "<span font-weight='light' >$(date +'%H %M %S')</span>"
           '';
           font_size = 300;
-          font_family = "SF Pro Ultralight";
+          font_family = "Adwaita Sans Thin";
 
           color = "rgb(8a9e6b)";
 
