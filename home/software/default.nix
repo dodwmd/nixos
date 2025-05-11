@@ -30,7 +30,6 @@
     bun
 
     fastfetch
-    netscanner
 
     # gnome
     dconf-editor
@@ -41,11 +40,8 @@
     (celluloid.override {youtubeSupport = true;})
     keypunch
     # kooha
-    letterpress
     loupe
     (papers.override {supportNautilus = true;})
-    parabolic
-    planify
     pwvucontrol
     resources
     gnome-control-center
@@ -58,6 +54,6 @@
     multiviewer-for-f1
 
     swww
-    inputs.ghostty.packages.${pkgs.system}.default
+    ghostty
   ];
 }

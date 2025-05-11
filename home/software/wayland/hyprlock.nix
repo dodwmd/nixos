@@ -12,7 +12,7 @@ _: {
       background = [
         {
           monitor = "";
-          path = "~/Downloads/WALLPAPERS/SPIDERVERSE/greenish/SPDRVRS-5.png";
+          path = "~/Downloads/Wallpapers/Wallpapers/Fractal\ Maze/02.jpg";
           blur_passes = 3;
           blur_size = 12;
           noise = "0.1";

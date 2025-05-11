@@ -78,8 +78,8 @@ in {
         border = {
           enable = true;
           width = 1;
-          active.color = "#8a9e6b";
-          inactive.color = "#2a2e2a";
+          active.color = "#7fb4ca";
+          inactive.color = "#090e13";
         };
         shadow = {
           enable = true;

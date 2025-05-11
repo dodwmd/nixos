@@ -54,10 +54,6 @@
 
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
-
     hm = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -81,6 +77,11 @@
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
       };
+    };
+
+    zed = {
+      url = "github:HPsaucii/zed-editor-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser = {
