@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   pkgs,
   ...
 }: {
@@ -25,7 +24,7 @@
 
     "Print".action.screenshot-screen = {write-to-disk = true;};
     "Mod+Shift+Alt+S".action = screenshot-window;
-    "Mod+Shift+S".action = screenshot;
+    "Mod+Shift+S".action.screenshot = {show-pointer = false;};
     "Mod+D".action = spawn "${pkgs.anyrun}/bin/anyrun";
     "Mod+Return".action = spawn "${pkgs.ghostty}/bin/ghostty";
     "Ctrl+Alt+L".action = spawn "sh -c pgrep hyprlock || hyprlock";
@@ -42,7 +41,7 @@
 
     "Mod+Comma".action = consume-window-into-column;
     "Mod+Period".action = expel-window-from-column;
-    "Mod+C".action = center-window;
+    "Mod+C".action = center-visible-columns;
     "Mod+Tab".action = switch-focus-between-floating-and-tiling;
 
     "Mod+Minus".action = set-column-width "-10%";

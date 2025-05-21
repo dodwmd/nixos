@@ -1,12 +1,8 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./anyrun
     ./browsers/chromium.nix
-    ./browsers/edge.nix
+    # ./browsers/edge.nix
     ./browsers/zen.nix
     ./gtk.nix
     ./media
@@ -32,20 +28,21 @@
     fastfetch
 
     # gnome
-    dconf-editor
-    file-roller
-    nautilus
     amberol
     cavalier
     (celluloid.override {youtubeSupport = true;})
+    dconf-editor
+    file-roller
+    gnome-control-center
+    gnome-text-editor
     keypunch
     # kooha
     loupe
+    nautilus
+    newsflash
     (papers.override {supportNautilus = true;})
     pwvucontrol
     resources
-    gnome-control-center
-    newsflash
 
     inkscape
     # gimp

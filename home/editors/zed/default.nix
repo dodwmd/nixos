@@ -1,4 +1,4 @@
-{inputs, pkgs, ...}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     nodejs
     biome
@@ -7,7 +7,7 @@
     nil
     typescript-language-server
     typescript
-    inputs.zed.packages.${pkgs.system}.zed-editor-bin-fhs
+    zed-editor
     astro-language-server
   ];
 }

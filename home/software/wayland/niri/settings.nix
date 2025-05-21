@@ -23,7 +23,6 @@ in {
         SDL_VIDEODRIVER = "wayland";
       };
       spawn-at-startup = [
-        (makeCommand "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1")
         (makeCommand "hyprlock")
         (makeCommand "swww-daemon")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
@@ -41,7 +40,6 @@ in {
           tap-button-map = "left-right-middle";
           middle-emulation = true;
           accel-profile = "adaptive";
-          # scroll-factor = 0.2;
         };
         focus-follows-mouse.enable = true;
         warp-mouse-to-focus = true;
@@ -69,6 +67,12 @@ in {
           };
         };
       };
+
+      overview = {
+        # workspace-shadow = "off";
+        backdrop-color = "transparent";
+      };
+      gestures = {hot-corners.enable = true;};
       cursor = {
         size = 20;
         theme = "${pointer.name}";
