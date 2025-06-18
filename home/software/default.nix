@@ -32,20 +32,19 @@
     cavalier
     (celluloid.override {youtubeSupport = true;})
     dconf-editor
+    eyedropper
     file-roller
     gnome-control-center
     gnome-text-editor
     keypunch
-    # kooha
     loupe
     nautilus
-    newsflash
     (papers.override {supportNautilus = true;})
     pwvucontrol
     resources
 
     inkscape
-    # gimp
+    gimp
     # krita
     scrcpy
     multiviewer-for-f1

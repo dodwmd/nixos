@@ -42,7 +42,7 @@ in {
           accel-profile = "adaptive";
         };
         focus-follows-mouse.enable = true;
-        warp-mouse-to-focus = true;
+        warp-mouse-to-focus.enable = true;
         workspace-auto-back-and-forth = true;
       };
       screenshot-path = "~/Pictures/Screenshots/Screenshot-from-%Y-%m-%d-%H-%M-%S.png";
@@ -69,7 +69,7 @@ in {
       };
 
       overview = {
-        # workspace-shadow = "off";
+        workspace-shadow.enable = false;
         backdrop-color = "transparent";
       };
       gestures = {hot-corners.enable = true;};
@@ -82,8 +82,8 @@ in {
         border = {
           enable = true;
           width = 1;
-          active.color = "#7fb4ca";
-          inactive.color = "#090e13";
+          active.color = "#EB6353";
+          inactive.color = "#092B50";
         };
         shadow = {
           enable = true;
@@ -116,7 +116,7 @@ in {
         };
       };
 
-      animations.shaders.window-resize = ''
+      animations.window-resize.custom-shader = ''
         vec4 resize_color(vec3 coords_curr_geo, vec3 size_curr_geo) {
           vec3 coords_next_geo = niri_curr_geo_to_next_geo * coords_curr_geo;
 

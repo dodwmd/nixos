@@ -15,9 +15,15 @@
       })
       list);
 
-  image = xdgAssociations "image" imageViewer ["png" "svg" "jpeg" "gif"];
-  video = xdgAssociations "video" videoPlayer ["mp4" "avi" "mkv"];
-  audio = xdgAssociations "audio" audioPlayer ["mp3" "flac" "wav" "aac"];
+  image = xdgAssociations "image" imageViewer [
+    "png" "jpg" "jpeg" "gif" "webp" "bmp" "tiff" "tif" "ico" "svg" "avif" "heic" "heif"
+  ];
+  video = xdgAssociations "video" videoPlayer [
+    "mp4" "avi" "mkv" "mov" "wmv" "flv" "webm" "m4v" "3gp" "ogv" "ts" "mts" "m2ts"
+  ];
+  audio = xdgAssociations "audio" audioPlayer [
+    "mp3" "flac" "wav" "aac" "ogg" "oga" "opus" "m4a" "wma" "ape" "alac" "aiff"
+  ];
   browserTypes =
     (xdgAssociations "application" browser [
       "json"
@@ -38,8 +44,24 @@
   # XDG MIME types
   associations = builtins.mapAttrs (_: v: (map (e: "${e}.desktop") v)) ({
       "application/pdf" = ["papers"];
+      "application/zip" = ["org.gnome.FileRoller"];
+      "application/x-7z-compressed" = ["org.gnome.FileRoller"];
+      "application/x-rar-compressed" = ["org.gnome.FileRoller"];
+      "application/x-tar" = ["org.gnome.FileRoller"];
+      "application/gzip" = ["org.gnome.FileRoller"];
       "text/html" = browser;
       "text/plain" = ["org.gnome.TextEditor"];
+      "text/markdown" = ["org.gnome.TextEditor"];
+      "text/x-python" = ["org.gnome.TextEditor"];
+      "text/x-shellscript" = ["org.gnome.TextEditor"];
+      "application/json" = ["org.gnome.TextEditor"];
+      "application/xml" = ["org.gnome.TextEditor"];
+      "application/javascript" = ["org.gnome.TextEditor"];
+      "text/css" = ["org.gnome.TextEditor"];
+      "text/x-c" = ["org.gnome.TextEditor"];
+      "text/x-c++" = ["org.gnome.TextEditor"];
+      "text/x-rust" = ["org.gnome.TextEditor"];
+      "text/x-nix" = ["org.gnome.TextEditor"];
       "x-scheme-handler/chrome" = ["chromium-browser"];
     }
     // image

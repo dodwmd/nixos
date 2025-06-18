@@ -230,7 +230,7 @@ in {
     layer-rules = [
       {
         matches = [{namespace = "^swww$";}];
-        # place-within-backdrop = true;
+        place-within-backdrop = true;
       }
     ];
   };

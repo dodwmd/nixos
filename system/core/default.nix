@@ -1,5 +1,4 @@
-{lib, ...}:
-{
+{lib, ...}: {
   imports = [
     ./security.nix
     ./users.nix
@@ -26,10 +25,18 @@
 
   # don't touch this
   system.stateVersion = lib.mkDefault "24.05";
+  system = {
+    switch = {
+      enable = false;
+      enableNg = true;
+    };
+    rebuild.enableNg = true;
+  };
 
   time.timeZone = lib.mkDefault "America/Argentina/Buenos_Aires";
   time.hardwareClockInLocalTime = lib.mkDefault true;
 
+  # compresses half the ram for use as swap
   zramSwap = {
     enable = true;
     algorithm = "zstd";

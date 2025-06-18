@@ -12,6 +12,7 @@
       "video"
       "wheel"
       "kvm"
+      "docker"
     ];
   };
 }

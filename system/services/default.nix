@@ -9,6 +9,7 @@ _: {
       enable = true;
       resyncTimer = "10m";
     };
+    irqbalance.enable = true;
   };
 
   # Use in place of hypridle's before_sleep_cmd, since systemd does not wait for

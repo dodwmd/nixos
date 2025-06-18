@@ -13,7 +13,7 @@
     # software
     ../../software
     ../../software/wayland
-    ../../software/wayland/caido.nix
+    # ../../software/wayland/caido.nix
 
     # system services
     ../../services/system/gpg-agent.nix
