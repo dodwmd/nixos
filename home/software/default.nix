@@ -18,9 +18,9 @@
     pciutils
     nixos-icons
     colord
+    cliphist
     ffmpegthumbnailer
     imagemagick
-    cliphist
     nodejs
     nodePackages.pnpm
     bun
@@ -32,6 +32,7 @@
     cavalier
     (celluloid.override {youtubeSupport = true;})
     dconf-editor
+    dialect
     eyedropper
     file-roller
     gnome-control-center
@@ -47,9 +48,10 @@
     gimp
     # krita
     scrcpy
-    multiviewer-for-f1
+    # multiviewer-for-f1
 
     swww
     ghostty
+    opencode
   ];
 }

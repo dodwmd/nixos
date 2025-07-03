@@ -3,6 +3,7 @@
     ./fonts.nix
     ./home-manager.nix
     ./xdg.nix
+    # ./qt.nix
   ];
 
   programs = {

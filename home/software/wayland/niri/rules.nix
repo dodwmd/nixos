@@ -54,7 +54,7 @@
         {app-id = "chromium-browser";}
         {app-id = "xdg-desktop-portal-gtk";}
       ];
-      scroll-factor = 0.2;
+      scroll-factor = 0.5;
     }
     {
       matches = [

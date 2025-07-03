@@ -30,6 +30,7 @@ in {
       ];
       input = {
         keyboard.xkb.layout = "latam";
+
         touchpad = {
           click-method = "button-areas";
           dwt = true;
@@ -41,7 +42,10 @@ in {
           middle-emulation = true;
           accel-profile = "adaptive";
         };
-        focus-follows-mouse.enable = true;
+        focus-follows-mouse = {
+          enable = true;
+          max-scroll-amount = "90%";
+        };
         warp-mouse-to-focus.enable = true;
         workspace-auto-back-and-forth = true;
       };

@@ -43,7 +43,7 @@
 
   # XDG MIME types
   associations = builtins.mapAttrs (_: v: (map (e: "${e}.desktop") v)) ({
-      "application/pdf" = ["papers"];
+      "application/pdf" = ["org.gnome.Papers"];
       "application/zip" = ["org.gnome.FileRoller"];
       "application/x-7z-compressed" = ["org.gnome.FileRoller"];
       "application/x-rar-compressed" = ["org.gnome.FileRoller"];

@@ -34,6 +34,11 @@
     "Mod+Q".action = close-window;
     "Mod+S".action = switch-preset-column-width;
     "Mod+F".action = maximize-column;
+
+    "Mod+1".action = set-column-width "25%";
+    "Mod+2".action = set-column-width "50%";
+    "Mod+3".action = set-column-width "75%";
+    "Mod+4".action = set-column-width "100%";
     # "Mod+Shift+F".action = fullscreen-window;
     "Mod+Shift+F".action = expand-column-to-available-width;
     "Mod+Space".action = toggle-window-floating;
