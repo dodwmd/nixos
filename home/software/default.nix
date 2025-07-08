@@ -2,7 +2,7 @@
   imports = [
     ./anyrun
     ./browsers/chromium.nix
-    # ./browsers/edge.nix
+    ./browsers/edge.nix
     ./browsers/zen.nix
     ./gtk.nix
     ./media
@@ -32,7 +32,6 @@
     cavalier
     (celluloid.override {youtubeSupport = true;})
     dconf-editor
-    dialect
     eyedropper
     file-roller
     gnome-control-center
@@ -53,5 +52,7 @@
     swww
     ghostty
     opencode
+    mods
+    zellij
   ];
 }

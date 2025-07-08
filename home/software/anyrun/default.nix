@@ -26,7 +26,7 @@
         Config(
           desktop_actions: false,
           max_entries: 5,
-          terminal: Some("ghostty"),
+          terminal: Some("foot"),
         )
       '';
 

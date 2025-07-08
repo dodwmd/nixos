@@ -22,6 +22,7 @@
 
     tuicam
     fum
+    meteor-git
   ];
 
   programs = {
