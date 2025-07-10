@@ -17,6 +17,7 @@
         term = "xterm-256color";
         selection-target = "clipboard";
         include = "${config.xdg.configHome}/foot/theme.ini";
+        shell = "${pkgs.zellij}/bin/zellij";
       };
       desktop-notifications.command = "${lib.getExe pkgs.libnotify} -a \${app-id} -i \${app-id} \${title} \${body}";
       scrollback = {
