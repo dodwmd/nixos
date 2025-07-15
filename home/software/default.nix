@@ -53,6 +53,5 @@
     ghostty
     opencode
     mods
-    zellij
   ];
 }

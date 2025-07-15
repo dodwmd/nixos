@@ -216,6 +216,7 @@
       rs = "sudo systemctl";
 
       zed = "zeditor";
+      koji = "meteor";
     };
 
     plugins = with pkgs.fishPlugins; [

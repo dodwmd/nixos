@@ -17,12 +17,14 @@
     jaq
     ripgrep
     killall
-    koji
     jq
 
     tuicam
     fum
     meteor-git
+    glow
+    scope-tui
+    discordo
   ];
 
   programs = {
