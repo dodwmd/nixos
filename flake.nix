@@ -61,6 +61,8 @@
 
     lanzaboote.url = "github:nix-community/lanzaboote";
 
+    mynixpkgs.url = "github:linuxmobile/mynixpkgs";
+
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";

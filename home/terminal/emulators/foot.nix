@@ -9,7 +9,7 @@
     enable = true;
     settings = {
       main = {
-        font = "PragmataProMonoLiga Nerd Font:size=8:fontfeatures=calt:fontfeatures=dlig:fontfeatures=liga";
+        font = "ZedMono Nerd Font Mono:size=8:fontfeatures=calt:fontfeatures=dlig:fontfeatures=liga";
         dpi-aware = "yes";
         horizontal-letter-offset = 0;
         vertical-letter-offset = 0;

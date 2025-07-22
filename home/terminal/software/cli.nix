@@ -1,42 +1,56 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
-    # archives
-    zip
-    unzip
-    unrar
+{
+  inputs,
+  pkgs,
+  ...
+}: {
+  home.packages = with pkgs;
+    [
+      # archives
+      zip
+      unzip
+      unrar
 
-    # misc
-    libnotify
-    fontconfig
+      # misc
+      libnotify
+      fontconfig
 
-    # utils
-    du-dust
-    duf
-    fd
-    file
-    jaq
-    ripgrep
-    killall
-    jq
+      # utils
+      du-dust
+      duf
+      fd
+      file
+      jaq
+      ripgrep
+      killall
+      jq
 
-    tuicam
-    fum
-    meteor-git
-    glow
-    scope-tui
-    discordo
-  ];
+      discordo
+      fum
+      glow
+      gtt
+      meteor-git
+      reddit-tui
+      scope-tui
+      tuicam
+      wiremix
+    ]
+    ++ (with inputs.mynixpkgs.packages.${pkgs.system}; [
+      opencode
+      toney
+      bmm
+      prs
+    ]);
 
   programs = {
     eza.enable = true;
     ssh.enable = true;
     dircolors = {
       enable = true;
-      enableFishIntegration = true;
+      # enableNushellIntegration = true;
     };
     autojump = {
       enable = true;
-      enableFishIntegration = true;
+      # enableNushellIntegration = true;
     };
   };
 }

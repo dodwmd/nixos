@@ -5,7 +5,7 @@
     ../../editors/zed
 
     # services
-    # ../../services/wayland/hypridle.nix
+    ../../services/wayland/hypridle.nix
 
     # media services
     ../../services/media/playerctl.nix

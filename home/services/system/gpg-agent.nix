@@ -2,7 +2,7 @@
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    enableFishIntegration = true;
+    enableNushellIntegration = true;
     pinentryPackage = pkgs.pinentry-gnome3;
   };
 }

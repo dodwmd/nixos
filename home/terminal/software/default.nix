@@ -4,14 +4,14 @@
     ./bat.nix
     ./bottom.nix
     ./cli.nix
-    ./gpg.nix
     ./git.nix
-    ./gitui.nix
+    ./gpg.nix
+    ./lazygit.nix
     ./nix.nix
     ./skim.nix
     # ./transient-services.nix
-    ./yazi
     ./xdg.nix
+    ./yazi
     ./zoxide.nix
   ];
 }

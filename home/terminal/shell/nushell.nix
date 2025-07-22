@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs = {
     carapace.enable = true;
-    carapace.enableFishIntegration = true;
+    carapace.enableNushellIntegration = true;
 
     nushell = {
       enable = true;
@@ -100,7 +100,7 @@
         }
 
         def homesearch [program: string] {
-          http get https://raw.githubusercontent.com/mipmip/home-manager-option-search/refs/heads/main/static/data/options-release-23.11.json
+          http get https://raw.githubusercontent.com/mipmip/home-manager-option-search/refs/heads/main/static/data/options-release-24.05.json
           | get options
           | where { |opt|
             $opt.title =~ $program or ($opt.declarations | any { |decl| $decl.name =~ $program })
@@ -143,6 +143,8 @@
         trimall = "sudo fstrim -va";
         temp = "cd /tmp/";
         zed = "zeditor";
+        koji = "meteor";
+        gitui = "lazygit";
 
         test-build = "sudo nixos-rebuild test --flake .#aesthetic";
         switch-build = "sudo nixos-rebuild switch --flake .#aesthetic";
@@ -159,7 +161,7 @@
         gitgrep = "git ls-files | rg";
         # gitrm = "git ls-files --deleted -z | xargs -0 git rm";
 
-        # cat = "bat --theme=base16 --number --color=always --paging=never --tabs=2 --wrap=never";
+        cat = "bat --theme=base16 --number --color=always --paging=never --tabs=2 --wrap=never";
         fcd = "cd (fd --type d | sk | str trim)";
         grep = "rg";
         l = "eza -lF --time-style=long-iso --icons";

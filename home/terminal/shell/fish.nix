@@ -217,6 +217,7 @@
 
       zed = "zeditor";
       koji = "meteor";
+      gitui = "lazygit";
     };
 
     plugins = with pkgs.fishPlugins; [

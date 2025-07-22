@@ -15,8 +15,8 @@
 
       # nerdfonts
       nerd-fonts.symbols-only
-      nerd-fonts.departure-mono
-      departure-mono
+      nerd-fonts.zed-mono
+      nerd-fonts.iosevka
     ];
 
     # causes more issues than it solves

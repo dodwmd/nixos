@@ -12,7 +12,7 @@ _: {
       background = [
         {
           monitor = "";
-          path = "~/Downloads/Wallpapers/Fractal-Neurona.jpg";
+          path = "~/Downloads/WALLPAPERS/wallhaven-5ylrm9.jpg";
           blur_passes = 3;
           blur_size = 12;
           noise = "0.1";

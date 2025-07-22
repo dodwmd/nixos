@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     ./anyrun
     ./browsers/chromium.nix
@@ -51,7 +55,6 @@
 
     swww
     ghostty
-    opencode
     mods
   ];
 }
