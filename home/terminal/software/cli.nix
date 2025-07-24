@@ -33,12 +33,16 @@
       scope-tui
       tuicam
       wiremix
+      zfxtop
+      nix-search-tv
+      television
     ]
     ++ (with inputs.mynixpkgs.packages.${pkgs.system}; [
       opencode
       toney
       bmm
       prs
+      omm
     ]);
 
   programs = {

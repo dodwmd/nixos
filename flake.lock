@@ -503,11 +503,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1753132348,
-        "narHash": "sha256-2Zne1Lr9+vaargsGEEz7423x8iuI2Rl2y3s0OpL/fiU=",
+        "lastModified": 1753213906,
+        "narHash": "sha256-gmYpiLIK1KwPikQ8luE+UAoLHSZrq8Bj654OHRAkH8E=",
         "owner": "linuxmobile",
         "repo": "mynixpkgs",
-        "rev": "2119955f8616ca960db3e7c1805a04633e537df1",
+        "rev": "eae06733b4665c7f998af987999f504779d2a6b7",
         "type": "github"
       },
       "original": {

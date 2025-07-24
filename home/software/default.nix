@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   ...
 }: {
@@ -7,6 +6,7 @@
     ./anyrun
     ./browsers/chromium.nix
     ./browsers/edge.nix
+    # ./browsers/qutebrowser.nix
     ./browsers/zen.nix
     ./gtk.nix
     ./media

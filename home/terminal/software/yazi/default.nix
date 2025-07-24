@@ -4,8 +4,8 @@
 }: {
   imports = [
     ./theme/icons.nix
-    ./theme/manager.nix
-    ./theme/status.nix
+    # ./theme/manager.nix
+    # ./theme/status.nix
   ];
 
   # general file info

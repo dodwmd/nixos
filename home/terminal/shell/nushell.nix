@@ -7,7 +7,7 @@
       enable = true;
 
       plugins = with pkgs.nushellPlugins; [
-        # skim
+        skim
         query
         gstat
         polars
@@ -18,13 +18,26 @@
           show_banner = false;
           edit_mode = "vi";
 
-          ls.clickable_links = true;
-          rm.always_trash = true;
+          ls = {
+            clickable_links = true;
+            use_ls_colors = true;
+          };
+          rm.always_trash = false;
 
           table = {
-            mode = "rounded";
+            mode = "single";
             index_mode = "always";
-            header_on_separator = false;
+            show_empty = true;
+            padding.left = 1;
+            padding.right = 1;
+            trim = {
+              methodology = "wrapping";
+              wrapping_try_keep_words = true;
+              truncating_suffix = "...";
+            };
+            header_on_separator = true;
+            abbreviated_row_count = null;
+            footer_inheritance = true;
           };
 
           cursor_shape = {
@@ -34,7 +47,23 @@
 
           display_errors = {
             exit_code = false;
+            termination_signal = true;
           };
+
+          completions = {
+            algorithm = "substring";
+            sort = "smart";
+            case_sensitive = false;
+            quick = true;
+            partial = true;
+            use_ls_colors = true;
+          };
+
+          use_kitty_protocol = true;
+          bracketed_paste = true;
+          use_ansi_coloring = true;
+          error_style = "fancy";
+          highlight_resolved_externals = true;
 
           menus = [
             {
@@ -42,13 +71,25 @@
               only_buffer_difference = false;
               marker = "? ";
               type = {
-                layout = "columnar"; # list, description
-                columns = 4;
-                col_padding = 2;
+                layout = "ide";
+                min_competion_width = 0;
+                max_completion_width = 150;
+                max_completion_height = 25;
+                padding = 0;
+                border = false;
+                cursor_offset = 0;
+                description_mode = "prefer_right";
+                min_description_width = 0;
+                max_description_width = 50;
+                max_description_height = 10;
+                description_offset = 1;
+                correct_cursor_pos = true;
               };
               style = {
-                text = "magenta";
-                selected_text = "blue_reverse";
+                text = "white";
+                selected_text = "white_reverse";
+                match_text = {attr = "u";};
+                selected_match_text = {attr = "ur";};
                 description_text = "yellow";
               };
             }
@@ -161,7 +202,7 @@
         gitgrep = "git ls-files | rg";
         # gitrm = "git ls-files --deleted -z | xargs -0 git rm";
 
-        cat = "bat --theme=base16 --number --color=always --paging=never --tabs=2 --wrap=never";
+        cat = "bat --number --color=always --paging=never --tabs=2 --wrap=never";
         fcd = "cd (fd --type d | sk | str trim)";
         grep = "rg";
         l = "eza -lF --time-style=long-iso --icons";
@@ -185,6 +226,7 @@
         SHELL = "${pkgs.nushell}/bin/nu";
         EDITOR = "hx";
         VISUAL = "hx";
+        CARAPACE_BRIDGES = "inshellisense,carapace,zsh,fish,bash";
       };
     };
   };
