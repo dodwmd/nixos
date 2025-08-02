@@ -51,7 +51,7 @@
     gimp
     # krita
     scrcpy
-    # multiviewer-for-f1
+    multiviewer-for-f1
 
     swww
     ghostty

@@ -41,8 +41,10 @@
       opencode
       toney
       bmm
-      prs
       omm
+      prs
+      dfft
+      crush
     ]);
 
   programs = {

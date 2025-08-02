@@ -7,7 +7,7 @@
       enable = true;
 
       plugins = with pkgs.nushellPlugins; [
-        skim
+        # skim
         query
         gstat
         polars
@@ -228,6 +228,7 @@
         VISUAL = "hx";
         CARAPACE_BRIDGES = "inshellisense,carapace,zsh,fish,bash";
       };
+      extraEnv = "$env.CARAPACE_BRIDGES = 'inshellisense,carapace,zsh,fish,bash'";
     };
   };
 }

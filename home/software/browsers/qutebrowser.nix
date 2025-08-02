@@ -2,6 +2,7 @@
   programs.qutebrowser = {
     enable = true;
     loadAutoconfig = true;
+    highdpi = true;
     keyBindings = {
       normal = {
         ";v" = "hint links spawn --detach mpv {hint-url}";
@@ -15,6 +16,7 @@
         ];
       };
     };
+    session.lazy_restore = true;
     settings = {
       auto_save.session = true;
       fonts = {
@@ -89,12 +91,15 @@
       "!d" = "https://duckduckgo.com/?ia=web&q={}";
       "!gc" = "https://github.com/search?q={}&type=code";
       "!g" = "https://www.google.com/search?hl=en&q={}";
+      "!gr" = "https://github.com/search?q={}&type=repositories";
       "!gs" = "https://github.com/search?o=desc&q={}&s=stars";
       "!hm" = "https://home-manager-options.extranix.com/?query={}";
-      "!np" = "https://search.nixos.org/packages?type=packages&query={}";
-      "!nw" = "https://nixos.wiki/index.php?search={}";
       "!nf" = "https://noogle.dev/q?term={}&limit=50&page=1";
+      "!np" = "https://search.nixos.org/packages?type=packages&query={}";
+      "!npp" = "https://github.com/NixOS/nixpkgs/pulls?q=is%3Apr+is%3Aopen+{}";
+      "!nw" = "https://nixos.wiki/index.php?search={}";
       "!s" = "https://sourcegraph.com/search?patternType=standard&sm=1&q=context:global+{}";
+      "!tr" = "https://nixpk.gs/pr-tracker.html?pr={}";
       "!yt" = "https://youtube.com/results?search_query={}";
     };
 

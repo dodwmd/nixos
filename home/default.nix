@@ -57,7 +57,7 @@
       };
     };
 
-    base16Scheme = "${inputs.self}/home/shared/colors/paradise.yaml";
+    base16Scheme = "${inputs.self}/home/shared/colors/charm.yaml";
 
     targets = {
       bat.enable = true;
