@@ -16,7 +16,6 @@
         ];
       };
     };
-    session.lazy_restore = true;
     settings = {
       auto_save.session = true;
       fonts = {

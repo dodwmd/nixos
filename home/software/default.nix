@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./anyrun
     ./browsers/chromium.nix
@@ -33,10 +30,8 @@
 
     # gnome
     amberol
-    cavalier
     (celluloid.override {youtubeSupport = true;})
     dconf-editor
-    eyedropper
     file-roller
     gnome-control-center
     gnome-text-editor
