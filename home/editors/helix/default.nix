@@ -55,14 +55,18 @@
         trim-final-newlines = true;
         trim-trailing-whitespace = true;
         whitespace = {
-          render.space = "all";
-          render.tab = "all";
-          render.newline = "all";
-          characters.space = " ";
-          characters.nbsp = "⍽";
-          characters.tab = "→";
-          characters.newline = "↴";
-          characters.tabpad = "-";
+          render = {
+            space = "all";
+            tab = "all";
+            newline = "all";
+          };
+          characters = {
+            space = " ";
+            nbsp = "⍽";
+            tab = "→";
+            newline = "↴";
+            tabpad = "-";
+          };
         };
         auto-pairs = true;
         clipboard-provider = "wayland";

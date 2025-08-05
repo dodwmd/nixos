@@ -3,7 +3,6 @@
     ./security.nix
     ./users.nix
     ../nix
-    # ../programs/fish.nix
     ../programs/nushell.nix
   ];
 

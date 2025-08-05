@@ -17,12 +17,32 @@
         conf = builtins.toJSON {
           show_banner = false;
           edit_mode = "vi";
+          buffer_editor = "hx";
 
-          ls = {
-            clickable_links = true;
+          completions = {
+            algorithm = "substring";
+            sort = "smart";
+            case_sensitive = false;
+            quick = true;
+            partial = true;
             use_ls_colors = true;
           };
-          rm.always_trash = false;
+
+          shell_integration = {
+            osc2 = true;
+            osc7 = true;
+            osc8 = true;
+          };
+
+          use_kitty_protocol = true;
+          bracketed_paste = true;
+          use_ansi_coloring = true;
+          error_style = "fancy";
+
+          display_errors = {
+            exit_code = false;
+            termination_signal = true;
+          };
 
           table = {
             mode = "single";
@@ -40,30 +60,8 @@
             footer_inheritance = true;
           };
 
-          cursor_shape = {
-            vi_insert = "line";
-            vi_normal = "block";
-          };
-
-          display_errors = {
-            exit_code = false;
-            termination_signal = true;
-          };
-
-          completions = {
-            algorithm = "substring";
-            sort = "smart";
-            case_sensitive = false;
-            quick = true;
-            partial = true;
-            use_ls_colors = true;
-          };
-
-          use_kitty_protocol = true;
-          bracketed_paste = true;
-          use_ansi_coloring = true;
-          error_style = "fancy";
-          highlight_resolved_externals = true;
+          ls.use_ls_colors = true;
+          rm.always_trash = false;
 
           menus = [
             {
@@ -94,6 +92,13 @@
               };
             }
           ];
+
+          cursor_shape = {
+            vi_insert = "line";
+            vi_normal = "block";
+          };
+
+          highlight_resolved_externals = true;
         };
         completions = let
           completion = name: ''
@@ -107,7 +112,7 @@
       in ''
         $env.config = ${conf};
 
-        ${completions ["git" "nix" "man" "rg"]}
+        ${completions ["git" "nix" "man" "rg" "gh" "glow" "bat"]}
 
         # use ${pkgs.nu_scripts}/share/nu_scripts/modules/background_task/task.nu
         # source ${pkgs.nu_scripts}/share/nu_scripts/modules/formats/from-env.nu
@@ -135,32 +140,6 @@
         def installedall [] {
           nix-store --query --requisites /run/current-system/ | sk | wl-copy
         }
-
-        def search [term: string] {
-          nix search nixpkgs --json $term | from json | values | select pname description
-        }
-
-        def homesearch [program: string] {
-          http get https://raw.githubusercontent.com/mipmip/home-manager-option-search/refs/heads/main/static/data/options-release-24.05.json
-          | get options
-          | where { |opt|
-            $opt.title =~ $program or ($opt.declarations | any { |decl| $decl.name =~ $program })
-          }
-          | each { |option|
-            let type_info = if ($option.type | is-empty) { "No type info" } else { $option.type }
-            let default_info = if ($option.default | is-empty) { "null" } else { $option.default }
-            let description = if ($option.description | is-empty) { "No description" } else { $option.description }
-
-            {
-              title: $option.title,
-              type: $type_info,
-              description: $description,
-              default: $default_info,
-              files: ($option.declarations | each { |d| $d.name } | str join ", ")
-            }
-          }
-        }
-
 
         def --env fm [...args] {
         	let tmp = (mktemp -t "yazi-cwd.XXXXX")

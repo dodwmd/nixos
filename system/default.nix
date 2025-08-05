@@ -13,7 +13,6 @@ let
 
     ./services
     ./services/ananicy.nix
-    ./services/docker.nix
     ./services/greetd.nix
     ./services/pipewire.nix
   ];

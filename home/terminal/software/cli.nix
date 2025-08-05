@@ -23,6 +23,7 @@
       ripgrep
       killall
       jq
+      ps_mem
 
       discordo
       fum

@@ -15,7 +15,6 @@
     vesktop
 
     # misc
-    ps_mem
     pciutils
     nixos-icons
     colord
@@ -35,7 +34,7 @@
     file-roller
     gnome-control-center
     gnome-text-editor
-    keypunch
+    # keypunch
     loupe
     nautilus
     (papers.override {supportNautilus = true;})
@@ -43,7 +42,7 @@
     resources
 
     inkscape
-    gimp
+    # gimp
     # krita
     scrcpy
     multiviewer-for-f1
