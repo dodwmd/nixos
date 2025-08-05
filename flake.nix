@@ -45,9 +45,11 @@
     # rest of inputs, alphabetical order
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "hm";
-      inputs.systems.follows = "systems";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "hm";
+        systems.follows = "systems";
+      };
     };
 
     anyrun.url = "github:anyrun-org/anyrun";
@@ -58,8 +60,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    lanzaboote.url = "github:nix-community/lanzaboote";
 
     mynixpkgs.url = "github:linuxmobile/mynixpkgs";
 

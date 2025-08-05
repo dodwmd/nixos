@@ -25,7 +25,7 @@
           "${mod}/programs/gamemode.nix"
           "${mod}/services/gnome-services.nix"
           "${mod}/services/location.nix"
-          "${mod}/core/lanzaboote.nix"
+          "${mod}/core/limine.nix"
           {
             home-manager = {
               users.linuxmobile.imports =
