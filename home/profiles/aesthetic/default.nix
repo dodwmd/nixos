@@ -6,6 +6,7 @@
 
     # services
     ../../services/wayland/hypridle.nix
+    ../../services/wayland/gammastep.nix
 
     # media services
     ../../services/media/playerctl.nix
@@ -19,8 +20,5 @@
     ../../services/system/polkit-agent.nix
     ../../services/system/power-monitor.nix
     ../../services/system/syncthing.nix
-
-    # terminal emulators
-    # ../../terminal/emulators/foot.nix
   ];
 }

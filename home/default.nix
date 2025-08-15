@@ -47,8 +47,8 @@
       };
 
       monospace = {
-        package = pkgs.nerd-fonts.zed-mono;
-        name = "ZedMono Nerd Font Mono";
+        package = pkgs.nerd-fonts.geist-mono;
+        name = "Geist Nerd Font Mono";
       };
 
       emoji = {
@@ -57,15 +57,17 @@
       };
     };
 
-    base16Scheme = "${inputs.self}/home/shared/colors/charm.yaml";
+    base16Scheme = "${inputs.self}/home/shared/colors/aesthetic.yaml";
 
     targets = {
       bat.enable = true;
+      gtk.enable = true;
       helix.enable = true;
       nixos-icons.enable = true;
       nushell.enable = true;
       qt.enable = true;
       starship.enable = true;
+      vesktop.enable = true;
       yazi.enable = true;
     };
   };
