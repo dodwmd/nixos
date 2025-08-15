@@ -182,7 +182,7 @@
         # gitrm = "git ls-files --deleted -z | xargs -0 git rm";
 
         cat = "bat --number --color=always --paging=never --tabs=2 --wrap=never";
-        fcd = "cd (fd --type d | sk | str trim)";
+        # fcd = "cd (fd --type d | sk | str trim)";
         grep = "rg";
         l = "eza -lF --time-style=long-iso --icons";
         # la = "eza -lah --tree";

@@ -2,7 +2,7 @@ _: let
   windowRules = [
     {
       geometry-corner-radius = let
-        radius = 0.0;
+        radius = 12.0;
       in {
         bottom-left = radius;
         bottom-right = radius;

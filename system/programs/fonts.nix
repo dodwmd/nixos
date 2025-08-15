@@ -12,7 +12,7 @@
 
       # nerdfonts
       nerd-fonts.symbols-only
-      nerd-fonts.zed-mono
+      nerd-fonts.geist-mono
       nerd-fonts.iosevka
     ];
 
@@ -37,7 +37,7 @@
         addAll {
           serif = ["Noto Sans Serif"];
           sansSerif = ["Adwaita Sans"];
-          monospace = ["Adwaita Mono"];
+          monospace = ["Geist Nerd Font Mono"];
           emoji = ["Noto Color Emoji"];
         };
     };

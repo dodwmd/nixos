@@ -8,7 +8,7 @@
     command = [command];
   };
 in {
-  programs.niri = {
+  programs.niri = with config.lib.stylix.colors; {
     enable = true;
     package = pkgs.niri;
     settings = {
@@ -85,12 +85,12 @@ in {
         focus-ring.enable = false;
         border = {
           enable = true;
-          width = 4;
-          active.color = "#ED61D730";
-          inactive.color = "#B8149F30";
+          width = 2;
+          active.color = "#${base0D}";
+          inactive.color = "#${base07}";
         };
         shadow = {
-          enable = true;
+          enable = false;
         };
         preset-column-widths = [
           {proportion = 0.25;}

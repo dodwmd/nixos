@@ -8,7 +8,7 @@
 
   boot = {
     # load modules on boot
-    kernelModules = ["amdgpu" "v4l2loopback" "i2c-dev"];
+    kernelModules = ["amdgpu" "v4l2loopback" "i2c-dev" "efivarfs"];
     kernelPackages = lib.mkForce pkgs.linuxPackages_cachyos;
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
     kernelParams = [

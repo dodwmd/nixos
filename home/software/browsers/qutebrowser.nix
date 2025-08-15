@@ -2,7 +2,6 @@
   programs.qutebrowser = {
     enable = true;
     loadAutoconfig = true;
-    highdpi = true;
     keyBindings = {
       normal = {
         ";v" = "hint links spawn --detach mpv {hint-url}";
@@ -17,6 +16,7 @@
       };
     };
     settings = {
+      highdpi = true;
       auto_save.session = true;
       fonts = {
         default_family = lib.mkForce "ZedMono Nerd Font Mono";
