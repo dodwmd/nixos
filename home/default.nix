@@ -57,15 +57,12 @@
       };
     };
 
-    base16Scheme = "${inputs.self}/home/shared/colors/aesthetic.yaml";
+    base16Scheme = "${inputs.self}/home/shared/colors/gruvbox-dark-hard.yml";
 
     targets = {
       bat.enable = true;
-      gtk.enable = true;
-      helix.enable = true;
       nixos-icons.enable = true;
       nushell.enable = true;
-      qt.enable = true;
       starship.enable = true;
       vesktop.enable = true;
       yazi.enable = true;

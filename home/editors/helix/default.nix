@@ -17,7 +17,7 @@
   programs.helix = {
     enable = true;
     settings = {
-      # theme = "charm-dark";
+      theme = "gruvbox_dark_hard";
       editor = {
         color-modes = true;
         completion-trigger-len = 1;

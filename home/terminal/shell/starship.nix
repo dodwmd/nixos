@@ -51,12 +51,12 @@
         ahead = "[⇡\${count} ](fg:#${base0B} bg:#${base02}) ";
         behind = "[⇣\${count} ](fg:#${base08} bg:#${base02})";
         diverged = "↑\${ahead_count} ⇣\${behind_count} ";
-        up_to_date = "[](fg:#${base0B} bg:#${base02})";
+        up_to_date = "[ ](fg:#${base0B} bg:#${base02})";
         untracked = "[?\${count} ](fg:#${base09} bg:#${base02}) ";
         stashed = "";
         modified = "[~\${count} ](fg:#${base09} bg:#${base02})";
         staged = "[+\${count} ](fg:#${base0B} bg:#${base02}) ";
-        renamed = "[󰑕\${count} ](fg:#${base0A} bg:#${base02})";
+        renamed = "[󰑕 \${count} ](fg:#${base0A} bg:#${base02})";
         deleted = "[ \${count} ](fg:#${base08} bg:#${base02}) ";
       };
       cmd_duration = {
@@ -69,7 +69,7 @@
       nix_shell = {
         disabled = false;
         heuristic = false;
-        format = "[  ](fg:#${base0D} bold)";
+        format = "[   ](fg:#${base0D} bold)";
         impure_msg = "";
         pure_msg = "";
         unknown_msg = "";

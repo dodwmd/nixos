@@ -3,8 +3,6 @@
   boot.kernel.sysctl = {
     # The Magic SysRq key is a key combo that allows users connected to the
     # system console of a Linux kernel to perform some low-level commands.
-    # Disable it, since we don't need it, and is a potential security concern.
-    "kernel.sysrq" = 0;
 
     ## TCP hardening
     # Prevent bogus ICMP errors from filling up logs.
@@ -45,12 +43,18 @@
 
   security = {
     # allow wayland lockers to unlock the screen
-    pam.services.hyprlock.text = "auth include login";
-
     # userland niceness
     rtkit.enable = true;
 
+    sudo-rs = {
+      enable = true;
+      execWheelOnly = true;
+      wheelNeedsPassword = false;
+    };
+
     # don't ask for password for wheel group
-    sudo.wheelNeedsPassword = false;
+    sudo = {
+      wheelNeedsPassword = false;
+    };
   };
 }
