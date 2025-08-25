@@ -25,7 +25,12 @@
       };
     };
   };
-  xdg.configFile."gtk-4.0/gtk.css".enable = lib.mkForce false;
+  xdg.configFile = {
+    "gtk-4.0/gtk.css".enable = lib.mkForce false;
+    "gtk-3.0/gtk.css".enable = lib.mkForce false;
+    "gtk-4.0/settings.ini".enable = lib.mkForce false;
+    "gtk-3.0/settings.ini".enable = lib.mkForce false;
+  };
 
   home.sessionVariables = {
     XDG_ICON_DIR = "${pkgs.whitesur-icon-theme}/share/icons/WhiteSur";

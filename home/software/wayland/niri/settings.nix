@@ -27,6 +27,7 @@ in {
         (makeCommand "swww-daemon")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
+        {command = ["qs" "-c" "DankMaterialShell"];}
       ];
       input = {
         keyboard.xkb.layout = "latam";

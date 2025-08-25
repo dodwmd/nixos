@@ -4,32 +4,139 @@
   ...
 }: {
   programs.niri.settings.binds = with config.lib.niri.actions; let
-    set-volume = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@";
     brillo = spawn "${pkgs.brillo}/bin/brillo" "-q" "-u" "300000";
     playerctl = spawn "${pkgs.playerctl}/bin/playerctl";
   in {
-    "XF86AudioMute".action = spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle";
-    "XF86AudioMicMute".action = spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle";
-
     "XF86AudioPlay".action = playerctl "play-pause";
     "XF86AudioStop".action = playerctl "pause";
     "XF86AudioPrev".action = playerctl "previous";
     "XF86AudioNext".action = playerctl "next";
 
-    "XF86AudioRaiseVolume".action = set-volume "5%+";
-    "XF86AudioLowerVolume".action = set-volume "5%-";
+    "XF86AudioMute" = {
+      allow-when-locked = true;
+      action.spawn = [
+        "qs"
+        "-c"
+        "DankMaterialShell"
+        "ipc"
+        "call"
+        "audio"
+        "mute"
+      ];
+    };
+    "XF86AudioMicMute" = {
+      allow-when-locked = true;
+      action.spawn = [
+        "qs"
+        "-c"
+        "DankMaterialShell"
+        "ipc"
+        "call"
+        "audio"
+        "micmute"
+      ];
+    };
 
-    "XF86MonBrightnessUp".action = brillo "-A" "5";
-    "XF86MonBrightnessDown".action = brillo "-U" "5";
+    "XF86AudioRaiseVolume" = {
+      allow-when-locked = true;
+      action.spawn = [
+        "qs"
+        "-c"
+        "DankMaterialShell"
+        "ipc"
+        "call"
+        "audio"
+        "increment"
+        "5"
+      ];
+    };
+    "XF86AudioLowerVolume" = {
+      allow-when-locked = true;
+      action.spawn = [
+        "qs"
+        "-c"
+        "DankMaterialShell"
+        "ipc"
+        "call"
+        "audio"
+        "decrement"
+        "5"
+      ];
+    };
+
+    "XF86MonBrightnessUp" = {
+      allow-when-locked = true;
+      action.spawn = [
+        "qs"
+        "-c"
+        "DankMaterialShell"
+        "ipc"
+        "call"
+        "brightness"
+        "decrement"
+        "5"
+      ];
+    };
+
+    "XF86MonBrightnessDown" = {
+      allow-when-locked = true;
+      action.spawn = [
+        "qs"
+        "-c"
+        "DankMaterialShell"
+        "ipc"
+        "call"
+        "brightness"
+        "decrement"
+        "5"
+      ];
+    };
+
+    "Ctrl+Alt+L".action = spawn [
+      "qs"
+      "-c"
+      "DankMaterialShell"
+      "ipc"
+      "call"
+      "lock"
+      "lock"
+    ];
+
+    "Mod+V".action = spawn [
+      "qs"
+      "-c"
+      "DankMaterialShell"
+      "ipc"
+      "call"
+      "clipboard"
+      "toggle"
+    ];
+
+    "Mod+U".action = spawn [
+      "qs"
+      "-c"
+      "DankMaterialShell"
+      "ipc"
+      "call"
+      "settings"
+      "toggle"
+    ];
+
+    "Mod+M".action = spawn [
+      "qs"
+      "-c"
+      "DankMaterialShell"
+      "ipc"
+      "call"
+      "processlist"
+      "toggle"
+    ];
 
     "Print".action.screenshot-screen = {write-to-disk = true;};
     "Mod+Shift+Alt+S".action = screenshot-window;
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
     "Mod+D".action = spawn "${pkgs.anyrun}/bin/anyrun";
     "Mod+Return".action = spawn "${pkgs.ghostty}/bin/ghostty";
-    "Ctrl+Alt+L".action = spawn "sh -c pgrep hyprlock || hyprlock";
-
-    "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome gnome-control-center";
 
     "Mod+Q".action = close-window;
     "Mod+S".action = switch-preset-column-width;

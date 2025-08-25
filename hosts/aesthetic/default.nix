@@ -40,14 +40,13 @@
 
       "kernel.sysrq" = 0; # Disable magic SysRq key (prevents low-level system commands)
       "kernel.kptr_restrict" = 2; # Hide kernel pointers from unprivileged users (security)
-      "net.core.bpf_jit_enable" = false; # Disable BPF JIT compiler (security, but may impact performance)
       "kernel.ftrace_enabled" = false; # Disable kernel function tracing (security, disables debugging)
       "kernel.dmesg_restrict" = 1; # Restrict access to dmesg for non-root users (security)
       "fs.protected_fifos" = 2; # Fully restrict writing to FIFOs not owned by the writer (security)
       "fs.protected_regular" = 2; # Fully restrict writing to regular files not owned by the writer (security)
       "fs.suid_dumpable" = 0; # Disable core dumps for setuid programs (security)
       "kernel.perf_event_paranoid" = 3; # Restrict perf events to root only (security)
-      "kernel.unprvileged_bpf_disabled" = 1; # Disable unprivileged BPF usage (security)
+      "kernel.unprivileged_bpf_disabled" = 1; # Disable unprivileged BPF usage (security)
     };
 
     blacklistedKernelModules = [
