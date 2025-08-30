@@ -4,7 +4,6 @@
   ...
 }: {
   programs.niri.settings.binds = with config.lib.niri.actions; let
-    brillo = spawn "${pkgs.brillo}/bin/brillo" "-q" "-u" "300000";
     playerctl = spawn "${pkgs.playerctl}/bin/playerctl";
   in {
     "XF86AudioPlay".action = playerctl "play-pause";
@@ -73,8 +72,9 @@
         "ipc"
         "call"
         "brightness"
-        "decrement"
+        "increment"
         "5"
+        "amdgpu_bl1"
       ];
     };
 
@@ -89,6 +89,7 @@
         "brightness"
         "decrement"
         "5"
+        "amdgpu_bl1"
       ];
     };
 

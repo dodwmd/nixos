@@ -8,7 +8,9 @@
       dns = "systemd-resolved";
       wifi.powersave = true;
     };
-    firewall.allowedTCPPorts = [4444];
+    firewall = {
+      allowedTCPPorts = [4444];
+    };
   };
 
   services = {

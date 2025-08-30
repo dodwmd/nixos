@@ -23,6 +23,7 @@ in {
       matugen
       swww
       wl-clipboard
+      glib
     ];
 
   home.sessionVariables.QML2_IMPORT_PATH = lib.concatStringsSep ":" [
