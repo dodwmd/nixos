@@ -3,7 +3,6 @@
     ./anyrun
     ./browsers/chromium.nix
     ./browsers/edge.nix
-    # ./browsers/qutebrowser.nix
     ./browsers/zen.nix
     ./gtk.nix
     ./media
@@ -17,12 +16,8 @@
     # misc
     pciutils
     nixos-icons
-    colord
-    cliphist
     ffmpegthumbnailer
     imagemagick
-    nodejs
-    nodePackages.pnpm
     bun
 
     fastfetch
@@ -34,7 +29,6 @@
     file-roller
     gnome-control-center
     gnome-text-editor
-    # keypunch
     loupe
     nautilus
     (papers.override {supportNautilus = true;})
@@ -42,8 +36,6 @@
     resources
 
     inkscape
-    # gimp
-    # krita
     scrcpy
     multiviewer-for-f1
 

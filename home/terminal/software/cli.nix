@@ -39,13 +39,13 @@
       television
     ]
     ++ (with inputs.mynixpkgs.packages.${pkgs.system}; [
-      opencode
-      toney
       bmm
-      omm
-      prs
-      dfft
       crush
+      dfft
+      omm
+      opencode
+      prs
+      toney
     ]);
 
   programs = {
