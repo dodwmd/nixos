@@ -52,8 +52,6 @@
       };
     };
 
-    anyrun.url = "github:anyrun-org/anyrun";
-
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     hm = {

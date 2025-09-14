@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   imports = [
-    ./anyrun
     ./browsers/chromium.nix
     ./browsers/edge.nix
     ./browsers/zen.nix
