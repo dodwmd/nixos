@@ -4,9 +4,6 @@
   ...
 }: let
   pointer = config.home.pointerCursor;
-  makeCommand = command: {
-    command = [command];
-  };
 in {
   programs.niri = with config.lib.stylix.colors; {
     enable = true;
@@ -23,8 +20,6 @@ in {
         SDL_VIDEODRIVER = "wayland";
       };
       spawn-at-startup = [
-        (makeCommand "hyprlock")
-        (makeCommand "swww-daemon")
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
         {command = ["qs" "-c" "DankMaterialShell"];}

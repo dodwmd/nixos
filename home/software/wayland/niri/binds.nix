@@ -133,10 +133,29 @@
       "toggle"
     ];
 
+    "Alt+Space".action = spawn [
+      "qs"
+      "-c"
+      "DankMaterialShell"
+      "ipc"
+      "call"
+      "spotlight"
+      "toggle"
+    ];
+
+    "Mod+D".action = spawn [
+      "qs"
+      "-c"
+      "DankMaterialShell"
+      "ipc"
+      "call"
+      "spotlight"
+      "toggle"
+    ];
+
     "Print".action.screenshot-screen = {write-to-disk = true;};
     "Mod+Shift+Alt+S".action = screenshot-window;
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
-    "Mod+D".action = spawn "${pkgs.anyrun}/bin/anyrun";
     "Mod+Return".action = spawn "${pkgs.ghostty}/bin/ghostty";
 
     "Mod+Q".action = close-window;
