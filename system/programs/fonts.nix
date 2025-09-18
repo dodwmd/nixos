@@ -13,7 +13,6 @@
       # nerdfonts
       nerd-fonts.symbols-only
       nerd-fonts.geist-mono
-      nerd-fonts.iosevka
     ];
 
     # causes more issues than it solves

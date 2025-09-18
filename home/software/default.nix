@@ -31,7 +31,6 @@
     loupe
     nautilus
     (papers.override {supportNautilus = true;})
-    pwvucontrol
     resources
 
     inkscape

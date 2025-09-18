@@ -7,8 +7,6 @@ let
     ./hardware/fwupd.nix
 
     ./network/default.nix
-    ./network/avahi.nix
-    # ./network/tailscale.nix
 
     ./programs
 
@@ -22,8 +20,6 @@ let
     desktop
     ++ [
       ./hardware/bluetooth.nix
-
-      ./services/backlight.nix
       ./services/power.nix
     ];
 in {

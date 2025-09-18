@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   networking = {
-    nameservers = ["1.1.1.1#cloudflare-dns.com" "1.0.0.1#cloudflare-dns.com"];
+    nameservers = ["1.1.1.1" "1.0.0.1"];
+
     nftables = {
       enable = true;
       tables = {
@@ -10,28 +11,27 @@
             chain POSTROUTING {
               type nat hook postrouting priority 100; policy accept;
               ip saddr 192.168.100.0/24 oifname "wlp2s0" masquerade
+              ip saddr 192.168.100.0/24 oifname "tun0" masquerade
             }
           '';
         };
       };
     };
+
     networkmanager = {
       enable = true;
-      dns = "systemd-resolved";
+      dns = "none";
       wifi.powersave = true;
     };
+
+    useDHCP = false;
+    dhcpcd.enable = false;
   };
 
   services = {
     openssh = {
       enable = true;
       settings.UseDns = true;
-    };
-
-    # DNS resolver
-    resolved = {
-      enable = true;
-      dnsovertls = "opportunistic";
     };
   };
 

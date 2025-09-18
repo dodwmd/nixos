@@ -13,7 +13,7 @@
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
     kernelParams = [
       "amd_pstate=active" # Enable AMD P-state CPU scaling driver
-      "amd_iommu" # Enable AMD IOMMU (for device passthrough/virtualization)
+      "amd_iommu=force" # Force AMD IOMMU for better DMA protection
       "mitigations=off" # Disable CPU security mitigations (improves performance, reduces security)
       "ideapad_laptop.allow_v4_dytc=Y" # Allow Lenovo IdeaPad v4 Dynamic Thermal Control
       "nvme_core.default_ps_max_latency_us=0" # Set NVMe power state latency to minimum (max performance)
@@ -29,6 +29,12 @@
       "rootflags=noatime" # Mount root filesystem with noatime (improves performance, disables file access time updates)
       "lsm=landlock,lockdown,yama,integrity,apparmor,bpf,tomoyo,selinux" # Enable and order Linux Security Modules (stacked LSMs for security)
       "fbcon=nodefer" # Do not defer kernel messages to framebuffer console (shows messages immediately)
+
+      # Additional security hardening for HSI compliance (validated)
+      "init_on_alloc=1" # Initialize allocated memory
+      "init_on_free=1" # Initialize freed memory
+      "mem_sleep_default=s2idle" # Force suspend-to-idle for better security
+      "acpi.ec_no_wakeup=1" # Reduces power consumption of S2idle sleep mode
     ];
     kernel.sysctl = {
       "vm.swappiness" = 10; # Lower tendency to swap (default is 60)
@@ -37,6 +43,12 @@
       "vm.dirty_background_ratio" = 5; # Lower % of dirty memory to start background writeback (default is 10)
 
       "kernel.nmi_watchdog" = 0; # Disable NMI watchdog (slightly improves performance)
+
+      # Network performance optimizations
+      "net.core.netdev_budget" = 600;
+      "net.core.netdev_max_backlog" = 16384;
+      "net.ipv4.tcp_no_metrics_save" = 1;
+      "net.ipv4.tcp_moderate_rcvbuf" = 1;
 
       "kernel.sysrq" = 0; # Disable magic SysRq key (prevents low-level system commands)
       "kernel.kptr_restrict" = 2; # Hide kernel pointers from unprivileged users (security)
@@ -47,6 +59,18 @@
       "fs.suid_dumpable" = 0; # Disable core dumps for setuid programs (security)
       "kernel.perf_event_paranoid" = 3; # Restrict perf events to root only (security)
       "kernel.unprivileged_bpf_disabled" = 1; # Disable unprivileged BPF usage (security)
+      "net.core.bpf_jit_harden" = 2; # Harden BPF JIT compiler for all users
+
+      # Additional security hardening
+      "kernel.yama.ptrace_scope" = 2; # Restrict ptrace to CAP_SYS_PTRACE
+      "kernel.kexec_load_disabled" = 1; # Disable kexec
+      "kernel.core_uses_pid" = 1; # Append PID to core filenames
+      "kernel.randomize_va_space" = 2; # Full ASLR
+      "vm.mmap_rnd_bits" = 32; # Increase ASLR entropy for mmap
+      "vm.mmap_rnd_compat_bits" = 16; # Increase ASLR entropy for compat mmap
+      "dev.tty.ldisc_autoload" = 0; # Disable TTY line discipline autoloading
+      # "kernel.unprivileged_userns_clone" = 0; # Disable unprivileged user namespaces (disabled for browser compatibility)
+      "vm.unprivileged_userfaultfd" = 0; # Disable unprivileged userfaultfd
     };
 
     blacklistedKernelModules = [
@@ -110,6 +134,8 @@
 
     extraModprobeConfig = ''
       options v4l2loopback exclusive_caps=1 card_label="OBS Virtual Output"
+      options rtw88_core disable_lps_deep=y
+      options rtw88_pci disable_aspm=y
     '';
   };
 
@@ -117,10 +143,35 @@
 
   security.tpm2.enable = true;
 
+  # Additional security hardening for HSI compliance
+  security = {
+    forcePageTableIsolation = true;
+    protectKernelImage = true;
+    apparmor = {
+      enable = true;
+      killUnconfinedConfinables = true;
+    };
+  };
+
   services = {
     # for SSD/NVME
     fstrim.enable = true;
     scx.enable = true;
     scx.scheduler = "scx_rusty";
   };
+
+  hardware = {
+    enableRedistributableFirmware = true;
+    cpu.amd.updateMicrocode = true;
+  };
+
+  # Additional systemd hardening
+  systemd = {
+    coredump.extraConfig = ''
+      Storage=none
+      ProcessSizeMax=0
+    '';
+  };
+
+  environment.systemPackages = [pkgs.cryptsetup];
 }
