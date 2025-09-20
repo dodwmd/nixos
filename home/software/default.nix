@@ -40,5 +40,6 @@
     swww
     ghostty
     mods
+    openvpn
   ];
 }

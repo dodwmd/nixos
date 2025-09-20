@@ -24,6 +24,5 @@
     AllowHibernation=no
     AllowSuspendThenHibernate=no
     AllowHybridSleep=no
-    MemorySleepMode=s2idle
   '';
 }

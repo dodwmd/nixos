@@ -15,7 +15,7 @@
       "amd_pstate=active" # Enable AMD P-state CPU scaling driver
       "amd_iommu=force" # Force AMD IOMMU for better DMA protection
       "mitigations=off" # Disable CPU security mitigations (improves performance, reduces security)
-      "ideapad_laptop.allow_v4_dytc=Y" # Allow Lenovo IdeaPad v4 Dynamic Thermal Control
+      "ideapad_laptop" # Allow Lenovo IdeaPad v4 Dynamic Thermal Control
       "nvme_core.default_ps_max_latency_us=0" # Set NVMe power state latency to minimum (max performance)
 
       "randomize_kstack_offset=on" # Randomize kernel stack offset on each syscall (mitigates some exploits)
@@ -33,8 +33,6 @@
       # Additional security hardening for HSI compliance (validated)
       "init_on_alloc=1" # Initialize allocated memory
       "init_on_free=1" # Initialize freed memory
-      "mem_sleep_default=s2idle" # Force suspend-to-idle for better security
-      "acpi.ec_no_wakeup=1" # Reduces power consumption of S2idle sleep mode
     ];
     kernel.sysctl = {
       "vm.swappiness" = 10; # Lower tendency to swap (default is 60)
@@ -57,19 +55,14 @@
       "fs.protected_fifos" = 2; # Fully restrict writing to FIFOs not owned by the writer (security)
       "fs.protected_regular" = 2; # Fully restrict writing to regular files not owned by the writer (security)
       "fs.suid_dumpable" = 0; # Disable core dumps for setuid programs (security)
-      "kernel.perf_event_paranoid" = 3; # Restrict perf events to root only (security)
-      "kernel.unprivileged_bpf_disabled" = 1; # Disable unprivileged BPF usage (security)
       "net.core.bpf_jit_harden" = 2; # Harden BPF JIT compiler for all users
 
       # Additional security hardening
-      "kernel.yama.ptrace_scope" = 2; # Restrict ptrace to CAP_SYS_PTRACE
-      "kernel.kexec_load_disabled" = 1; # Disable kexec
       "kernel.core_uses_pid" = 1; # Append PID to core filenames
       "kernel.randomize_va_space" = 2; # Full ASLR
       "vm.mmap_rnd_bits" = 32; # Increase ASLR entropy for mmap
       "vm.mmap_rnd_compat_bits" = 16; # Increase ASLR entropy for compat mmap
       "dev.tty.ldisc_autoload" = 0; # Disable TTY line discipline autoloading
-      # "kernel.unprivileged_userns_clone" = 0; # Disable unprivileged user namespaces (disabled for browser compatibility)
       "vm.unprivileged_userfaultfd" = 0; # Disable unprivileged userfaultfd
     };
 
@@ -79,8 +72,6 @@
       "appletalk" # Appletalk
       "atm" # ATM
       "ax25" # Amatuer X.25
-      "can" # Controller Area Network
-      "dccp" # Datagram Congestion Control Protocol
       "decnet" # DECnet
       "econet" # Econet
       "ipx" # Internetwork Packet Exchange
@@ -91,7 +82,6 @@
       "psnap" # SubnetworkAccess Protocol
       "rds" # Reliable Datagram Sockets
       "rose" # ROSE
-      "sctp" # Stream Control Transmission Protocol
       "tipc" # Transparent Inter-Process Communication
       "x25" # X.25
 
@@ -100,7 +90,6 @@
       "affs" # Amiga Fast File System
       "befs" # "Be File System"
       "bfs" # BFS, used by SCO UnixWare OS for the /stand slice
-      "cifs" # Common Internet File System
       "cramfs" # compressed ROM/RAM file system
       "efs" # Extent File System
       "erofs" # Enhanced Read-Only File System
@@ -115,9 +104,6 @@
       "jfs" # Journaled File System - only useful for VMWare sessions
       "ksmbd" # SMB3 Kernel Server
       "minix" # minix fs - used by the minix OS
-      "nfs" # Network File System
-      "nfsv3" # Network File System (v3)
-      "nfsv4" # Network File System (v4)
       "nilfs2" # New Implementation of a Log-structured File System
       "omfs" # Optimized MPEG Filesystem
       "qnx4" # Extent-based file system used by the QNX4 OS.

@@ -5,7 +5,6 @@
     ../../editors/zed
 
     # services
-    ../../services/wayland/hypridle.nix
     ../../services/wayland/gammastep.nix
     ../../services/wayland/quickshell.nix
 

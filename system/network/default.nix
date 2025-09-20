@@ -2,26 +2,15 @@
   networking = {
     nameservers = ["1.1.1.1" "1.0.0.1"];
 
-    nftables = {
-      enable = true;
-      tables = {
-        nat = {
-          family = "ip";
-          content = ''
-            chain POSTROUTING {
-              type nat hook postrouting priority 100; policy accept;
-              ip saddr 192.168.100.0/24 oifname "wlp2s0" masquerade
-              ip saddr 192.168.100.0/24 oifname "tun0" masquerade
-            }
-          '';
-        };
-      };
-    };
+    nftables.enable = true;
 
     networkmanager = {
       enable = true;
       dns = "none";
       wifi.powersave = true;
+      plugins = with pkgs; [
+        networkmanager-openvpn
+      ];
     };
 
     useDHCP = false;
