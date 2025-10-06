@@ -1,6 +1,9 @@
-_: {
+{pkgs, ...}: {
   services = {
-    printing.enable = true;
+    printing = {
+      enable = true;
+      drivers = [pkgs.hplip];
+    };
 
     dbus.implementation = "broker";
 

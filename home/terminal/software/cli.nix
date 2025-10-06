@@ -37,13 +37,13 @@
       zfxtop
       nix-search-tv
       television
+      opencode
+      crush
     ]
     ++ (with inputs.mynixpkgs.packages.${pkgs.system}; [
       bmm
-      crush
       dfft
       omm
-      opencode
       prs
       toney
     ]);

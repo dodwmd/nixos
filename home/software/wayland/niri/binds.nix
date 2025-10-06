@@ -74,7 +74,7 @@
         "brightness"
         "increment"
         "5"
-        "amdgpu_bl1"
+        "amdgpu_bl0"
       ];
     };
 
@@ -89,7 +89,7 @@
         "brightness"
         "decrement"
         "5"
-        "amdgpu_bl1"
+        "amdgpu_bl0"
       ];
     };
 
