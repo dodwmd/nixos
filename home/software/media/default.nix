@@ -1,8 +1,8 @@
 {pkgs, ...}: {
   imports = [
+    ./mpv.nix
     ./obs.nix
     ./rnnoise.nix
-    ./mpv.nix
   ];
 
   home.packages = with pkgs; [

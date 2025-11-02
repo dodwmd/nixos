@@ -13,7 +13,7 @@
     no-kill=false
 
     # HLS
-    servers=https://lb-eu.cdn-perfprod.com/live/[channel],https://lb-eu2.cdn-perfprod.com/live/[channel],https://lb-eu3.cdn-perfprod.com/live/[channel],https://lb-sa.cdn-perfprod.com/live/[channel]
+    servers=https://eu.luminous.dev/live/[channel],https://eu2.luminous.dev/live/[channel],https://as.luminous.dev/live/[channel]
     print-streams=false
     no-low-latency=false
     codecs=av1,h265,h264
