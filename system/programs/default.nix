@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+_: {
   imports = [
     ./fonts.nix
     ./home-manager.nix
@@ -12,5 +12,4 @@
     seahorse.enable = true;
     adb.enable = true;
   };
-  services.udev.packages = [pkgs.android-udev-rules];
 }
