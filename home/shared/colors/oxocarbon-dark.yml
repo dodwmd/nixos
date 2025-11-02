@@ -1,0 +1,19 @@
+system: "base16"
+name: "Oxocarbon Dark"
+author: "shaunsingh/IBM"
+base00: "161616" # Default Background
+base01: "262626" # Lighter Background (status bars, line numbers)
+base02: "393939" # Selection Background
+base03: "525252" # Comments, Invisibles
+base04: "dde1e6" # Dark Foreground (status bars)
+base05: "f2f4f8" # Default Foreground
+base06: "ffffff" # Light Foreground
+base07: "ffffff" # Light Background
+base08: "ff4297" # Variables, XML Tags, Markup Link Text, Red
+base09: "ff74b8" # Integers, Boolean, Constants, Pink
+base0A: "00c15a" # Classes, Markup Bold, Search Text Background, Green
+base0B: "00dfdb" # Strings, Inherited Class, Markup Code, Cyan
+base0C: "00b4ff" # Support, Regular Expressions, Blue
+base0D: "00b4ff" # Functions, Methods, Attribute IDs, Blue
+base0E: "c693ff" # Keywords, Storage, Selector, Purple
+base0F: "ff74b8" # Deprecated, Opening/Closing Embedded Language Tags

@@ -16,7 +16,7 @@
       action.spawn = [
         "qs"
         "-c"
-        "DankMaterialShell"
+        "dms"
         "ipc"
         "call"
         "audio"
@@ -28,7 +28,7 @@
       action.spawn = [
         "qs"
         "-c"
-        "DankMaterialShell"
+        "dms"
         "ipc"
         "call"
         "audio"
@@ -41,7 +41,7 @@
       action.spawn = [
         "qs"
         "-c"
-        "DankMaterialShell"
+        "dms"
         "ipc"
         "call"
         "audio"
@@ -54,7 +54,7 @@
       action.spawn = [
         "qs"
         "-c"
-        "DankMaterialShell"
+        "dms"
         "ipc"
         "call"
         "audio"
@@ -68,13 +68,13 @@
       action.spawn = [
         "qs"
         "-c"
-        "DankMaterialShell"
+        "dms"
         "ipc"
         "call"
         "brightness"
         "increment"
         "5"
-        "amdgpu_bl0"
+        "amdgpu_bl1"
       ];
     };
 
@@ -83,20 +83,20 @@
       action.spawn = [
         "qs"
         "-c"
-        "DankMaterialShell"
+        "dms"
         "ipc"
         "call"
         "brightness"
         "decrement"
         "5"
-        "amdgpu_bl0"
+        "amdgpu_bl1"
       ];
     };
 
     "Ctrl+Alt+L".action = spawn [
       "qs"
       "-c"
-      "DankMaterialShell"
+      "dms"
       "ipc"
       "call"
       "lock"
@@ -106,7 +106,7 @@
     "Mod+V".action = spawn [
       "qs"
       "-c"
-      "DankMaterialShell"
+      "dms"
       "ipc"
       "call"
       "clipboard"
@@ -116,7 +116,7 @@
     "Mod+U".action = spawn [
       "qs"
       "-c"
-      "DankMaterialShell"
+      "dms"
       "ipc"
       "call"
       "settings"
@@ -126,7 +126,7 @@
     "Mod+M".action = spawn [
       "qs"
       "-c"
-      "DankMaterialShell"
+      "dms"
       "ipc"
       "call"
       "processlist"
@@ -136,7 +136,7 @@
     "Alt+Space".action = spawn [
       "qs"
       "-c"
-      "DankMaterialShell"
+      "dms"
       "ipc"
       "call"
       "spotlight"
@@ -146,7 +146,7 @@
     "Mod+D".action = spawn [
       "qs"
       "-c"
-      "DankMaterialShell"
+      "dms"
       "ipc"
       "call"
       "spotlight"

@@ -10,6 +10,7 @@
     ./nix.nix
     ./skim.nix
     # ./transient-services.nix
+    ./twitch.nix
     ./xdg.nix
     ./yazi
     ./zoxide.nix

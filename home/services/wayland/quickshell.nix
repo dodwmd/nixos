@@ -11,24 +11,28 @@ in {
       quickshell
     ]
     ++ [
-      inputs.mynixpkgs.packages.${pkgs.system}.dgop
       accountsservice
       brightnessctl
       cava
       cliphist
       ddcutil
+      elogind
+      glib
+      inputs.dms-cli.packages.${pkgs.system}.default
+      inputs.mynixpkgs.packages.${pkgs.system}.dgop
       kdePackages.qt6ct
+      kdePackages.qtmultimedia
       khal
       material-symbols
       matugen
       swww
       wl-clipboard
-      glib
     ];
 
   home.sessionVariables.QML2_IMPORT_PATH = lib.concatStringsSep ":" [
     "${quickshell}/lib/qt-6/qml"
     "${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml"
     "${pkgs.kdePackages.kirigami.unwrapped}/lib/qt-6/qml"
+    "${pkgs.kdePackages.qtmultimedia}/lib/qt-6/qml"
   ];
 }

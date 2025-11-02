@@ -57,7 +57,7 @@
       };
     };
 
-    base16Scheme = "${inputs.self}/home/shared/colors/gruvbox-dark-hard.yml";
+    base16Scheme = "${inputs.self}/home/shared/colors/oxocarbon-dark.yml";
 
     targets = {
       bat.enable = true;
