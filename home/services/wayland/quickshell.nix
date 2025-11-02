@@ -12,6 +12,7 @@ in {
     ]
     ++ [
       accountsservice
+      adw-gtk3
       brightnessctl
       cava
       cliphist
@@ -23,6 +24,7 @@ in {
       kdePackages.qt6ct
       kdePackages.qtmultimedia
       khal
+      libsForQt5.qt5ct
       material-symbols
       matugen
       swww
