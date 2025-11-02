@@ -154,7 +154,7 @@
     ];
 
     "Print".action.screenshot-screen = {write-to-disk = true;};
-    "Mod+Shift+Alt+S".action = screenshot-window;
+    "Mod+Shift+Alt+S".action.screenshot-window = [];
     "Mod+Shift+S".action.screenshot = {show-pointer = false;};
     "Mod+Return".action = spawn "${pkgs.ghostty}/bin/ghostty";
 
