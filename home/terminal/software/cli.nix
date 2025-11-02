@@ -15,7 +15,7 @@
       fontconfig
 
       # utils
-      du-dust
+      dust
       duf
       fd
       file
@@ -25,20 +25,21 @@
       jq
       ps_mem
 
+      crush
       discordo
       fum
       glow
       gtt
       meteor-git
+      nix-search-tv
+      opencode
       reddit-tui
       scope-tui
+      television
       tuicam
+      undercut-f1
       wiremix
       zfxtop
-      nix-search-tv
-      television
-      opencode
-      crush
     ]
     ++ (with inputs.mynixpkgs.packages.${pkgs.system}; [
       bmm
