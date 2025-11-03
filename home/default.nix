@@ -1,9 +1,4 @@
-{
-  config,
-  inputs,
-  pkgs,
-  ...
-}: {
+{inputs, ...}: {
   imports = [
     ./terminal
     inputs.nix-index-db.homeModules.nix-index
@@ -39,30 +34,9 @@
       terminal = 1.0;
     };
 
-    fonts = {
-      serif = config.stylix.fonts.sansSerif;
-      sansSerif = {
-        package = pkgs.adwaita-fonts;
-        name = "Adwaita Sans";
-      };
-
-      monospace = {
-        package = pkgs.nerd-fonts.geist-mono;
-        name = "Geist Nerd Font Mono";
-      };
-
-      emoji = {
-        package = pkgs.noto-fonts-emoji;
-        name = "Noto Color Emoji";
-      };
-    };
-
     base16Scheme = "${inputs.self}/home/shared/colors/oxocarbon-dark.yml";
 
     targets = {
-      bat.enable = true;
-      nixos-icons.enable = true;
-      nushell.enable = true;
       starship.enable = true;
       vesktop.enable = true;
       yazi.enable = true;
