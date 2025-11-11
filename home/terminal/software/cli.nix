@@ -25,14 +25,12 @@
       jq
       ps_mem
 
-      crush
       discordo
       fum
       glow
       gtt
       meteor-git
       nix-search-tv
-      opencode
       reddit-tui
       scope-tui
       television
