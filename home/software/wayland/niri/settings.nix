@@ -18,11 +18,14 @@ in {
         QT_QPA_PLATFORM = "wayland;xcb";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         SDL_VIDEODRIVER = "wayland";
+        WLR_RENDERER = "vulkan";
+        WLR_NO_HARDWARE_CURSORS = "1";
+        QT_QPA_PLATFORMTHEME = "qt6ct";
       };
       spawn-at-startup = [
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
-        {command = ["qs" "-c" "dms"];}
+        {command = ["dms" "run" "-d"];}
       ];
       input = {
         keyboard.xkb.layout = "latam";

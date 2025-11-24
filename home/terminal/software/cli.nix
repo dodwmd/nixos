@@ -35,14 +35,15 @@
       scope-tui
       television
       tuicam
-      undercut-f1
       wiremix
       zfxtop
     ]
     ++ (with inputs.mynixpkgs.packages.${pkgs.system}; [
       bmm
       dfft
+      nekot
       omm
+      orchat
       prs
       toney
     ]);

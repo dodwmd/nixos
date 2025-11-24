@@ -84,18 +84,13 @@
       };
     };
 
-    quickshell = {
-      url = "git+https://git.outfoxxed.me/quickshell/quickshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser = {
-      url = "github:pfaj/zen-browser-flake";
+      url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
