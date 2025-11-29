@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   lib,
   ...
 }: {
@@ -17,8 +16,7 @@
       ddcutil
       elogind
       glib
-      inputs.dms-cli.packages.${pkgs.system}.default
-      inputs.mynixpkgs.packages.${pkgs.system}.dgop
+      gpu-screen-recorder
       kdePackages.qt6ct
       kdePackages.qtmultimedia
       khal

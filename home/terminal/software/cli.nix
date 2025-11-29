@@ -52,6 +52,7 @@
     eza.enable = true;
     dircolors = {
       enable = true;
+      enableNushellIntegration = true;
     };
     autojump = {
       enable = true;

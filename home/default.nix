@@ -2,7 +2,6 @@
   imports = [
     ./terminal
     inputs.nix-index-db.homeModules.nix-index
-    inputs.stylix.homeModules.stylix
   ];
   home = {
     username = "linuxmobile";
@@ -23,23 +22,5 @@
   programs.nix-index = {
     enable = true;
     # enableNushellIntegration = true;
-  };
-
-  stylix = {
-    enable = true;
-    autoEnable = false;
-    polarity = "dark";
-    opacity = {
-      popups = 1.0;
-      terminal = 1.0;
-    };
-
-    base16Scheme = "${inputs.self}/home/shared/colors/oxocarbon-dark.yml";
-
-    targets = {
-      starship.enable = true;
-      vesktop.enable = true;
-      yazi.enable = true;
-    };
   };
 }

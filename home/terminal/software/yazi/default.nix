@@ -17,7 +17,7 @@
     enable = true;
 
     enableBashIntegration = config.programs.bash.enable;
-    enableNushellIntegration = config.programs.fish.enable;
+    enableNushellIntegration = config.programs.nushell.enable;
 
     settings = {
       mgr = {

@@ -13,6 +13,7 @@
       # nerdfonts
       nerd-fonts.symbols-only
       nerd-fonts.geist-mono
+      departure-mono
     ];
 
     # causes more issues than it solves

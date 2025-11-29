@@ -6,21 +6,68 @@
   programs.niri.settings.binds = with config.lib.niri.actions; let
     playerctl = spawn "${pkgs.playerctl}/bin/playerctl";
   in {
-    "XF86AudioPlay".action = playerctl "play-pause";
-    "XF86AudioStop".action = playerctl "pause";
-    "XF86AudioPrev".action = playerctl "previous";
-    "XF86AudioNext".action = playerctl "next";
+    "XF86AudioPlay" = {
+      allow-when-locked = true;
+      action.spawn = [
+        "qs"
+        "-c"
+        "noctalia"
+        "ipc"
+        "call"
+        "media"
+        "playPause"
+      ];
+    };
+
+    "XF86AudioStop" = {
+      allow-when-locked = true;
+      action.spawn = [
+        "qs"
+        "-c"
+        "noctalia"
+        "ipc"
+        "call"
+        "media"
+        "stop"
+      ];
+    };
+
+    "XF86AudioNext" = {
+      allow-when-locked = true;
+      action.spawn = [
+        "qs"
+        "-c"
+        "noctalia"
+        "ipc"
+        "call"
+        "media"
+        "next"
+      ];
+    };
+
+    "XF86AudioPrev" = {
+      allow-when-locked = true;
+      action.spawn = [
+        "qs"
+        "-c"
+        "noctalia"
+        "ipc"
+        "call"
+        "media"
+        "previous"
+      ];
+    };
 
     "XF86AudioMute" = {
       allow-when-locked = true;
       action.spawn = [
         "qs"
         "-c"
-        "dms"
+        "noctalia"
         "ipc"
         "call"
-        "audio"
-        "mute"
+        "volume"
+        "muteOutput"
       ];
     };
     "XF86AudioMicMute" = {
@@ -28,11 +75,11 @@
       action.spawn = [
         "qs"
         "-c"
-        "dms"
+        "noctalia"
         "ipc"
         "call"
-        "audio"
-        "micmute"
+        "volume"
+        "muteOutput"
       ];
     };
 
@@ -41,12 +88,11 @@
       action.spawn = [
         "qs"
         "-c"
-        "dms"
+        "noctalia"
         "ipc"
         "call"
-        "audio"
-        "increment"
-        "5"
+        "volume"
+        "increase"
       ];
     };
     "XF86AudioLowerVolume" = {
@@ -54,12 +100,11 @@
       action.spawn = [
         "qs"
         "-c"
-        "dms"
+        "noctalia"
         "ipc"
         "call"
-        "audio"
-        "decrement"
-        "5"
+        "volume"
+        "decrease"
       ];
     };
 
@@ -68,13 +113,11 @@
       action.spawn = [
         "qs"
         "-c"
-        "dms"
+        "noctalia"
         "ipc"
         "call"
         "brightness"
-        "increment"
-        "5"
-        ""
+        "increase"
       ];
     };
 
@@ -83,73 +126,71 @@
       action.spawn = [
         "qs"
         "-c"
-        "dms"
+        "noctalia"
         "ipc"
         "call"
         "brightness"
-        "decrement"
-        "5"
-        ""
+        "decrease"
       ];
     };
 
     "Ctrl+Alt+L".action = spawn [
       "qs"
       "-c"
-      "dms"
+      "noctalia"
       "ipc"
       "call"
-      "lock"
+      "lockScreen"
       "lock"
     ];
 
     "Mod+V".action = spawn [
       "qs"
       "-c"
-      "dms"
+      "noctalia"
       "ipc"
       "call"
+      "launcher"
       "clipboard"
-      "toggle"
+    ];
+
+    "Mod+E".action = spawn [
+      "qs"
+      "-c"
+      "noctalia"
+      "ipc"
+      "call"
+      "launcher"
+      "emoji"
     ];
 
     "Mod+U".action = spawn [
       "qs"
       "-c"
-      "dms"
+      "noctalia"
       "ipc"
       "call"
       "settings"
       "toggle"
     ];
 
-    "Mod+M".action = spawn [
-      "qs"
-      "-c"
-      "dms"
-      "ipc"
-      "call"
-      "processlist"
-      "toggle"
-    ];
-
     "Alt+Space".action = spawn [
       "qs"
       "-c"
-      "dms"
+      "noctalia"
       "ipc"
       "call"
-      "spotlight"
+      "launcher"
       "toggle"
     ];
 
     "Mod+D".action = spawn [
       "qs"
       "-c"
-      "dms"
+      "noctalia"
       "ipc"
       "call"
-      "spotlight"
+      "launcher"
       "toggle"
     ];
 

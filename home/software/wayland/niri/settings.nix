@@ -5,7 +5,7 @@
 }: let
   pointer = config.home.pointerCursor;
 in {
-  programs.niri = with config.lib.stylix.colors; {
+  programs.niri = {
     enable = true;
     package = pkgs.niri;
     settings = {
@@ -21,11 +21,12 @@ in {
         WLR_RENDERER = "vulkan";
         WLR_NO_HARDWARE_CURSORS = "1";
         QT_QPA_PLATFORMTHEME = "qt6ct";
+        GTK_IM_MODULE = "simple";
       };
       spawn-at-startup = [
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
-        {command = ["dms" "run" "-d"];}
+        {command = ["qs" "-c" "noctalia"];}
       ];
       input = {
         keyboard.xkb.layout = "latam";
@@ -85,8 +86,8 @@ in {
         border = {
           enable = true;
           width = 2;
-          active.color = "#${base0B}";
-          inactive.color = "#${base0F}";
+          active.color = "#00ff00";
+          inactive.color = "#003300";
         };
         shadow = {
           enable = false;

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   services = {
     printing = {
       enable = true;
@@ -13,6 +17,7 @@
       resyncTimer = "10m";
     };
     irqbalance.enable = true;
+    speechd.enable = lib.mkForce false;
   };
 
   # Use in place of hypridle's before_sleep_cmd, since systemd does not wait for
