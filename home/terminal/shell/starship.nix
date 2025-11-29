@@ -26,7 +26,7 @@
 
       character = {
         format = "$symbol";
-        success_symbol = "[❯](bold bright-green)";
+        success_symbol = "[❯](bold bright-green) ";
         error_symbol = "[✗](bold bright-red) ";
         disabled = false;
       };
