@@ -11,7 +11,6 @@ let
     ./programs
 
     ./services
-    ./services/ananicy.nix
     ./services/greetd.nix
     ./services/pipewire.nix
   ];

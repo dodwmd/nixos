@@ -16,7 +16,10 @@
       "amd_iommu=force" # Force AMD IOMMU for better DMA protection
       "mitigations=off" # Disable CPU security mitigations (improves performance, reduces security)
       "ideapad_laptop" # Allow Lenovo IdeaPad v4 Dynamic Thermal Control
-      "nvme_core.default_ps_max_latency_us=0" # Set NVMe power state latency to minimum (max performance)
+      # "nvme_core.default_ps_max_latency_us=0" # Set NVMe power state latency to minimum (max performance)
+      "preempt=voluntary"
+      "nowatchdog"
+      "psi=1"
 
       "randomize_kstack_offset=on" # Randomize kernel stack offset on each syscall (mitigates some exploits)
       "vsyscall=none" # Disable vsyscall (removes legacy syscall interface, improves security)
@@ -142,8 +145,6 @@
   services = {
     # for SSD/NVME
     fstrim.enable = true;
-    scx.enable = true;
-    scx.scheduler = "scx_rusty";
   };
 
   hardware = {

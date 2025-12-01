@@ -22,7 +22,6 @@
         ++ laptop
         ++ [
           ./aesthetic
-          "${mod}/programs/gamemode.nix"
           "${mod}/services/gnome-services.nix"
           "${mod}/core/limine.nix"
           {

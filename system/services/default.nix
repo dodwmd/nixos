@@ -17,6 +17,7 @@
       resyncTimer = "10m";
     };
     irqbalance.enable = true;
+    thermald.enable = true;
     speechd.enable = lib.mkForce false;
   };
 
@@ -24,6 +25,7 @@
   # it to complete
   powerManagement = {
     enable = true;
+    cpuFreqGovernor = "schedutil";
     powerDownCommands = ''
       # Lock all sessions
       loginctl lock-sessions
