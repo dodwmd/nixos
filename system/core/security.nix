@@ -71,6 +71,7 @@
     # allow wayland lockers to unlock the screen
     # userland niceness
     rtkit.enable = true;
+    polkit.enable = true;
 
     sudo-rs = {
       enable = true;
