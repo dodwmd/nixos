@@ -3,9 +3,7 @@
   pkgs,
   ...
 }: {
-  programs.niri.settings.binds = with config.lib.niri.actions; let
-    playerctl = spawn "${pkgs.playerctl}/bin/playerctl";
-  in {
+  programs.niri.settings.binds = with config.lib.niri.actions; {
     "XF86AudioPlay" = {
       allow-when-locked = true;
       action.spawn = [
@@ -79,7 +77,7 @@
         "ipc"
         "call"
         "volume"
-        "muteOutput"
+        "muteInput"
       ];
     };
 
