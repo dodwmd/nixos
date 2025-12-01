@@ -86,8 +86,8 @@ in {
         border = {
           enable = true;
           width = 2;
-          active.color = "#00ff00";
-          inactive.color = "#003300";
+          active.color = "#0d5ba5";
+          inactive.color = "#204c78";
         };
         shadow = {
           enable = false;

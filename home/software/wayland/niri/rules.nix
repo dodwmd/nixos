@@ -50,15 +50,17 @@ _: let
     {
       matches = [
         {app-id = "zen";}
+        {app-id = "helium";}
         {app-id = "firefox";}
         {app-id = "chromium-browser";}
         {app-id = "xdg-desktop-portal-gtk";}
       ];
-      scroll-factor = 0.5;
+      scroll-factor = 0.6;
     }
     {
       matches = [
         {app-id = "zen";}
+        {app-id = "helium";}
         {app-id = "firefox";}
         {app-id = "chromium-browser";}
         {app-id = "edge";}
