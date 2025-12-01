@@ -7,6 +7,7 @@
     ./browsers/chromium.nix
     ./browsers/edge.nix
     ./browsers/zen.nix
+    ./browsers/helium.nix
     ./gtk.nix
     ./media
   ];
