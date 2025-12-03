@@ -54,11 +54,6 @@
 
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
-    helium = {
-      url = "github:ominit/helium-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     hm = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -109,27 +109,6 @@
     },
     "flake-parts_2": {
       "inputs": {
-        "nixpkgs-lib": [
-          "helium",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1759362264,
-        "narHash": "sha256-wfG0S7pltlYyZTM+qqlhJ7GMw2fTF4mLKCIVhLii/4M=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "758cf7296bee11f1706a574c77d072b8a7baa881",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
-    "flake-parts_3": {
-      "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
       },
       "locked": {
@@ -177,28 +156,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "helium": {
-      "inputs": {
-        "flake-parts": "flake-parts_2",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": "treefmt-nix"
-      },
-      "locked": {
-        "lastModified": 1763627727,
-        "narHash": "sha256-Z2fI8oTUxFXDJ2a6pOUPh4Y+V20WbHkkaS16s6a+10A=",
-        "owner": "ominit",
-        "repo": "helium-browser-flake",
-        "rev": "5e40c4fb1183b15cec3a5dbf9efe7fea9104dfc1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ominit",
-        "repo": "helium-browser-flake",
         "type": "github"
       }
     },
@@ -288,15 +245,15 @@
     },
     "mynixpkgs": {
       "inputs": {
-        "flake-parts": "flake-parts_3",
+        "flake-parts": "flake-parts_2",
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1764439026,
-        "narHash": "sha256-SILxE4ahKW0wU7CBBh65/hndOlY/MqZu272gjWAVqDU=",
+        "lastModified": 1764699449,
+        "narHash": "sha256-N/Z3aCwz6+lhl57mmWHm6UEoY4URusAlNdmC7An58MI=",
         "owner": "linuxmobile",
         "repo": "mynixpkgs",
-        "rev": "6ecba015b4ecef02abab2c365af9d74a95b9b641",
+        "rev": "f0fcee431869938df74364ea29996f8f4650a2d0",
         "type": "github"
       },
       "original": {
@@ -492,7 +449,6 @@
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
-        "helium": "helium",
         "hm": "hm",
         "mynixpkgs": "mynixpkgs",
         "niri": "niri",
@@ -535,27 +491,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
-        "type": "github"
-      }
-    },
-    "treefmt-nix": {
-      "inputs": {
-        "nixpkgs": [
-          "helium",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1758728421,
-        "narHash": "sha256-ySNJ008muQAds2JemiyrWYbwbG+V7S5wg3ZVKGHSFu8=",
-        "owner": "numtide",
-        "repo": "treefmt-nix",
-        "rev": "5eda4ee8121f97b218f7cc73f5172098d458f1d1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "treefmt-nix",
         "type": "github"
       }
     },
