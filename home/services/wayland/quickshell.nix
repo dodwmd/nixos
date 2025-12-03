@@ -19,7 +19,6 @@
       gpu-screen-recorder
       kdePackages.qt6ct
       kdePackages.qtmultimedia
-      khal
       libsForQt5.qt5ct
       material-symbols
       matugen
@@ -27,8 +26,9 @@
       wl-clipboard
     ];
 
-  home.sessionVariables.QML2_IMPORT_PATH = lib.concatStringsSep ":" [
+  systemd.user.sessionVariables.QML2_IMPORT_PATH = lib.concatStringsSep ":" [
     "${pkgs.quickshell}/lib/qt-6/qml"
+    "${pkgs.kdePackages.qtbase}/lib/qt-6/qml"
     "${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml"
     "${pkgs.kdePackages.kirigami.unwrapped}/lib/qt-6/qml"
     "${pkgs.kdePackages.qtmultimedia}/lib/qt-6/qml"
