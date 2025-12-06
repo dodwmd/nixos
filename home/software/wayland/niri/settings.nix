@@ -12,7 +12,6 @@ in {
       environment = {
         CLUTTER_BACKEND = "wayland";
         DISPLAY = null;
-        GDK_BACKEND = "wayland,x11";
         MOZ_ENABLE_WAYLAND = "1";
         NIXOS_OZONE_WL = "1";
         QT_QPA_PLATFORM = "wayland;xcb";
@@ -99,6 +98,7 @@ in {
           {proportion = 1.0;}
         ];
         default-column-width = {proportion = 0.5;};
+        always-center-single-column = true;
 
         gaps = 6;
         struts = {
