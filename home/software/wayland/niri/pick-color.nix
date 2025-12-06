@@ -37,11 +37,6 @@
         end
       end
 
-      niri msg action toggle-debug-tint
-      function cleanup --on-event fish_exit
-        niri msg action toggle-debug-tint
-      end
-
       set -l color (niri msg pick-color | string match --regex --groups-only "^Hex: #(.+)")
       test $pipestatus[1] -eq 0; or exit 1
 

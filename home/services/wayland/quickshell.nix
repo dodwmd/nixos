@@ -2,12 +2,21 @@
   pkgs,
   lib,
   ...
-}: {
+}: let
+  qmlCandidates =
+    [pkgs.quickshell]
+    ++ (with pkgs.kdePackages; [
+      qtbase
+      qtdeclarative
+      qt6ct
+      qtmultimedia
+      qtwayland
+      kirigami
+    ]);
+in {
   home.packages = with pkgs;
     [
       quickshell
-    ]
-    ++ [
       accountsservice
       adw-gtk3
       brightnessctl
@@ -17,20 +26,15 @@
       elogind
       glib
       gpu-screen-recorder
-      kdePackages.qt6ct
-      kdePackages.qtmultimedia
-      libsForQt5.qt5ct
       material-symbols
       matugen
       swww
       wl-clipboard
-    ];
+    ]
+    ++ qmlCandidates;
 
-  systemd.user.sessionVariables.QML2_IMPORT_PATH = lib.concatStringsSep ":" [
-    "${pkgs.quickshell}/lib/qt-6/qml"
-    "${pkgs.kdePackages.qtbase}/lib/qt-6/qml"
-    "${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml"
-    "${pkgs.kdePackages.kirigami.unwrapped}/lib/qt-6/qml"
-    "${pkgs.kdePackages.qtmultimedia}/lib/qt-6/qml"
-  ];
+  systemd.user.sessionVariables.QML2_IMPORT_PATH =
+    lib.makeSearchPath "lib/qt-6/qml" qmlCandidates
+    + ":"
+    + lib.makeSearchPath "lib/qt-5/qml" qmlCandidates;
 }
