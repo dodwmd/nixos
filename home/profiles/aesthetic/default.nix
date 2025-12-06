@@ -19,6 +19,5 @@
     ../../services/system/gpg-agent.nix
     ../../services/system/cliphist.nix
     ../../services/system/polkit-agent.nix
-    ../../services/system/power-monitor.nix
   ];
 }
