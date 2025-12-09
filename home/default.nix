@@ -17,10 +17,11 @@
   };
 
   # let HM manage itself when in standalone mode
-  programs.home-manager.enable = true;
-
-  programs.nix-index = {
-    enable = true;
-    # enableNushellIntegration = true;
+  programs = {
+    home-manager.enable = true;
+    nix-index = {
+      enable = true;
+      # enableNushellIntegration = true;
+    };
   };
 }

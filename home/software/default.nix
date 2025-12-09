@@ -52,8 +52,6 @@
     }))
 
     swww
-    ghostty
-    mods
     openvpn
     # (mangowc.override {enableXWayland = false;})
   ];

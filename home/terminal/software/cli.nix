@@ -20,10 +20,10 @@
       fd
       file
       jaq
-      ripgrep
       killall
       jq
       ps_mem
+      inshellisense
 
       discordo
       fum
@@ -33,7 +33,6 @@
       nix-search-tv
       reddit-tui
       scope-tui
-      television
       tuicam
       wiremix
       zfxtop
@@ -49,13 +48,43 @@
     ]);
 
   programs = {
-    eza.enable = true;
+    eza = {
+      enable = true;
+      enableFishIntegration = true;
+      colors = "auto";
+      git = true;
+      icons = "auto";
+    };
     dircolors = {
       enable = true;
-      enableNushellIntegration = true;
+      enableFishIntegration = true;
     };
     autojump = {
       enable = true;
+      enableFishIntegration = true;
+    };
+    television = {
+      enableFishIntegration = true;
+      enable = true;
+    };
+    mods = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+    ripgrep = {
+      enable = true;
+    };
+    nix-your-shell = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+    pay-respects = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+    fzf = {
+      enable = true;
+      enableFishIntegration = true;
     };
   };
 }

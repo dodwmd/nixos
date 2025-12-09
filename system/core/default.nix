@@ -3,7 +3,7 @@
     ./security.nix
     ./users.nix
     ../nix
-    ../programs/nushell.nix
+    ../programs/fish.nix
   ];
 
   i18n = {

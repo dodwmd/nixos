@@ -1,14 +1,16 @@
 {
   programs.starship = {
     enable = true;
-    enableTransience = true;
+    enableFishIntegration = true;
     settings = {
       add_newline = true;
+      scan_timeout = 5;
+      command_timeout = 500;
 
       format = ''
-        [╭──╼](bold bright-blue) $hostname $os
-        [┆](bold bright-blue) $directory$git_branch$git_commit$git_state$git_metrics$git_status$nix_shell
-        [╰─>](bold bright-blue) $character
+        [┌───](bold bright-blue) $hostname $os
+        [│](bold bright-blue) $directory$git_branch$git_status$nix_shell
+        [└─>](bold bright-blue) $character
       '';
 
       os = {
@@ -31,22 +33,6 @@
         disabled = false;
       };
 
-      time = {
-        disabled = false;
-        format = " [$time]($style)";
-        time_format = "%H:%M";
-        utc_time_offset = "local";
-        style = "pale bright-blue";
-      };
-
-      cmd_duration = {
-        disabled = false;
-        min_time = 250;
-        show_milliseconds = false;
-        show_notifications = false;
-        format = "was [$duration](bold green)";
-      };
-
       nix_shell = {
         disabled = false;
         heuristic = false;
@@ -55,6 +41,30 @@
         pure_msg = "";
         unknown_msg = "";
       };
+
+      aws.disabled = true;
+      gcloud.disabled = true;
+      nodejs.disabled = true;
+      ruby.disabled = true;
+      python.disabled = true;
+      rust.disabled = true;
+      golang.disabled = true;
+      java.disabled = true;
+      kotlin.disabled = true;
+      lua.disabled = true;
+      perl.disabled = true;
+      php.disabled = true;
+      swift.disabled = true;
+      terraform.disabled = true;
+      zig.disabled = true;
+      package.disabled = true;
+      conda.disabled = true;
+      docker_context.disabled = true;
+      kubernetes.disabled = true;
+      helm.disabled = true;
+      battery.disabled = true;
+      time.disabled = true;
+      cmd_duration.disabled = true;
     };
   };
 }

@@ -5,8 +5,8 @@
 }: {
   imports = [
     ./theme/icons.nix
-    # ./theme/manager.nix
-    # ./theme/status.nix
+    ./theme/manager.nix
+    ./theme/status.nix
   ];
 
   # general file info
@@ -16,8 +16,7 @@
   programs.yazi = {
     enable = true;
 
-    enableBashIntegration = config.programs.bash.enable;
-    enableNushellIntegration = config.programs.nushell.enable;
+    enableFishIntegration = config.programs.fish.enable;
 
     settings = {
       mgr = {
