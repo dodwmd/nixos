@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   fonts = {
     packages = with pkgs; [
       # icon fonts
@@ -8,12 +12,12 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
-      adwaita-fonts
 
       # nerdfonts
       nerd-fonts.symbols-only
-      nerd-fonts.geist-mono
       departure-mono
+
+      inputs.self.packages.${pkgs.system}.apple-fonts
     ];
 
     # causes more issues than it solves
@@ -35,9 +39,9 @@
         addAll = builtins.mapAttrs (_: v: ["Symbols Nerd Font"] ++ v ++ ["Noto Color Emoji"]);
       in
         addAll {
-          serif = ["Noto Sans Serif"];
-          sansSerif = ["Adwaita Sans"];
-          monospace = ["Geist Nerd Font Mono"];
+          serif = ["New York Small"];
+          sansSerif = ["SF Pro Display"];
+          monospace = ["SF Mono"];
           emoji = ["Noto Color Emoji"];
         };
     };
