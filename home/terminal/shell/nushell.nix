@@ -32,6 +32,10 @@
             osc2 = true;
             osc7 = true;
             osc8 = true;
+            osc9_9 = true;
+            osc133 = true;
+            osc633 = true;
+            reset_application_mode = true;
           };
 
           use_kitty_protocol = true;

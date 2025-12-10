@@ -11,11 +11,6 @@
 
     dbus.implementation = "broker";
 
-    # profile-sync-daemon
-    psd = {
-      enable = true;
-      resyncTimer = "10m";
-    };
     irqbalance.enable = true;
     thermald.enable = true;
     speechd.enable = lib.mkForce false;
