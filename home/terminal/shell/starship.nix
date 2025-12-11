@@ -30,6 +30,7 @@
         format = "$symbol";
         success_symbol = "[❯](bold bright-green) ";
         error_symbol = "[✗](bold bright-red) ";
+        vicmd_symbol = "[](bold yellow) ";
         disabled = false;
       };
 
