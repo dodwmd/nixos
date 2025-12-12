@@ -22,7 +22,7 @@
         pad = "15x6center";
         term = "xterm-256color";
         selection-target = "both";
-        include = "${config.xdg.configHome}/foot/themes/noctalia";
+        include = "${config.xdg.configHome}/foot/dank-colors.ini";
       };
       bell = {
         command = "notify-send bell";

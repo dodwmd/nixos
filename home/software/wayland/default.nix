@@ -2,16 +2,13 @@
 # Wayland config
 {
   imports = [
+    ./dms
     ./niri
   ];
 
   home.packages = with pkgs; [
-    # screenshot
-    grim
-    slurp
-
     # utils
-    wl-clipboard
+    wl-clipboard-rs
   ];
 
   # make stuff work on wayland

@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  imports = [inputs.niri.homeModules.niri ./settings.nix ./binds.nix ./rules.nix ./pick-color.nix];
+  imports = [inputs.niri.homeModules.niri ./settings.nix ./binds.nix ./rules.nix];
 
   home = {
     packages = with pkgs; [

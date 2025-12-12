@@ -25,7 +25,6 @@ in {
       spawn-at-startup = [
         {command = ["wl-paste" "--watch" "cliphist" "store"];}
         {command = ["wl-paste" "--type text" "--watch" "cliphist" "store"];}
-        {command = ["qs" "-c" "noctalia"];}
       ];
       input = {
         keyboard.xkb.layout = "latam";

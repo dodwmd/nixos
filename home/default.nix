@@ -2,6 +2,8 @@
   imports = [
     ./terminal
     inputs.nix-index-db.homeModules.nix-index
+    inputs.dankMaterialShell.homeModules.dankMaterialShell.default
+    inputs.dankMaterialShell.homeModules.dankMaterialShell.niri
   ];
   home = {
     username = "linuxmobile";

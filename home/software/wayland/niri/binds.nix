@@ -7,12 +7,10 @@
     "XF86AudioPlay" = {
       allow-when-locked = true;
       action.spawn = [
-        "qs"
-        "-c"
-        "noctalia"
+        "dms"
         "ipc"
         "call"
-        "media"
+        "mpris"
         "playPause"
       ];
     };
@@ -20,12 +18,10 @@
     "XF86AudioStop" = {
       allow-when-locked = true;
       action.spawn = [
-        "qs"
-        "-c"
-        "noctalia"
+        "dms"
         "ipc"
         "call"
-        "media"
+        "mpris"
         "stop"
       ];
     };
@@ -33,12 +29,10 @@
     "XF86AudioNext" = {
       allow-when-locked = true;
       action.spawn = [
-        "qs"
-        "-c"
-        "noctalia"
+        "dms"
         "ipc"
         "call"
-        "media"
+        "mpris"
         "next"
       ];
     };
@@ -46,12 +40,10 @@
     "XF86AudioPrev" = {
       allow-when-locked = true;
       action.spawn = [
-        "qs"
-        "-c"
-        "noctalia"
+        "dms"
         "ipc"
         "call"
-        "media"
+        "mpris"
         "previous"
       ];
     };
@@ -59,113 +51,91 @@
     "XF86AudioMute" = {
       allow-when-locked = true;
       action.spawn = [
-        "qs"
-        "-c"
-        "noctalia"
+        "dms"
         "ipc"
         "call"
-        "volume"
-        "muteOutput"
+        "mpris"
+        "next"
       ];
     };
     "XF86AudioMicMute" = {
       allow-when-locked = true;
       action.spawn = [
-        "qs"
-        "-c"
-        "noctalia"
+        "dms"
         "ipc"
         "call"
-        "volume"
-        "muteInput"
+        "audio"
+        "micmute"
       ];
     };
 
     "XF86AudioRaiseVolume" = {
       allow-when-locked = true;
       action.spawn = [
-        "qs"
-        "-c"
-        "noctalia"
+        "dms"
         "ipc"
         "call"
-        "volume"
-        "increase"
+        "audio"
+        "increment"
+        "5"
       ];
     };
     "XF86AudioLowerVolume" = {
       allow-when-locked = true;
       action.spawn = [
-        "qs"
-        "-c"
-        "noctalia"
+        "dms"
         "ipc"
         "call"
-        "volume"
-        "decrease"
+        "audio"
+        "decrement"
+        "5"
       ];
     };
 
     "XF86MonBrightnessUp" = {
       allow-when-locked = true;
       action.spawn = [
-        "qs"
-        "-c"
-        "noctalia"
+        "dms"
         "ipc"
         "call"
         "brightness"
-        "increase"
+        "increment"
+        "5"
+        ""
       ];
     };
 
     "XF86MonBrightnessDown" = {
       allow-when-locked = true;
       action.spawn = [
-        "qs"
-        "-c"
-        "noctalia"
+        "dms"
         "ipc"
         "call"
         "brightness"
-        "decrease"
+        "decrement"
+        "5"
+        ""
       ];
     };
 
     "Ctrl+Alt+L".action = spawn [
-      "qs"
-      "-c"
-      "noctalia"
+      "dms"
       "ipc"
       "call"
-      "lockScreen"
+      "lock"
       "lock"
     ];
 
     "Mod+V".action = spawn [
-      "qs"
-      "-c"
-      "noctalia"
+      "dms"
       "ipc"
       "call"
-      "launcher"
       "clipboard"
-    ];
-
-    "Mod+E".action = spawn [
-      "qs"
-      "-c"
-      "noctalia"
-      "ipc"
-      "call"
-      "launcher"
-      "emoji"
+      "toggle"
     ];
 
     "Mod+U".action = spawn [
-      "qs"
-      "-c"
-      "noctalia"
+      "dms"
       "ipc"
       "call"
       "settings"
@@ -173,22 +143,33 @@
     ];
 
     "Alt+Space".action = spawn [
-      "qs"
-      "-c"
-      "noctalia"
+      "dms"
       "ipc"
       "call"
-      "launcher"
+      "spotlight"
       "toggle"
     ];
 
     "Mod+D".action = spawn [
-      "qs"
-      "-c"
-      "noctalia"
+      "dms"
       "ipc"
       "call"
-      "launcher"
+      "spotlight"
+      "toggle"
+    ];
+
+    "Mod+Shift+X".action = spawn [
+      "dms"
+      "color"
+      "pick"
+      "-a"
+    ];
+
+    "Mod+escape".action = spawn [
+      "dms"
+      "ipc"
+      "call"
+      "powermenu"
       "toggle"
     ];
 
