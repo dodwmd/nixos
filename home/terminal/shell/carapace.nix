@@ -11,21 +11,18 @@
     inshellisense
   ];
 
-  xdg.configFile."carapace/carapace.toml".text = ''
-    [integrations.fish]
-    enabled = true
-  '';
-
   environment.sessionVariables = {
     CARAPACE_BRIDGES = "fish,zsh,bash,inshellisense";
     CARAPACE_CACHE_DIR = "${config.xdg.cacheHome}/carapace";
   };
 
-  xdg.configFile."fish/conf.d/carapace.fish".text = ''
-    set -Ux CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense'
+  # Configuración de Carapace
+  xdg.configFile."carapace/carapace.toml".text = ''
+    [integrations.fish]
+    enabled = true
+  '';
 
-    if status --is-interactive
-      ${pkgs.carapace}/bin/carapace _carapace | source
-    end
+  xdg.configFile."fish/completions/carapace.fish".source = pkgs.runCommand "carapace-fish-init" {} ''
+    ${pkgs.carapace}/bin/carapace _carapace fish > $out
   '';
 }

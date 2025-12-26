@@ -76,4 +76,9 @@ in {
     time.disabled = true;
     cmd_duration.disabled = true;
   };
+  xdg.configFile."fish/conf.d/starship.fish".text = ''
+    if test "$TERM" != "dumb"
+      ${builtins.readFile (pkgs.runCommand "starship-init" {} "${pkgs.starship}/bin/starship init fish > $out")}
+    end
+  '';
 }
