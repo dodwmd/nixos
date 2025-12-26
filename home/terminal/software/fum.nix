@@ -3,6 +3,7 @@
 in {
   users.users.linuxmobile.packages = with pkgs; [
     fum
+    playerctl
   ];
 
   xdg.configFile."${configFile}".text = builtins.toJSON {
