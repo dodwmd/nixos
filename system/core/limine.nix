@@ -2,9 +2,7 @@
   lib,
   pkgs,
   ...
-}:
-# lanzaboote config
-{
+}: {
   boot.loader = {
     limine = {
       enable = true;

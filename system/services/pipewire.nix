@@ -27,10 +27,12 @@
 
     extraConfig.pipewire."99-custom" = {
       "context.properties" = {
-        default.clock.rate = 48000;
-        default.clock.quantum = 1024;
-        default.clock.min-quantum = 32;
-        default.clock.max-quantum = 2048;
+        default.clock = {
+          rate = 48000;
+          quantum = 1024;
+          min-quantum = 32;
+          max-quantum = 2048;
+        };
       };
     };
   };

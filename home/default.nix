@@ -1,29 +1,31 @@
 {inputs, ...}: {
   imports = [
+    (inputs.import-tree ./services)
+    (inputs.import-tree ./packages)
     ./terminal
-    inputs.nix-index-db.homeModules.nix-index
-    inputs.dankMaterialShell.homeModules.dankMaterialShell.default
-    inputs.dankMaterialShell.homeModules.dankMaterialShell.niri
+    ./xdg-compat.nix
+    inputs.nix-index-db.nixosModules.nix-index
+    inputs.hjem.nixosModules.default
   ];
-  home = {
-    username = "linuxmobile";
-    homeDirectory = "/home/linuxmobile";
-    stateVersion = "24.05";
-  };
 
-  # disable manuals as nmd fails to build often
-  manual = {
-    html.enable = false;
-    json.enable = false;
-    manpages.enable = false;
-  };
-
-  # let HM manage itself when in standalone mode
   programs = {
-    home-manager.enable = true;
     nix-index = {
       enable = true;
-      # enableNushellIntegration = true;
+      enableFishIntegration = true;
+    };
+    nix-index-database.comma.enable = true;
+  };
+
+  hjem = {
+    extraModules = [
+      inputs.hjem-rum.hjemModules.default
+    ];
+    users = {
+      linuxmobile = {
+        enable = true;
+        user = "linuxmobile";
+        directory = "/home/linuxmobile";
+      };
     };
   };
 }

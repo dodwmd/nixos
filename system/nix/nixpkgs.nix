@@ -1,8 +1,10 @@
 _: {
   nixpkgs = {
-    config.allowUnfree = true;
-    config.permittedInsecurePackages = [
-      "electron-25.9.0"
-    ];
+    config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [
+        "electron-38.7.1"
+      ];
+    };
   };
 }

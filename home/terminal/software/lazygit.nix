@@ -1,27 +1,31 @@
-{
-  programs.lazygit = {
-    enable = true;
-    enableFishIntegration = true;
-    settings = {
-      disableStartupPopups = true;
-      notARepository = "skip";
-      promptToReturnFromSubprocess = false;
-      update.method = "never";
-      git = {
-        commit.signOff = true;
-        parseEmoji = true;
+{pkgs, ...}: let
+  configFile = "lazygit/config.yml";
+  toYAML = (pkgs.formats.yaml {}).generate;
+in {
+  users.users.linuxmobile.packages = [pkgs.lazygit];
+  xdg.configFile."${configFile}".source = toYAML "config.yml" {
+    disableStartupPopups = true;
+    git = {
+      commit = {
+        signOff = true;
       };
-      gui = {
-        theme = {
-          activeBorderColor = ["magenta" "bold"];
-          inactiveBorderColor = ["black"];
-        };
-        showListFooter = false;
-        showRandomTip = false;
-        showCommandLog = false;
-        showBottomLine = false;
-        nerdFontsVersion = "3";
+      parseEmoji = true;
+    };
+    gui = {
+      nerdFontsVersion = "3";
+      showBottomLine = false;
+      showCommandLog = false;
+      showListFooter = false;
+      showRandomTip = false;
+      theme = {
+        activeBorderColor = ["magenta" "bold"];
+        inactiveBorderColor = ["black"];
       };
+    };
+    notARepository = "skip";
+    promptToReturnFromSubprocess = false;
+    update = {
+      method = "never";
     };
   };
 }

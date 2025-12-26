@@ -1,58 +1,50 @@
 {
-  config,
-  lib,
   pkgs,
+  lib,
   ...
-}: {
-  home.packages = [pkgs.libsixel];
-  programs.foot = {
-    enable = true;
-    settings = {
-      main = {
-        font = lib.mkForce (
-          "SF Mono:size=10"
-          + ":fontfeatures=calt"
-          + ":fontfeatures=dlig"
-          + ":fontfeatures=fbarc"
-          + ":fontfeatures=liga,PragmataProMonoLiga Nerd Font:size=8"
-        );
-
-        horizontal-letter-offset = 0;
-        vertical-letter-offset = 0;
-        pad = "15x6center";
-        term = "xterm-256color";
-        selection-target = "both";
-        include = "${config.xdg.configHome}/foot/dank-colors.ini";
-      };
-      bell = {
-        command = "notify-send bell";
-        command-focused = "no";
-        notify = "yes";
-        urgent = "yes";
-      };
-      desktop-notifications.command = "${lib.getExe pkgs.libnotify} -a \${app-id} -i \${app-id} \${title} \${body}";
-      scrollback = {
-        lines = 1000;
-        multiplier = 3;
-        indicator-position = "relative";
-        indicator-format = "line";
-      };
-      url = {
-        launch = "${pkgs.xdg-utils}/bin/xdg-open \${url}";
-        label-letters = "sadfjklewcmpgh";
-        osc8-underline = "url-mode";
-      };
-      cursor = {
-        style = "beam";
-        beam-thickness = "2";
-      };
-      tweak = {
-        font-monospace-warn = "no";
-        sixel = "yes";
-      };
-      colors = {
-        alpha = 1.0;
-      };
+}: let
+  configFile = "foot/foot.ini";
+  toINI = (pkgs.formats.ini {}).generate;
+in {
+  users.users.linuxmobile.packages = with pkgs; [foot libsixel];
+  xdg.configFile."${configFile}".source = toINI "foot.ini" {
+    main = {
+      font = "Cozette:size=10:fontfeatures=calt:fontfeatures=dlig:fontfeatures=fbarc:fontfeatures=liga,PragmataProMonoLiga Nerd Font:size=8";
+      horizontal-letter-offset = 0;
+      vertical-letter-offset = 0;
+      pad = "15x6center";
+      term = "xterm-256color";
+      selection-target = "both";
+      include = "$XDG_CONFIG_HOME/foot/themes/noctalia";
+    };
+    bell = {
+      command = "notify-send bell";
+      command-focused = "no";
+      notify = "yes";
+      urgent = "yes";
+    };
+    desktop-notifications.command = "${lib.getExe pkgs.libnotify} -a \${app-id} -i \${app-id} \${title} \${body}";
+    scrollback = {
+      lines = 1000;
+      multiplier = 3;
+      indicator-position = "relative";
+      indicator-format = "line";
+    };
+    url = {
+      launch = "${pkgs.xdg-utils}/bin/xdg-open \${url}";
+      label-letters = "sadfjklewcmpgh";
+      osc8-underline = "url-mode";
+    };
+    cursor = {
+      style = "beam";
+      beam-thickness = "2";
+    };
+    tweak = {
+      font-monospace-warn = "no";
+      sixel = "yes";
+    };
+    colors = {
+      alpha = 1.0;
     };
   };
 }

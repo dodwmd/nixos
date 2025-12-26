@@ -1,11 +1,11 @@
 {
-  description = "LinuDev Configuration NixOs.";
+  description = "linuxmobile flake configuration based on hjem";
 
   outputs = inputs:
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux"];
 
-      imports = [./home/profiles ./hosts ./pkgs];
+      imports = [./hosts ./pkgs];
 
       perSystem = {
         config,
@@ -47,35 +47,28 @@
       url = "github:ryantm/agenix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "hm";
         systems.follows = "systems";
       };
     };
 
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
-    dgop = {
-      url = "github:AvengeMedia/dgop";
+    import-tree.url = "github:vic/import-tree";
+
+    hjem = {
+      url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    dankMaterialShell = {
-      url = "github:AvengeMedia/DankMaterialShell";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.dgop.follows = "dgop";
-    };
-
-    hm = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+    hjem-rum = {
+      url = "github:snugnug/hjem-rum";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        hjem.follows = "hjem";
+      };
     };
 
     mynixpkgs.url = "github:linuxmobile/mynixpkgs";
-
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nix-index-db = {
       url = "github:Mic92/nix-index-database";

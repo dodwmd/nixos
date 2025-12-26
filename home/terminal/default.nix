@@ -1,19 +1,17 @@
-{config, ...}: let
-  conf = config.xdg.configHome;
-  cache = config.xdg.cacheHome;
-in {
+{
+  config,
+  inputs,
+  ...
+}: {
   imports = [
-    ./software
-    ./shell/starship.nix
-    ./shell/fish.nix
+    (inputs.import-tree ./emulators)
+    (inputs.import-tree ./shell)
+    (inputs.import-tree ./software)
   ];
-
-  home.sessionVariables = {
-    # clean up ~
-    LESSHISTFILE = "${cache}/less/history";
-    LESSKEY = "${conf}/less/lesskey";
-
-    XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
+  environment.sessionVariables = {
+    LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
+    LESKEY = "${config.xdg.configHome}/less/lesskey";
+    XAUTHORITY = "${config.xdg.runtimeDir}/Xauthority";
 
     EDITOR = "hx";
     DIRENV_LOG_FORMAT = "";

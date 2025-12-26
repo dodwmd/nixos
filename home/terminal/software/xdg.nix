@@ -1,12 +1,13 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
-  browser = ["zen"];
-  imageViewer = ["org.gnome.Loupe"];
-  videoPlayer = ["io.github.celluloid_player.Celluloid"];
-  audioPlayer = ["io.bassi.Amberol"];
+  browser = ["helium.desktop"];
+  imageViewer = ["lightview.desktop"];
+  videoPlayer = ["mpv.desktop"];
+  audioPlayer = ["io.bassi.Amberol.desktop"];
 
   xdgAssociations = type: program: list:
     builtins.listToAttrs (map (e: {
@@ -30,6 +31,7 @@
     "heic"
     "heif"
   ];
+
   video = xdgAssociations "video" videoPlayer [
     "mp4"
     "avi"
@@ -45,6 +47,7 @@
     "mts"
     "m2ts"
   ];
+
   audio = xdgAssociations "audio" audioPlayer [
     "mp3"
     "flac"
@@ -59,6 +62,7 @@
     "alac"
     "aiff"
   ];
+
   browserTypes =
     (xdgAssociations "application" browser [
       "json"
@@ -76,58 +80,72 @@
       "unknown"
     ]);
 
-  # XDG MIME types
-  associations = builtins.mapAttrs (_: v: (map (e: "${e}.desktop") v)) ({
-      "application/pdf" = ["org.gnome.Papers"];
-      "application/zip" = ["org.gnome.FileRoller"];
-      "application/x-7z-compressed" = ["org.gnome.FileRoller"];
-      "application/x-rar-compressed" = ["org.gnome.FileRoller"];
-      "application/x-tar" = ["org.gnome.FileRoller"];
-      "application/gzip" = ["org.gnome.FileRoller"];
+  associations =
+    {
+      "application/pdf" = ["org.gnome.Papers.desktop"];
+      "application/zip" = ["org.gnome.FileRoller.desktop"];
+      "application/x-7z-compressed" = ["org.gnome.FileRoller.desktop"];
+      "application/x-rar-compressed" = ["org.gnome.FileRoller.desktop"];
+      "application/x-tar" = ["org.gnome.FileRoller.desktop"];
+      "application/gzip" = ["org.gnome.FileRoller.desktop"];
       "text/html" = browser;
-      "text/plain" = ["org.gnome.TextEditor"];
-      "text/markdown" = ["org.gnome.TextEditor"];
-      "text/x-python" = ["org.gnome.TextEditor"];
-      "text/x-shellscript" = ["org.gnome.TextEditor"];
-      "application/json" = ["org.gnome.TextEditor"];
-      "application/xml" = ["org.gnome.TextEditor"];
-      "application/javascript" = ["org.gnome.TextEditor"];
-      "text/css" = ["org.gnome.TextEditor"];
-      "text/x-c" = ["org.gnome.TextEditor"];
-      "text/x-c++" = ["org.gnome.TextEditor"];
-      "text/x-rust" = ["org.gnome.TextEditor"];
-      "text/x-nix" = ["org.gnome.TextEditor"];
-      "x-scheme-handler/chrome" = ["chromium-browser"];
+      "text/plain" = ["org.gnome.TextEditor.desktop"];
+      "text/markdown" = ["org.gnome.TextEditor.desktop"];
+      "text/x-python" = ["org.gnome.TextEditor.desktop"];
+      "text/x-shellscript" = ["org.gnome.TextEditor.desktop"];
+      "application/json" = ["org.gnome.TextEditor.desktop"];
+      "application/xml" = ["org.gnome.TextEditor.desktop"];
+      "application/javascript" = ["org.gnome.TextEditor.desktop"];
+      "text/css" = ["org.gnome.TextEditor.desktop"];
+      "text/x-c" = ["org.gnome.TextEditor.desktop"];
+      "text/x-c++" = ["org.gnome.TextEditor.desktop"];
+      "text/x-rust" = ["org.gnome.TextEditor.desktop"];
+      "text/x-nix" = ["org.gnome.TextEditor.desktop"];
+      "x-scheme-handler/chrome" = ["helium.desktop"];
     }
-    // image
-    // video
-    // audio
-    // browserTypes);
-in {
-  xdg = {
-    enable = true;
-    cacheHome = config.home.homeDirectory + "/.local/cache";
+    // image // video // audio // browserTypes;
 
-    mimeApps = {
+  userDirsConfig = pkgs.writeText "user-dirs.dirs" ''
+    XDG_DESKTOP_DIR="$HOME/Desktop"
+    XDG_DOWNLOAD_DIR="$HOME/Downloads"
+    XDG_TEMPLATES_DIR="$HOME/Templates"
+    XDG_PUBLICSHARE_DIR="$HOME/Public"
+    XDG_DOCUMENTS_DIR="$HOME/Documents"
+    XDG_MUSIC_DIR="$HOME/Music"
+    XDG_PICTURES_DIR="$HOME/Pictures"
+    XDG_VIDEOS_DIR="$HOME/Videos"
+    XDG_SCREENSHOTS_DIR="$HOME/Pictures/Screenshots"
+  '';
+in {
+  users.users.linuxmobile.packages = with pkgs; [
+    xdg-utils
+    (writeShellScriptBin "xdg-terminal-exec" ''
+      foot start "$@"
+    '')
+  ];
+
+  xdg = {
+    mime = {
       enable = true;
       defaultApplications = associations;
     };
-
-    userDirs = {
-      enable = true;
-      createDirectories = true;
-      extraConfig = {
-        XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
-      };
-    };
+    configFile."user-dirs.dirs".source = userDirsConfig;
+    configFile."mimeapps.list".text = let
+      mkSection = name: apps:
+        "[${name}]\n"
+        + (lib.concatStringsSep "\n"
+          (lib.mapAttrsToList (k: v: "${k}=${lib.concatStringsSep ";" v}") apps));
+    in ''
+      ${mkSection "Default Applications" associations}
+      ${mkSection "Added Associations" associations}
+    '';
   };
 
-  # used by `gio open` and xdp-gtk
-  home.packages = [
-    # used by `gio open` and xdp-gtk
-    (pkgs.writeShellScriptBin "xdg-terminal-exec" ''
-      foot start "$@"
-    '')
-    pkgs.xdg-utils
-  ];
+  environment.sessionVariables = {
+    XDG_CONFIG_HOME = config.xdg.configHome;
+    XDG_CACHE_HOME = config.xdg.cacheHome;
+    XDG_DATA_HOME = config.xdg.dataHome;
+    XDG_STATE_HOME = config.xdg.stateHome;
+    XDG_RUNTIME_DIR = config.xdg.runtimeDir;
+  };
 }

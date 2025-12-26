@@ -24,14 +24,16 @@
   console.keyMap = "la-latin1";
 
   # don't touch this
-  system.stateVersion = lib.mkDefault "24.05";
   system = {
     switch.enable = true;
     rebuild.enableNg = true;
+    stateVersion = lib.mkDefault "25.05";
   };
 
-  time.timeZone = lib.mkDefault "America/Argentina/Buenos_Aires";
-  time.hardwareClockInLocalTime = lib.mkDefault true;
+  time = {
+    timeZone = lib.mkDefault "America/Argentina/Buenos_Aires";
+    hardwareClockInLocalTime = lib.mkDefault true;
+  };
 
   # compresses half the ram for use as swap
   zramSwap = {

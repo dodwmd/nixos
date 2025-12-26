@@ -1,0 +1,90 @@
+{pkgs}: {
+  "XF86AudioPlay" = {
+    allow-when-locked = true;
+    spawn = ["qs" "-c" "noctalia" "ipc" "call" "media" "playPause"];
+  };
+  "XF86AudioStop" = {
+    allow-when-locked = true;
+    spawn = ["qs" "-c" "noctalia" "ipc" "call" "media" "stop"];
+  };
+  "XF86AudioNext" = {
+    allow-when-locked = true;
+    spawn = ["qs" "-c" "noctalia" "ipc" "call" "media" "next"];
+  };
+  "XF86AudioPrev" = {
+    allow-when-locked = true;
+    spawn = ["qs" "-c" "noctalia" "ipc" "call" "media" "previous"];
+  };
+  "XF86AudioMute" = {
+    allow-when-locked = true;
+    spawn = ["qs" "-c" "noctalia" "ipc" "call" "volume" "muteOutput"];
+  };
+  "XF86AudioMicMute" = {
+    allow-when-locked = true;
+    spawn = ["qs" "-c" "noctalia" "ipc" "call" "volume" "muteInput"];
+  };
+  "XF86AudioRaiseVolume" = {
+    allow-when-locked = true;
+    spawn = ["qs" "-c" "noctalia" "ipc" "call" "volume" "increase"];
+  };
+  "XF86AudioLowerVolume" = {
+    allow-when-locked = true;
+    spawn = ["qs" "-c" "noctalia" "ipc" "call" "volume" "decrease"];
+  };
+  "XF86MonBrightnessUp" = {
+    allow-when-locked = true;
+    spawn = ["qs" "-c" "noctalia" "ipc" "call" "brightness" "increase"];
+  };
+  "XF86MonBrightnessDown" = {
+    allow-when-locked = true;
+    spawn = ["qs" "-c" "noctalia" "ipc" "call" "brightness" "decrease"];
+  };
+  "Ctrl+Alt+L".spawn = ["qs" "-c" "noctalia" "ipc" "call" "lockScreen" "lock"];
+  "Mod+V".spawn = ["qs" "-c" "noctalia" "ipc" "call" "launcher" "clipboard"];
+  "Mod+E".spawn = ["qs" "-c" "noctalia" "ipc" "call" "launcher" "emoji"];
+  "Mod+U".spawn = ["qs" "-c" "noctalia" "ipc" "call" "settings" "toggle"];
+  "Alt+Space".spawn = ["qs" "-c" "noctalia" "ipc" "call" "launcher" "toggle"];
+  "Mod+D".spawn = ["qs" "-c" "noctalia" "ipc" "call" "launcher" "toggle"];
+  "Print" = {
+    screenshot-screen = true;
+    write-to-disk = true;
+  };
+  "Mod+Shift+Alt+S".screenshot-window = {};
+  "Mod+Shift+S" = {
+    screenshot = true;
+    show-pointer = false;
+  };
+  "Mod+Return".spawn = ["${pkgs.foot}/bin/foot"];
+  "Mod+Q".close-window = {};
+  "Mod+S".switch-preset-column-width = {};
+  "Mod+F".maximize-column = {};
+  "Mod+1" = {set-column-width = "25%";};
+  "Mod+2" = {set-column-width = "50%";};
+  "Mod+3" = {set-column-width = "75%";};
+  "Mod+4" = {set-column-width = "100%";};
+  "Mod+Shift+F".expand-column-to-available-width = {};
+  "Mod+Space".toggle-window-floating = {};
+  "Mod+W".toggle-column-tabbed-display = {};
+  "Mod+Comma".consume-window-into-column = {};
+  "Mod+Period".expel-window-from-column = {};
+  "Mod+C".center-visible-columns = {};
+  "Mod+Tab".switch-focus-between-floating-and-tiling = {};
+  "Mod+Minus" = {set-column-width = "-10%";};
+  "Mod+Plus" = {set-column-width = "+10%";};
+  "Mod+Shift+Minus" = {set-window-height = "-10%";};
+  "Mod+Shift+Plus" = {set-window-height = "+10%";};
+  "Mod+H".focus-column-left = {};
+  "Mod+L".focus-column-right = {};
+  "Mod+J".focus-window-or-workspace-down = {};
+  "Mod+K".focus-window-or-workspace-up = {};
+  "Mod+Left".focus-column-left = {};
+  "Mod+Right".focus-column-right = {};
+  "Mod+Down".focus-workspace-down = {};
+  "Mod+Up".focus-workspace-up = {};
+  "Mod+Shift+H".move-column-left = {};
+  "Mod+Shift+L".move-column-right = {};
+  "Mod+Shift+K".move-column-to-workspace-up = {};
+  "Mod+Shift+J".move-column-to-workspace-down = {};
+  "Mod+Shift+Ctrl+J".move-column-to-monitor-down = {};
+  "Mod+Shift+Ctrl+K".move-column-to-monitor-up = {};
+}

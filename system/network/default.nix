@@ -26,5 +26,6 @@
 
   # Don't wait for network startup
   systemd.services.NetworkManager-wait-online.serviceConfig.ExecStart = ["" "${pkgs.networkmanager}/bin/nm-online -q"];
+  # Editable /etc/hosts for htb machines
   environment.etc.hosts.enable = false;
 }

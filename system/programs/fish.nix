@@ -1,6 +1,8 @@
 {pkgs, ...}: {
-  environment.shells = [pkgs.fish];
-  environment.pathsToLink = ["/share/fish"];
+  environment = {
+    shells = [pkgs.fish];
+    pathsToLink = ["/share/fish"];
+  };
 
   programs = {
     less.enable = true;

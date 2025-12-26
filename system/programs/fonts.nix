@@ -15,9 +15,9 @@
 
       # nerdfonts
       nerd-fonts.symbols-only
-      departure-mono
+      cozette
 
-      inputs.self.packages.${pkgs.system}.apple-fonts
+      inputs.self.packages.${stdenv.hostPlatform.system}.apple-fonts
     ];
 
     # causes more issues than it solves

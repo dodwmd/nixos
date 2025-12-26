@@ -1,146 +1,129 @@
-{
-  programs.yazi.theme.icons = {
-    # Default
-    "*" = "";
-    "*/" = "󰉋";
-
-    # Home
-    ".config/" = "";
-    ".ssh/" = "󰢬";
-    "Desktop/" = "";
-    "Development/" = "";
-    "Documents/" = "";
-    "Downloads/" = "󰉍";
-    "Library/" = "";
-    "Movies/" = "";
-    "Music/" = "󱍙";
-    "Pictures/" = "󰉏";
-    "Videos/" = "";
-    "Public/" = "";
-
-    # Git
-    ".git/" = "";
-    ".gitignore" = "";
-    ".gitmodules" = "";
-    ".gitattributes" = "";
-
-    # Dotfiles
-    ".DS_Store" = "";
-    ".bashrc" = "";
-    ".bashprofile" = "";
-    ".zshrc" = "";
-    ".zshenv" = "";
-    ".zprofile" = "";
-    ".vimrc" = "";
-
-    # Text
-    "*.txt" = "";
-    "*.md" = "";
-    "*.rst" = "";
-    COPYING = "󰿃";
-    LICENSE = "󰿃";
-
-    # Archives
-    "*.zip" = "";
-    "*.tar" = "";
-    "*.gz" = "";
-    "*.7z" = "";
-    "*.bz2" = "";
-    "*.xz" = "";
-
-    # Documents
-    "*.csv" = "";
-    "*.doc" = "";
-    "*.doct" = "";
-    "*.docx" = "";
-    "*.dot" = "";
-    "*.ods" = "";
-    "*.ots" = "";
-    "*.pdf" = "";
-    "*.pom" = "";
-    "*.pot" = "";
-    "*.ppm" = "";
-    "*.pps" = "";
-    "*.ppt" = "";
-    "*.potx" = "";
-    "*.ppmx" = "";
-    "*.ppsx" = "";
-    "*.pptx" = "";
-    "*.xlc" = "";
-    "*.xlm" = "";
-    "*.xls" = "";
-    "*.xlt" = "";
-    "*.xlsm" = "";
-    "*.xlsx" = "";
-
-    # Audio
-    "*.mp3" = "";
-    "*.flac" = "";
-    "*.wav" = "";
-    "*.aac" = "";
-    "*.ogg" = "";
-    "*.m4a" = "";
-    "*.mp2" = "";
-
-    # Movies
-    "*.mp4" = "";
-    "*.mkv" = "";
-    "*.avi" = "";
-    "*.mov" = "";
-    "*.webm" = "";
-
-    # Images
-    "*.jpg" = "";
-    "*.jpeg" = "";
-    "*.png" = "";
-    "*.gif" = "";
-    "*.webp" = "";
-    "*.avif" = "";
-    "*.bmp" = "";
-    "*.ico" = "";
-    "*.svg" = "";
-    "*.xcf" = "";
-    "*.HEIC" = "";
-
-    # Programming
-    "*.c" = "";
-    "*.cpp" = "";
-    "*.h" = "";
-    "*.hpp" = "";
-    "*.rs" = "";
-    "*.go" = "";
-    "*.py" = "";
-    "*.hs" = "";
-    "*.js" = "";
-    "*.ts" = "";
-    "*.tsx" = "";
-    "*.jsx" = "";
-    "*.rb" = "";
-    "*.php" = "";
-    "*.java" = "";
-    "*.sh" = "";
-    "*.fish" = "";
-    "*.swift" = "";
-    "*.vim" = "";
-    "*.lua" = "";
-    "*.html" = "";
-    "*.css" = "";
-    "*.sass" = "";
-    "*.scss" = "";
-    "*.json" = "";
-    "*.toml" = "";
-    "*.yml" = "";
-    "*.yaml" = "";
-    "*.ini" = "";
-    "*.conf" = "";
-    "*.lock" = "";
-    "*.nix" = "";
-    Containerfile = "󰡨";
-    Dockerfile = "󰡨";
-
-    # Misc
-    "*.bin" = "";
-    "*.exe" = "";
-    "*.pkg" = "";
+{pkgs, ...}: let
+  configFile = "yazi/theme.toml";
+  toTOML = (pkgs.formats.toml {}).generate;
+in {
+  users.users.linuxmobile.packages = [pkgs.yazi];
+  xdg.configFile."${configFile}".source = toTOML "theme.toml" {
+    icons = {
+      "*" = "";
+      "*.7z" = "";
+      "*.HEIC" = "";
+      "*.aac" = "";
+      "*.avi" = "";
+      "*.avif" = "";
+      "*.bin" = "";
+      "*.bmp" = "";
+      "*.bz2" = "";
+      "*.c" = "";
+      "*.conf" = "";
+      "*.cpp" = "";
+      "*.css" = "";
+      "*.csv" = "";
+      "*.doc" = "";
+      "*.doct" = "";
+      "*.docx" = "";
+      "*.dot" = "";
+      "*.exe" = "";
+      "*.fish" = "";
+      "*.flac" = "";
+      "*.gif" = "";
+      "*.go" = "";
+      "*.gz" = "";
+      "*.h" = "";
+      "*.hpp" = "";
+      "*.hs" = "";
+      "*.html" = "";
+      "*.ico" = "";
+      "*.ini" = "";
+      "*.java" = "";
+      "*.jpeg" = "";
+      "*.jpg" = "";
+      "*.js" = "";
+      "*.json" = "";
+      "*.jsx" = "";
+      "*.lock" = "";
+      "*.lua" = "";
+      "*.m4a" = "";
+      "*.md" = "";
+      "*.mkv" = "";
+      "*.mov" = "";
+      "*.mp2" = "";
+      "*.mp3" = "";
+      "*.mp4" = "";
+      "*.nix" = "";
+      "*.ods" = "";
+      "*.ogg" = "";
+      "*.ots" = "";
+      "*.pdf" = "";
+      "*.php" = "";
+      "*.pkg" = "";
+      "*.png" = "";
+      "*.pom" = "";
+      "*.pot" = "";
+      "*.potx" = "";
+      "*.ppm" = "";
+      "*.ppmx" = "";
+      "*.pps" = "";
+      "*.ppsx" = "";
+      "*.ppt" = "";
+      "*.pptx" = "";
+      "*.py" = "";
+      "*.rb" = "";
+      "*.rs" = "";
+      "*.rst" = "";
+      "*.sass" = "";
+      "*.scss" = "";
+      "*.sh" = "";
+      "*.svg" = "";
+      "*.swift" = "";
+      "*.tar" = "";
+      "*.toml" = "";
+      "*.ts" = "";
+      "*.tsx" = "";
+      "*.txt" = "";
+      "*.vim" = "";
+      "*.wav" = "";
+      "*.webm" = "";
+      "*.webp" = "";
+      "*.xcf" = "";
+      "*.xlc" = "";
+      "*.xlm" = "";
+      "*.xls" = "";
+      "*.xlsm" = "";
+      "*.xlsx" = "";
+      "*.xlt" = "";
+      "*.xz" = "";
+      "*.yaml" = "";
+      "*.yml" = "";
+      "*.zip" = "";
+      "*/" = "󰉋";
+      ".DS_Store" = "";
+      ".bashprofile" = "";
+      ".bashrc" = "";
+      ".config/" = "";
+      ".git/" = "";
+      ".gitattributes" = "";
+      ".gitignore" = "";
+      ".gitmodules" = "";
+      ".ssh/" = "󰢬";
+      ".vimrc" = "";
+      ".zprofile" = "";
+      ".zshenv" = "";
+      ".zshrc" = "";
+      COPYING = "󰿃";
+      Containerfile = "󰡨";
+      "Desktop/" = "";
+      "Development/" = "";
+      Dockerfile = "󰡨";
+      "Documents/" = "";
+      "Downloads/" = "󰉍";
+      LICENSE = "󰿃";
+      "Library/" = "";
+      "Movies/" = "";
+      "Music/" = "󱍙";
+      "Pictures/" = "󰉏";
+      "Public/" = "";
+      "Videos/" = "";
+    };
   };
 }
