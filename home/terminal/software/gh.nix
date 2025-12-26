@@ -21,14 +21,9 @@ in {
     browser = "helium";
   };
 
-  # Create hosts.yml with placeholder for OAuth token
   xdg.configFile."${hostsFile}".text = ''
     github.com:
       git_protocol: https
-      users:
-        linuxmobile:
-          oauth_token: "REPLACE_WITH_YOUR_TOKEN"
       user: linuxmobile
-      oauth_token: "REPLACE_WITH_YOUR_TOKEN"
   '';
 }

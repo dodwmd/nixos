@@ -38,9 +38,8 @@ in {
         layout ruby use ruby
       '';
 
-      # Fish shell integration
-      "fish/conf.d/direnv.fish".text = ''
-        ${pkgs.direnv}/bin/direnv hook fish | source
+      xdg.configFile."fish/conf.d/direnv.fish".source = pkgs.runCommand "direnv-fish-hook" {} ''
+        ${pkgs.direnv}/bin/direnv hook fish > $out
       '';
     };
   };

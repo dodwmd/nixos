@@ -37,7 +37,7 @@ in {
       apis = {
         openrouter = {
           base-url = "https://openrouter.ai/api/v1";
-          api-key = "sk-or-v1-REPLACE_WITH_YOUR_KEY";
+          api-key = "";
           api-key-env = "OPENROUTER_API_KEY";
           models = {
             "kwaipilot/kat-coder-pro:free" = {

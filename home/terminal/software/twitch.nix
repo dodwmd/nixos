@@ -36,7 +36,6 @@
       username = "linuxmobile";
       channel = "bunzopy";
       server = "irc.chat.twitch.tv";
-      token = "oauth:REPLACE_WITH_YOUR_TOKEN";
     };
     terminal = {
       delay = 30;

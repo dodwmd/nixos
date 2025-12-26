@@ -2,9 +2,28 @@
   config,
   lib,
   pkgs,
+  self,
   ...
 }: {
   imports = [./hardware-configuration.nix];
+
+  age.secrets = {
+    openrouter = {
+      file = "${self}/secrets/openrouter.age";
+      owner = "linuxmobile";
+      group = "users";
+    };
+    github = {
+      file = "${self}/secrets/github.age";
+      owner = "linuxmobile";
+      group = "users";
+    };
+    twt = {
+      file = "${self}/secrets/twt.age";
+      owner = "linuxmobile";
+      group = "users";
+    };
+  };
 
   boot = {
     # load modules on boot

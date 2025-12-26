@@ -17,6 +17,17 @@ in {
 
   xdg.configFile = {
     "${fishConfigDir}/config.fish".text = ''
+      if test -f /run/agenix/openrouter
+        set -gx OPENROUTER_API_KEY (cat /run/agenix/openrouter)
+      end
+      if test -f /run/agenix/github
+        set -gx GITHUB_TOKEN (cat /run/agenix/github)
+      end
+      if test -f /run/agenix/twt
+        set -gx TWT_TOKEN (cat /run/agenix/twt)
+      end
+
+
       set -gx NIXPKGS_ALLOW_UNFREE 1
       set -gx NIXPKGS_ALLOW_INSECURE 1
       set -gx EDITOR hx
