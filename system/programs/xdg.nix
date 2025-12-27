@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
@@ -15,5 +19,9 @@
       pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal-gnome
     ];
+  };
+
+  environment.sessionVariables = {
+    NIX_XDG_DESKTOP_PORTAL_DIR = lib.mkForce null;
   };
 }

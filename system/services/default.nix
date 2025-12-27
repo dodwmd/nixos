@@ -9,8 +9,6 @@
       drivers = [pkgs.hplip];
     };
 
-    dbus.implementation = "broker";
-
     irqbalance.enable = true;
     thermald.enable = true;
     speechd.enable = lib.mkForce false;
