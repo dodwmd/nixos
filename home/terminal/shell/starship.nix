@@ -18,26 +18,26 @@ in {
       command_timeout = 500;
 
       format = ''
-        [┌───](bold bright-blue) $hostname $os
-        [│](bold bright-blue) $directory$git_branch$git_status$nix_shell
-        [└─>](bold bright-blue) $character
+        $directory$git_branch$git_status$character
       '';
 
-      os = {
-        format = "on [($name $codename$version $symbol )]($style)";
-        style = "bold bright-blue";
-        disabled = false;
+      os.disabled = true;
+      hostname.disabled = true;
+      
+      directory = {
+        truncation_length = 0;  # Don't truncate
+        truncate_to_repo = false;
+        format = "[$path]($style)";
+        style = "bold cyan";
       };
-
-      hostname = {
-        ssh_only = false;
-        format = "[$hostname]($style)";
-        style = "bold bright-red";
-        disabled = false;
+      
+      git_branch = {
+        format = " [$branch]($style)";
+        style = "bold purple";
       };
 
       character = {
-        format = "$symbol";
+        format = " $symbol";
         success_symbol = "[❯](bold bright-green) ";
         error_symbol = "[✗](bold bright-red) ";
         vicmd_symbol = "[](bold yellow) ";

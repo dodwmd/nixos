@@ -1,7 +1,7 @@
 {pkgs, ...}: {
-  users.users.linuxmobile = {
+  users.users.dodwmd = {
     isNormalUser = true;
-    shell = pkgs.fish;
+    shell = pkgs.bash;
     extraGroups = [
       "adbusers"
       "input"

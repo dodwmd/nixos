@@ -21,7 +21,7 @@
     };
   };
 
-  console.keyMap = "la-latin1";
+  console.keyMap = "us";
 
   # don't touch this
   system = {
