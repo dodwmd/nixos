@@ -76,8 +76,6 @@ in {
         };
       };
     };
-    "fish/completions/mods.fish".source = pkgs.runCommand "mods-fish-completion" {} ''
-      ${pkgs.mods}/bin/mods completion fish > $out
-    '';
+    "fish/completions/mods.fish".source = "${pkgs.mods}/share/fish/completions/mods.fish";
   };
 }

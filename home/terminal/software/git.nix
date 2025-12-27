@@ -41,13 +41,13 @@ in {
       "side-by-side" = "true";
       "true-color" = "never";
     };
-    "delta decorations" = {
+    "delta-decorations" = {
       "commit-decoration-style" = "bold grey box ul";
       "file-decoration-style" = "ul";
       "file-style" = "bold blue";
       "hunk-header-decoration-style" = "box";
     };
-    "delta unobtrusive-line-numbers" = {
+    "delta-unobtrusive-line-numbers" = {
       "line-numbers" = "true";
       "line-numbers-left-format" = "{nm:>4}│";
       "line-numbers-left-style" = "grey";
@@ -57,7 +57,7 @@ in {
     diff = {
       colorMoved = "default";
     };
-    "filter lfs" = {
+    "filter-lfs" = {
       clean = "git-lfs clean -- %f";
       process = "git-lfs filter-process";
       required = "true";
@@ -66,7 +66,7 @@ in {
     gpg = {
       format = "openpgp";
     };
-    "gpg openpgp" = {
+    "gpg-openpgp" = {
       program = "${pkgs.gnupg}/bin/gpg";
     };
     init = {

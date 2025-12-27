@@ -33,8 +33,11 @@ in {
       multi: true
       tiebreak: "index,begin,end,length"
     '';
-    "fish/conf.d/skim.fish".text = ''
-      source ${pkgs.skim}/share/skim/key-bindings.fish
-    '';
+
+    "fish/conf.d/skim.fish".source = pkgs.symlinkJoin {
+      name = "skim.fish";
+      paths = ["${pkgs.skim}/share/skim"];
+      target = "key-bindings.fish";
+    };
   };
 }

@@ -38,7 +38,7 @@ in {
         layout ruby use ruby
       '';
 
-      xdg.configFile."fish/conf.d/direnv.fish".source = pkgs.runCommand "direnv-fish-hook" {} ''
+      "fish/conf.d/direnv.fish".source = pkgs.runCommand "direnv-fish-hook" {} ''
         ${pkgs.direnv}/bin/direnv hook fish > $out
       '';
     };

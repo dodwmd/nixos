@@ -1,19 +1,9 @@
 {pkgs, ...}: let
   configFile = "atuin/config.toml";
   toTOML = (pkgs.formats.toml {}).generate;
-
-  atuinWithFlags = pkgs.symlinkJoin {
-    name = "atuin-wrapped";
-    paths = [pkgs.atuin];
-    buildInputs = [pkgs.makeWrapper];
-    postBuild = ''
-      wrapProgram $out/bin/atuin \
-        --add-flags "--disable-up-arrow"
-    '';
-  };
 in {
   users.users.linuxmobile.packages = [
-    atuinWithFlags
+    pkgs.atuin
   ];
 
   xdg.configFile = {
@@ -36,8 +26,15 @@ in {
         records = true;
       };
     };
-    "fish/conf.d/atuin.fish".source = pkgs.runCommand "atuin-fish-init" {} ''
-      ${atuinWithFlags}/bin/atuin init fish > $out
-    '';
+
+    "fish/conf.d/atuin.fish".source =
+      pkgs.runCommand "atuin-fish-init" {
+        XDG_CONFIG_HOME = "$PWD";
+        XDG_DATA_HOME = "$PWD";
+        ATUIN_CONFIG_DIR = "$PWD/atuin";
+      } ''
+        mkdir -p atuin
+        ${pkgs.atuin}/bin/atuin init fish --disable-up-arrow > $out
+      '';
   };
 }

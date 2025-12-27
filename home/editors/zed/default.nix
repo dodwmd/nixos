@@ -15,14 +15,12 @@
 
   zedWithLSP = pkgs.symlinkJoin {
     name = "zed-with-lsp";
-    paths = [pkgs.zed] ++ lspPackages;
-    buildInputs = [pkgs.makeWrapper];
+    paths = [pkgs.zed-editor] ++ lspPackages;
+    nativeBuildInputs = [pkgs.makeWrapper];
     postBuild = ''
-      wrapProgram $out/bin/zeditor \
-        --prefix PATH : ${pkgs.symlinkJoin {
-        name = "helix-lsp-bin";
-        paths = lspPackages;
-      }}/bin
+      rm $out/bin/zeditor
+      makeWrapper ${pkgs.zed-editor}/bin/zeditor $out/bin/zeditor \
+        --prefix PATH : ${pkgs.lib.makeBinPath lspPackages}
     '';
   };
 in {

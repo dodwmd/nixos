@@ -1,6 +1,7 @@
 {
-  pkgs,
+  config,
   lib,
+  pkgs,
   ...
 }: let
   configFile = "foot/foot.ini";
@@ -15,7 +16,7 @@ in {
       pad = "15x6center";
       term = "xterm-256color";
       selection-target = "both";
-      include = "$XDG_CONFIG_HOME/foot/themes/noctalia";
+      include = "${config.xdg.configHome}/foot/themes/noctalia";
     };
     bell = {
       command = "notify-send bell";

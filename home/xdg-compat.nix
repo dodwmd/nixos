@@ -1,4 +1,3 @@
-# home/xdg-compat.nix
 {
   config,
   lib,
@@ -7,8 +6,6 @@
 }: let
   cfg = config.xdg;
   username = "linuxmobile";
-  userConfig = config.users.users.${username};
-  homeDir = userConfig.home;
 
   fileType = lib.types.submodule {
     options = {
@@ -45,64 +42,46 @@
   };
 in {
   options = {
-    users.users = lib.mkOption {
-      type = lib.types.attrsOf (lib.types.submodule userOpts);
-    };
-
+    users.users = lib.mkOption {type = lib.types.attrsOf (lib.types.submodule userOpts);};
     xdg = {
       configHome = lib.mkOption {
         type = lib.types.path;
-        default = "${homeDir}/.config";
-        description = "XDG config home directory";
+        default = "/home/${username}/.config";
       };
-
       cacheHome = lib.mkOption {
         type = lib.types.path;
-        default = "${homeDir}/.cache";
-        description = "XDG cache home directory";
+        default = "/home/${username}/.cache";
       };
-
       dataHome = lib.mkOption {
         type = lib.types.path;
-        default = "${homeDir}/.local/share";
-        description = "XDG data home directory";
+        default = "/home/${username}/.local/share";
       };
-
       stateHome = lib.mkOption {
         type = lib.types.path;
-        default = "${homeDir}/.local/state";
-        description = "XDG state home directory";
+        default = "/home/${username}/.local/state";
       };
 
+      # RE-AGREGADO: Declaramos la opción para que ssh.nix no explote
       runtimeDir = lib.mkOption {
-        type = lib.types.path;
-        default = "/run/user/${toString userConfig.uid}";
-        readOnly = true;
-        description = "XDG runtime directory";
+        type = lib.types.str;
+        default = "/run/user/1000"; # El UID default de NixOS para el primer usuario
       };
 
       configFile = lib.mkOption {
         type = lib.types.attrsOf fileType;
         default = {};
-        description = "Files to place in XDG_CONFIG_HOME";
       };
-
       cacheFile = lib.mkOption {
         type = lib.types.attrsOf fileType;
         default = {};
-        description = "Files to place in XDG_CACHE_HOME";
       };
-
       dataFile = lib.mkOption {
         type = lib.types.attrsOf fileType;
         default = {};
-        description = "Files to place in XDG_DATA_HOME";
       };
-
       stateFile = lib.mkOption {
         type = lib.types.attrsOf fileType;
         default = {};
-        description = "Files to place in XDG_STATE_HOME";
       };
     };
   };
@@ -120,7 +99,6 @@ in {
       XDG_CACHE_HOME = cfg.cacheHome;
       XDG_DATA_HOME = cfg.dataHome;
       XDG_STATE_HOME = cfg.stateHome;
-      XDG_RUNTIME_DIR = cfg.runtimeDir;
     };
 
     systemd.tmpfiles.rules = lib.flatten (
@@ -130,7 +108,7 @@ in {
             lib.mapAttrsToList (
               name: file:
                 if file.text != null
-                then "f+ ${baseDir}/${name} 0644 ${user} users - ${pkgs.writeText name file.text}"
+                then "L+ ${baseDir}/${name} - - - - ${pkgs.writeText name file.text}"
                 else "L+ ${baseDir}/${name} - - - - ${file.source}"
             )
             files;

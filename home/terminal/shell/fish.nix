@@ -17,14 +17,14 @@ in {
 
   xdg.configFile = {
     "${fishConfigDir}/config.fish".text = ''
-      if test -f /run/agenix/openrouter
-        set -gx OPENROUTER_API_KEY (cat /run/agenix/openrouter)
+      if test -f /run/agenix.d/openrouter
+        set -gx OPENROUTER_API_KEY (cat /run/agenix.d/openrouter)
       end
-      if test -f /run/agenix/github
-        set -gx GITHUB_TOKEN (cat /run/agenix/github)
+      if test -f /run/agenix.d/github
+        set -gx GITHUB_TOKEN (cat /run/agenix.d/github)
       end
-      if test -f /run/agenix/twt
-        set -gx TWT_TOKEN (cat /run/agenix/twt)
+      if test -f /run/agenix.d/twt
+        set -gx TWT_TOKEN (cat /run/agenix.d/twt)
       end
 
 

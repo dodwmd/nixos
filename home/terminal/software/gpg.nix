@@ -39,9 +39,8 @@ in {
       grab
       pinentry-program ${pkgs.pinentry-gnome3}/bin/pinentry
     '';
-    "fish/conf.d/gpg.fish".text = ''
+    "fish/conf.d/gpg.fish".source = pkgs.writeText "gpg.fish" ''
       set -gx GPG_TTY (tty)
-
       ${pkgs.gnupg}/bin/gpg-connect-agent --quiet updatestartuptty /bye >/dev/null
     '';
   };
