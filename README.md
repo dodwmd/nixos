@@ -17,7 +17,9 @@
 
 <p align="center"><img src="/assets/1.png" width=600px></p>
 
-<h2 align="center">革 | kaku</h2>
+<h2 align="center">革 | kaku - Homelab Edition</h2>
+
+> **🍴 Fork Notice**: This is a fork of [linuxmobile/kaku](https://github.com/linuxmobile/kaku) - an excellent NixOS configuration with Niri window manager. Massive kudos to [@linuxmobile](https://github.com/linuxmobile) for the amazing foundation! This fork extends the original desktop-focused setup with comprehensive homelab infrastructure management.
 
 ### ⚠ <sup><sub><samp>PLEASE RESPECT THE CREDITS IF YOU USE SOMETHING FROM MY DESKTOP/SETUP.</samp></sub></sup>
 
@@ -45,7 +47,36 @@
 - **GTK Theme** • [GTK](https://github.com/linuxmobile/Colloid-gtk-theme) 🐾 My
   Fork of colloid
 
-## 🌼 <samp>INSTALLATION (NixOS)</samp>
+## � <samp>HOMELAB ADDITIONS</samp>
+
+This fork extends the original kaku configuration with comprehensive homelab infrastructure:
+
+### 🚀 **Kubernetes Cluster (K3s)**
+- **5-node cluster**: 2 masters + 3 workers with HA configuration
+- **Custom modules**: `homelab.k3s-master` and `homelab.k3s-worker` for easy deployment
+- **Network configuration**: Static IPs, proper DNS, and TLS SAN certificates
+
+### 🎬 **Media & Entertainment Stack**
+- **Jellyfin**: Media server with hardware acceleration support
+- ***arr Suite**: Sonarr, Radarr, Lidarr, Readarr, Bazarr for media management
+- **Jellyseerr**: Media request management
+- **Prowlarr**: Indexer management
+- **Tdarr**: Media transcoding and optimization
+
+### 🛠️ **Infrastructure Services**
+- **AdGuard Home**: Network-wide ad blocking and DNS management
+- **Netdata**: Real-time system monitoring and alerting
+- **NFS Server**: Centralized storage sharing
+- **Nginx Proxy**: Reverse proxy and load balancing
+- **Homepage**: Unified dashboard for all services
+- **ZFS**: Advanced storage management with snapshots
+
+### 🔧 **Development & Management**
+- **Makefile**: Streamlined NixOS operations (`make switch`, `make update`, etc.)
+- **Enhanced profiles**: `exodus` profile with homelab-specific packages
+- **Monitoring scripts**: System health and performance tracking
+
+## � <samp>INSTALLATION (NixOS)</samp>
 
 > Request:
 > [NixOs](https://channels.nixos.org/nixos-25.05/latest-nixos-minimal-x86_64-linux.iso)
@@ -97,10 +128,10 @@ mount /dev/disk/by-label/EFI /mnt/boot
 nix-shell -p nixVersions.stable git
 ```
 
-- Clone my Dotfiles
+- Clone this Fork
 
 ```bash
-git clone --depth 1 https://github.com/linuxmobile/kaku /mnt/etc/nixos
+git clone --depth 1 https://github.com/dodwmd/nixos /mnt/etc/nixos
 ```
 
 - Generate your Own Nix Hardware Settings:
@@ -137,7 +168,11 @@ passwd YourUser
 - Install w/ Home-Manager the config
 
 ```bash
-home-manager switch --flake 'github:linuxmobile/kaku#linudev@aesthetic'
+# For desktop/workstation use:
+home-manager switch --flake 'github:dodwmd/nixos#exodus@exodus'
+
+# For the original aesthetic profile:
+home-manager switch --flake 'github:dodwmd/nixos#linudev@aesthetic'
 ```
 
 ### 🌸 <samp>SCREENSHOTS</samp>
@@ -157,12 +192,23 @@ If you're using this NixOS configuration flake locally, you can simplify the pro
 To switch your system configuration with `nh`, use:
 
 ```bash
+# For desktop/workstation:
+nh os switch .#exodus
+
+# For original aesthetic setup:
 nh os switch .#aesthetic
+
+# For K3s nodes:
+nh os switch .#k3s-master-01  # or k3s-master-02, k3s-worker-01, etc.
 ```
 
 Similarly, to apply home-manager configurations:
 
 ```bash
+# For homelab desktop setup:
+nh home switch .#exodus@exodus
+
+# For original aesthetic profile:
 nh home switch .#linudev@aesthetic
 ```
 
@@ -176,6 +222,7 @@ This avoids needing to type out the full `nixos-rebuild` or `home-manager` comma
 
 |     |     | Inspiration and Resources                   |     |     |
 | :-: | :-: | :------------------------------------------ | :-- | :-: |
+|     |  🍴 | **[linuxmobile](https://github.com/linuxmobile)** - **Original kaku author** |     |     |
 |     |  1  | [owl4ce](https://github.com/owl4ce)         |     |     |
 |     |  2  | [Ilham25](https://github.com/ilham25)       |     |     |
 |     |  3  | [Siduck](https://github.com/siduck)         |     |     |
