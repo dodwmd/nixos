@@ -1,115 +1,112 @@
-{pkgs}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   pointer = "Bibata-Original-Ice";
 in {
-  extraVariables = {
+  environment = {
     CLUTTER_BACKEND = "wayland";
     DISPLAY = null;
-    GTK_IM_MODULE = "simple";
     MOZ_ENABLE_WAYLAND = "1";
     NIXOS_OZONE_WL = "1";
-    QT_QPA_PLATFORMTHEME = "qt6ct";
     QT_QPA_PLATFORM = "wayland;xcb";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
     SDL_VIDEODRIVER = "wayland";
-    WLR_NO_HARDWARE_CURSORS = "1";
     WLR_RENDERER = "vulkan";
-    XDG_CURRENT_DESKTOP = "niri:GNOME";
+    WLR_NO_HARDWARE_CURSORS = "1";
+    QT_QPA_PLATFORMTHEME = "qt6ct";
+    GTK_IM_MODULE = "simple";
   };
 
   spawn-at-startup = [
-    ["dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "DISPLAY" "DBUS_SESSION_BUS_ADDRESS" "SWAYSOCK" "XDG_SESSION_TYPE" "XDG_SESSION_DESKTOP" "XDG_CURRENT_DESKTOP"]
-    ["dbus-update-activation-environment" "--systemd" "--all"]
     ["wl-paste" "--watch" "cliphist" "store"]
     ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]
     ["qs" "-c" "noctalia"]
   ];
 
-  config = ''
-    input {
-        keyboard {
-            xkb {
-                layout "latam"
-            }
-            repeat-delay 600
-            repeat-rate 25
-            track-layout "global"
-        }
-        touchpad {
-            tap
-            dwt
-            dwtp
-            natural-scroll
-            middle-emulation
-            accel-profile "adaptive"
-            scroll-method "two-finger"
-            click-method "button-areas"
-            tap-button-map "left-right-middle"
-        }
-        warp-mouse-to-focus
-        focus-follows-mouse max-scroll-amount="90%"
-        workspace-auto-back-and-forth
-    }
+  input = {
+    keyboard.xkb.layout = "latam";
+    touchpad = {
+      click-method = "button-areas";
+      dwt = {};
+      dwtp = {};
+      natural-scroll = {};
+      scroll-method = "two-finger";
+      tap = {};
+      tap-button-map = "left-right-middle";
+      middle-emulation = {};
+      accel-profile = "adaptive";
+    };
+    focus-follows-mouse._props = {max-scroll-amount = "90%";};
+    warp-mouse-to-focus = {};
+    workspace-auto-back-and-forth = {};
+  };
 
-    output "eDP-1" {
-        scale 1.0
-        transform "normal"
-        position x=0 y=0
-    }
+  screenshot-path = "~/Pictures/Screenshots/Screenshot-from-%Y-%m-%d-%H-%M-%S.png";
 
-    output "HDMI-A-1" {
-        scale 1.0
-        transform "normal"
-        mode "1920x1080"
-        position x=0 y=-1080
+  output = [
+    {
+      _args = ["eDP-1"];
+      scale = 1.0;
+      position._props = {
+        x = 0;
+        y = 0;
+      };
     }
-
-    layout {
-        background-color "transparent"
-        focus-ring { off; }
-        border {
-            width 2
-            active-color "#0d5ba5"
-            inactive-color "#204c78"
-        }
-        shadow { off; }
-        preset-column-widths {
-            proportion 0.25
-            proportion 0.5
-            proportion 0.75
-            proportion 1.0
-        }
-        default-column-width { proportion 0.5; }
-        always-center-single-column
-        gaps 6
-        struts { left 0; right 0; top 0; bottom 0; }
-        tab-indicator {
-            hide-when-single-tab
-            place-within-column
-            position "left"
-            corner-radius 20.0
-            gap -12.0
-            gaps-between-tabs 10.0
-            width 4.0
-            length total-proportion=0.1
-        }
+    {
+      _args = ["HDMI-A-1"];
+      mode = "1920x1080";
+      scale = 1.0;
+      position._props = {
+        x = 0;
+        y = -1080;
+      };
     }
+  ];
 
-    cursor {
-        xcursor-size 20
-        xcursor-theme "${pointer}"
-    }
+  overview = {
+    workspace-shadow.off = {};
+    backdrop-color = "transparent";
+  };
 
-    overview {
-        backdrop-color "transparent"
-        workspace-shadow { off; }
-    }
+  gestures.hot-corners = {};
 
-    gestures {
-        hot-corners
-    }
+  cursor = {
+    xcursor-size = 20;
+    xcursor-theme = pointer;
+  };
 
-    screenshot-path "~/Pictures/Screenshots/Screenshot-from-%Y-%m-%d-%H-%M-%S.png"
-    prefer-no-csd
-    hotkey-overlay { skip-at-startup; }
-  '';
+  layout = {
+    focus-ring.off = {};
+    border = {
+      width = 2;
+      active-color = "#0d5ba5";
+      inactive-color = "#204c78";
+    };
+    shadow.off = {};
+    preset-column-widths.proportion = [0.25 0.5 0.75 1.0];
+    default-column-width.proportion = 0.5;
+    always-center-single-column = {};
+    gaps = 6;
+    struts = {
+      left = 0;
+      right = 0;
+      top = 0;
+      bottom = 0;
+    };
+    tab-indicator = {
+      hide-when-single-tab = {};
+      place-within-column = {};
+      position = "left";
+      corner-radius = 20.0;
+      gap = -12.0;
+      gaps-between-tabs = 10.0;
+      width = 4.0;
+      length._props = {total-proportion = 0.1;};
+    };
+  };
+
+  prefer-no-csd = {};
+  hotkey-overlay.skip-at-startup = {};
 }
