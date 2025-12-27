@@ -7,21 +7,30 @@
 }: {
   imports = [./hardware-configuration.nix];
 
-  age.secrets = {
-    openrouter = {
-      file = "${self}/secrets/openrouter.age";
-      owner = "linuxmobile";
-      group = "users";
-    };
-    github = {
-      file = "${self}/secrets/github.age";
-      owner = "linuxmobile";
-      group = "users";
-    };
-    twt = {
-      file = "${self}/secrets/twt.age";
-      owner = "linuxmobile";
-      group = "users";
+  age = {
+    identityPaths = [
+      "/etc/ssh/ssh_host_ed25519_key"
+    ];
+
+    secrets = {
+      openrouter = {
+        file = "${self}/secrets/openrouter.age";
+        owner = "linuxmobile";
+        group = "users";
+        mode = "0400";
+      };
+      github = {
+        file = "${self}/secrets/github.age";
+        owner = "linuxmobile";
+        group = "users";
+        mode = "0400";
+      };
+      twt = {
+        file = "${self}/secrets/twt.age";
+        owner = "linuxmobile";
+        group = "users";
+        mode = "0400";
+      };
     };
   };
 
