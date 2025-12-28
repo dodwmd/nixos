@@ -78,6 +78,7 @@ in {
   };
 
   layout = {
+    background-color = "transparent";
     focus-ring.off = {};
     border = {
       width = 2;
