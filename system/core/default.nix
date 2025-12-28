@@ -26,7 +26,6 @@
   # don't touch this
   system = {
     switch.enable = true;
-    rebuild.enableNg = true;
     stateVersion = lib.mkDefault "25.05";
   };
 
