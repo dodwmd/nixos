@@ -22,8 +22,6 @@
     gnumake
     kubectl
     bc
-    # htop - already included in kaku
-    # btop - already included in kaku
     bitwarden-cli
     gnupg
     # curl - already included

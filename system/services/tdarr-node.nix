@@ -23,12 +23,12 @@
     autoStart = true;
     
     environment = {
-      PUID = "1000";  # dodwmd user ID on kaku
-      PGID = "100";   # users group ID on kaku
+      PUID = "1000";
+      PGID = "100";
       TZ = "Australia/Brisbane";
       serverIP = "nexus.home.dodwell.us";
       serverPort = "8266";
-      nodeName = "kaku-gpu";  # Different node name for kaku
+      nodeName = "exodus-gpu";
       inContainer = "true";
       ffmpegVersion = "7";
       NVIDIA_VISIBLE_DEVICES = "all";
@@ -38,7 +38,7 @@
     volumes = [
       "/home/dodwmd/.config/tdarr-node:/app/configs"
       "/mnt/nexus-data:/media"
-      "/tmp/tdarr-transcode-kaku:/temp"  # Different temp dir for kaku
+      "/tmp/tdarr-transcode-exodus:/temp"
       "/mnt/nexus-config/tdarr/server:/app/server:ro"  # Mount server plugins read-only
     ];
     
@@ -54,7 +54,7 @@
 
   # Create required directories
   systemd.tmpfiles.rules = [
-    "d /tmp/tdarr-transcode-kaku 0755 1000 100 -"
+    "d /tmp/tdarr-transcode-exodus 0755 1000 100 -"
     "d /home/dodwmd/.config/tdarr-node 0755 1000 100 -"
   ];
 }
