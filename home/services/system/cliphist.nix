@@ -26,14 +26,8 @@ in {
   };
 
   xdg.configFile."${configFile}".text = ''
-    # Cliphist configuration
-    # Enable image support
     allow_images=true
-
-    # Maximum number of entries to keep
     max_entries=500
-
-    # Database file location
     database=${config.xdg.dataHome}/cliphist/db
   '';
 }

@@ -61,10 +61,9 @@ in {
         default = "/home/${username}/.local/state";
       };
 
-      # RE-AGREGADO: Declaramos la opción para que ssh.nix no explote
       runtimeDir = lib.mkOption {
         type = lib.types.str;
-        default = "/run/user/1000"; # El UID default de NixOS para el primer usuario
+        default = "/run/user/1000";
       };
 
       configFile = lib.mkOption {

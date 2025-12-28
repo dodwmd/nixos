@@ -16,7 +16,6 @@
     CARAPACE_CACHE_DIR = "${config.xdg.cacheHome}/carapace";
   };
 
-  # Configuración de Carapace
   xdg.configFile."carapace/carapace.toml".text = ''
     [integrations.fish]
     enabled = true
