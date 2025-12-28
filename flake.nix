@@ -55,19 +55,6 @@
 
     import-tree.url = "github:vic/import-tree";
 
-    hjem = {
-      url = "github:feel-co/hjem";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hjem-rum = {
-      url = "github:snugnug/hjem-rum";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        hjem.follows = "hjem";
-      };
-    };
-
     mynixpkgs.url = "github:linuxmobile/mynixpkgs";
 
     nix-index-db = {
