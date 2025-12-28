@@ -1,11 +1,23 @@
 {
-  lib,
   pkgs,
+  lib,
   ...
 }: let
-  qmlCandidates =
+  quickshellDeps = with pkgs;
     [
-      pkgs.quickshell
+      accountsservice
+      brightnessctl
+      cava
+      cliphist
+      ddcutil
+      elogind
+      glib
+      gpu-screen-recorder
+      gsettings-desktop-schemas
+      material-symbols
+      swww
+      wl-clipboard
+      wget
     ]
     ++ (with pkgs.kdePackages; [
       qtbase
@@ -16,41 +28,31 @@
       kirigami
     ]);
 
-  requiredPackages = with pkgs; [
-    accountsservice
-    gsettings-desktop-schemas
-    brightnessctl
-    cava
-    cliphist
-    ddcutil
-    elogind
-    glib
-    gpu-screen-recorder
-    material-symbols
+  userPackages = with pkgs; [
     matugen
-    swww
-    wl-clipboard
+    gsettings-desktop-schemas
   ];
 
-  allPackages = qmlCandidates ++ requiredPackages;
+  quickshellWrapped =
+    pkgs.runCommand "quickshell-wrapped" {
+      buildInputs = [pkgs.makeWrapper];
+    } ''
+      mkdir -p $out/bin
+      paths="${pkgs.lib.makeBinPath quickshellDeps}"
+      qmlPaths="${lib.makeSearchPath "lib/qt-6/qml" quickshellDeps}:${lib.makeSearchPath "lib/qt-5/qml" quickshellDeps}"
 
-  quickshellWrapped = pkgs.symlinkJoin {
-    name = "quickshell-wrapped";
-    paths = allPackages;
-    buildInputs = [pkgs.makeWrapper];
 
-    postBuild = ''
-      wrapProgram $out/bin/quickshell \
-        --set QML2_IMPORT_PATH "${lib.makeSearchPath "lib/qt-6/qml" qmlCandidates}:${lib.makeSearchPath "lib/qt-5/qml" qmlCandidates}"
+      for bin in ${pkgs.quickshell}/bin/*; do
+        name=$(basename "$bin")
+        makeWrapper "$bin" "$out/bin/$name" \
+          --prefix QML2_IMPORT_PATH : "$qmlPaths" \
+          --prefix PATH : "$paths"
+      done
     '';
-  };
 in {
-  users.users.linuxmobile.packages = [
-    quickshellWrapped
-  ];
-
-  environment.sessionVariables.QML2_IMPORT_PATH =
-    lib.makeSearchPath "lib/qt-6/qml" qmlCandidates
-    + ":"
-    + lib.makeSearchPath "lib/qt-5/qml" qmlCandidates;
+  users.users.linuxmobile.packages =
+    [
+      quickshellWrapped
+    ]
+    ++ userPackages;
 }
