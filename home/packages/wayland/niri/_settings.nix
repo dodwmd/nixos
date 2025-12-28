@@ -1,10 +1,7 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+_: let
   pointer = "Bibata-Original-Ice";
 in {
+  include = "noctalia.kdl";
   environment = {
     CLUTTER_BACKEND = "wayland";
     DISPLAY = null;
@@ -82,8 +79,6 @@ in {
     focus-ring.off = {};
     border = {
       width = 2;
-      active-color = "#0d5ba5";
-      inactive-color = "#204c78";
     };
     shadow.off = {};
     preset-column-widths.proportion = [0.25 0.5 0.75 1.0];
