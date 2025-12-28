@@ -1,6 +1,6 @@
 _: {
   # nh default flake
-  environment.variables.NH_FLAKE = "/home/dodwmd/code/homelab/nixos/kaku";
+  environment.variables.NH_FLAKE = "/home/dodwmd/code/nixos";
 
   programs.nh = {
     enable = true;

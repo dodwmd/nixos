@@ -72,9 +72,10 @@ This fork extends the original kaku configuration with comprehensive homelab inf
 - **ZFS**: Advanced storage management with snapshots
 
 ### 🔧 **Development & Management**
-- **Makefile**: Streamlined NixOS operations (`make switch`, `make update`, etc.)
+- **Makefile**: Streamlined NixOS operations for all hosts (`make switch HOST=k3s-master-01`, etc.)
 - **Enhanced profiles**: `exodus` profile with homelab-specific packages
 - **Monitoring scripts**: System health and performance tracking
+- **Multi-host support**: Easy management of all 7 system configurations
 
 ## � <samp>INSTALLATION (NixOS)</samp>
 
@@ -189,27 +190,27 @@ home-manager switch --flake 'github:dodwmd/nixos#linudev@aesthetic'
 
 If you're using this NixOS configuration flake locally, you can simplify the process of switching and managing your system using [`nh`](https://github.com/viperML/nh), a CLI helper for Nix Flakes.
 
-To switch your system configuration with `nh`, use:
+To switch your system configuration, you can use the Makefile or `nh`:
 
 ```bash
-# For desktop/workstation:
-nh os switch .#exodus
+# Using the Makefile (recommended):
+make switch                    # Build and switch exodus (default)
+make switch HOST=k3s-master-01 # Build and switch k3s-master-01
+make build HOST=nexus          # Build nexus without switching
+make hosts                     # List all available hosts
 
-# For original aesthetic setup:
-nh os switch .#aesthetic
-
-# For K3s nodes:
-nh os switch .#k3s-master-01  # or k3s-master-02, k3s-worker-01, etc.
+# Using nh directly:
+nh os switch .#exodus          # Desktop/workstation
+nh os switch .#k3s-master-01   # K3s master node
+nh os switch .#k3s-worker-01   # K3s worker node
+nh os switch .#nexus           # Nexus host
 ```
 
-Similarly, to apply home-manager configurations:
+For home-manager configurations:
 
 ```bash
 # For homelab desktop setup:
 nh home switch .#exodus@exodus
-
-# For original aesthetic profile:
-nh home switch .#linudev@aesthetic
 ```
 
 This avoids needing to type out the full `nixos-rebuild` or `home-manager` commands manually and provides a cleaner workflow when iterating on your setup.
