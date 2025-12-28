@@ -1,24 +1,18 @@
 {pkgs, ...}: let
   formatters = {
     alejandra = "${pkgs.alejandra}/bin/alejandra";
-    biome = "biome";
-    goimports = "${pkgs.gosimports}/bin/goimports";
-    nushell = "${pkgs.nushell}/bin/nu";
-    prettier = "${pkgs.nodePackages.prettier}/bin/prettier";
+    biome = "${pkgs.biome}/bin/biome";
+    oxfmt = "${pkgs.oxfmt}/bin/oxfmt";
     shfmt = "${pkgs.shfmt}/bin/shfmt";
-    stylua = "${pkgs.stylua}/bin/stylua";
   };
 
   languageServers = {
     astro-ls = "${pkgs.astro-language-server}/bin/astro-ls";
-    biome-lsp = "biome";
-    css-languageserver = "${pkgs.vscode-langservers-extracted}/bin/css-languageserver";
-    emmet-ls = "${pkgs.emmet-ls}/bin/emmet-ls";
-    gopls = "${pkgs.gopls}/bin/gopls";
-    lua-language-server = "${pkgs.lua-language-server}/bin/lua-language-server";
+    biome = "${pkgs.biome}/bin/biome";
     marksman = "${pkgs.marksman}/bin/marksman";
     nil = "${pkgs.nil}/bin/nil";
-    yaml-language-server = "${pkgs.yaml-language-server}/bin/yaml-language-server";
+    tailwindcss = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
+    volar = "${pkgs.vue-language-server}/bin/vue-language-server";
   };
 in
   (pkgs.formats.toml {}).generate "languages.toml" {
@@ -32,81 +26,55 @@ in
         };
       }
       {
-        name = "go";
-        auto-format = true;
-        formatter = {
-          command = formatters.goimports;
-        };
-        language-servers = ["gopls"];
-      }
-      {
         name = "yaml";
         auto-format = true;
         formatter = {
-          command = formatters.prettier;
-          args = ["--parser" "yaml"];
+          command = formatters.oxfmt;
+          args = ["--stdin-filepath" "file.yaml"];
         };
-        language-servers = ["yaml-language-server"];
       }
       {
         name = "astro";
         auto-format = true;
         formatter = {
-          command = formatters.prettier;
-          args = ["--parser" "astro"];
+          command = formatters.biome;
+          args = ["format" "--stdin-file-path" "a.astro"];
         };
-        language-servers = ["astro-ls"];
+        language-servers = ["astro-ls" "tailwindcss"];
       }
       {
         name = "javascript";
         auto-format = true;
         formatter = {
-          command = formatters.biome;
-          args = ["format" "--stdin-file-path" "a.js"];
+          command = formatters.oxfmt;
+          args = ["--stdin-filepath" "file.js"];
         };
-        language-servers = [
-          {
-            name = "typescript-language-server";
-            except-features = ["format"];
-          }
-          "biome-lsp"
-        ];
+        language-servers = ["biome" "tailwindcss"];
       }
       {
         name = "json";
+        auto-format = true;
         formatter = {
-          command = formatters.biome;
-          args = ["format" "json"];
+          command = formatters.oxfmt;
+          args = ["--stdin-filepath" "file.json"];
         };
-        language-servers = [
-          {
-            name = "typescript-language-server";
-            except-features = ["format"];
-          }
-          "biome-lsp"
-        ];
+        language-servers = ["biome"];
       }
       {
         name = "jsx";
         auto-format = true;
         formatter = {
-          command = formatters.biome;
-          args = ["format" "--stdin-file-path" "a.jsx"];
+          command = formatters.oxfmt;
+          args = ["--stdin-filepath" "file.jsx"];
         };
-        language-servers = [
-          {
-            name = "typescript-language-server";
-            except-features = ["format"];
-          }
-          "biome-lsp"
-        ];
+        language-servers = ["biome" "tailwindcss"];
       }
       {
         name = "markdown";
         auto-format = true;
         formatter = {
-          command = formatters.prettier;
-          args = ["--parser" "markdown"];
+          command = formatters.oxfmt;
+          args = ["--stdin-filepath" "file.md"];
         };
         language-servers = ["marksman"];
       }
@@ -114,48 +82,46 @@ in
         name = "typescript";
         auto-format = true;
         formatter = {
-          command = formatters.biome;
-          args = ["format" "--stdin-file-path" "a.ts"];
+          command = formatters.oxfmt;
+          args = ["--stdin-filepath" "file.ts"];
         };
-        language-servers = [
-          {
-            name = "typescript-language-server";
-            except-features = ["format"];
-          }
-          "biome-lsp"
-        ];
+        language-servers = ["biome" "tailwindcss"];
       }
       {
         name = "tsx";
         auto-format = true;
         formatter = {
-          command = formatters.biome;
-          args = ["format" "--stdin-file-path" "a.tsx"];
+          command = formatters.oxfmt;
+          args = ["--stdin-filepath" "file.tsx"];
         };
-        language-servers = [
-          {
-            name = "typescript-language-server";
-            except-features = ["format"];
-          }
-          "biome-lsp"
-        ];
+        language-servers = ["biome" "tailwindcss"];
       }
       {
-        name = "lua";
+        name = "css";
         auto-format = true;
         formatter = {
-          command = formatters.stylua;
-          args = ["-"];
+          command = formatters.oxfmt;
+          args = ["--stdin-filepath" "file.css"];
         };
-        language-servers = ["lua-language-server"];
+        language-servers = ["biome" "tailwindcss"];
       }
       {
-        name = "nu";
+        name = "html";
         auto-format = true;
         formatter = {
-          command = formatters.nushell;
-          args = ["--format"];
+          command = formatters.oxfmt;
+          args = ["--stdin-filepath" "file.html"];
         };
+        language-servers = ["tailwindcss"];
+      }
+      {
+        name = "vue";
+        auto-format = true;
+        formatter = {
+          command = formatters.oxfmt;
+          args = ["--stdin-filepath" "file.vue"];
+        };
+        language-servers = ["volar" "tailwindcss"];
       }
       {
         name = "nix";
@@ -173,67 +139,24 @@ in
         command = languageServers.astro-ls;
         args = ["--stdio"];
       };
-      biome-lsp = {
-        command = languageServers.biome-lsp;
+      biome = {
+        command = languageServers.biome;
         args = ["lsp-proxy"];
-      };
-      emmet-ls = {
-        command = languageServers.emmet-ls;
-        args = ["--stdio"];
       };
       nil = {
         command = languageServers.nil;
         config.nil.formatting.command = [formatters.alejandra "-q"];
       };
-      vscode-css-language-server = {
-        command = languageServers.css-languageserver;
-        args = ["--stdio"];
-        config = {
-          provideFormatter = true;
-          css.validate.enable = true;
-          scss.validate.enable = true;
-        };
-      };
-      lua-language-server = {
-        command = languageServers.lua-language-server;
-        config = {
-          runtime = {
-            version = "LuaJIT";
-            path = [
-              "?.lua"
-              "?/init.lua"
-            ];
-          };
-          diagnostics = {
-            globals = ["vim"];
-          };
-          workspace = {
-            library = {};
-            maxPreload = 2000;
-            preloadFileSize = 1000;
-            checkThirdParty = false;
-          };
-          telemetry = {
-            enable = false;
-          };
-          format = {
-            enable = true;
-            defaultConfig = {
-              indent_style = "space";
-              indent_size = "2";
-            };
-          };
-        };
-      };
-      gopls = {
-        command = languageServers.gopls;
-      };
-      yaml-language-server = {
-        command = languageServers.yaml-language-server;
-        args = ["--stdio"];
-      };
       marksman = {
         command = languageServers.marksman;
+      };
+      tailwindcss = {
+        command = languageServers.tailwindcss;
+        args = ["--stdio"];
+      };
+      volar = {
+        command = languageServers.volar;
+        args = ["--stdio"];
       };
     };
   }

@@ -1,35 +1,44 @@
 {pkgs, ...}: let
   configFile = "helix/config.toml";
   toTOML = (pkgs.formats.toml {}).generate;
-
   languagesTOML = import ./_languages.nix {inherit pkgs;};
 
   lspPackages = with pkgs; [
+    # Language Server Protocol
     astro-language-server
     biome
-    emmet-ls
-    gopls
     marksman
     nil
-    nixd
-    nodePackages.typescript-language-server
-    typescript
-    vscode-langservers-extracted
-    yaml-language-server
+    tailwindcss-language-server
+    vue-language-server
+
+    # Formatters
+    alejandra
+    oxfmt
+    shfmt
   ];
 
-  helixWithLSP = pkgs.symlinkJoin {
-    name = "helix-with-lsp";
-    paths = [pkgs.helix] ++ lspPackages;
-    buildInputs = [pkgs.makeWrapper];
-    postBuild = ''
-      wrapProgram $out/bin/hx \
-        --prefix PATH : ${pkgs.symlinkJoin {
-        name = "helix-lsp-bin";
-        paths = lspPackages;
-      }}/bin
-    '';
+  lspBinPath = pkgs.buildEnv {
+    name = "helix-lsp-env";
+    paths = lspPackages;
+    pathsToLink = ["/bin"];
   };
+
+  helixWithLSP =
+    pkgs.runCommand "helix-with-lsp" {
+      buildInputs = [pkgs.makeWrapper];
+    } ''
+      mkdir -p $out/bin
+      makeWrapper ${pkgs.helix}/bin/hx $out/bin/hx \
+        --prefix PATH : ${lspBinPath}/bin
+
+
+      for bin in ${pkgs.helix}/bin/*; do
+        if [ "$(basename $bin)" != "hx" ]; then
+          ln -s $bin $out/bin/$(basename $bin)
+        fi
+      done
+    '';
 in {
   users.users.linuxmobile.packages = [
     helixWithLSP
@@ -122,7 +131,7 @@ in {
       space = {x = ":buffer-close";};
 
       space.u = {
-        f = ":format"; # format using LSP formatter
+        f = ":format";
         w = ":set whitespace.render all";
         W = ":set whitespace.render none";
       };

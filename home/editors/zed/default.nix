@@ -1,28 +1,40 @@
 {pkgs, ...}: let
   lspPackages = with pkgs; [
+    # Language Server Protocol
     astro-language-server
     biome
-    emmet-ls
-    gopls
     marksman
     nil
-    nixd
-    nodePackages.typescript-language-server
-    typescript
-    vscode-langservers-extracted
-    yaml-language-server
+    tailwindcss-language-server
+    vue-language-server
+
+    # Formatters
+    alejandra
+    oxfmt
+    shfmt
   ];
 
-  zedWithLSP = pkgs.symlinkJoin {
-    name = "zed-with-lsp";
-    paths = [pkgs.zed-editor] ++ lspPackages;
-    nativeBuildInputs = [pkgs.makeWrapper];
-    postBuild = ''
-      rm $out/bin/zeditor
-      makeWrapper ${pkgs.zed-editor}/bin/zeditor $out/bin/zeditor \
-        --prefix PATH : ${pkgs.lib.makeBinPath lspPackages}
-    '';
+  lspBinPath = pkgs.buildEnv {
+    name = "zed-lsp-env";
+    paths = lspPackages;
+    pathsToLink = ["/bin"];
   };
+
+  zedWithLSP =
+    pkgs.runCommand "zed-with-lsp" {
+      buildInputs = [pkgs.makeWrapper];
+    } ''
+      mkdir -p $out/bin
+      makeWrapper ${pkgs.zed-editor}/bin/zeditor $out/bin/zeditor \
+        --prefix PATH : ${lspBinPath}/bin
+
+
+      for bin in ${pkgs.zed-editor}/bin/*; do
+        if [ "$(basename $bin)" != "zeditor" ]; then
+          ln -s $bin $out/bin/$(basename $bin)
+        fi
+      done
+    '';
 in {
   users.users.linuxmobile.packages = [
     zedWithLSP
