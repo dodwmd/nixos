@@ -6,7 +6,6 @@
 }: let
   cfg = config.xdg;
   username = "linuxmobile";
-
   fileType = lib.types.submodule {
     options = {
       text = lib.mkOption {
@@ -17,9 +16,13 @@
         type = lib.types.nullOr lib.types.path;
         default = null;
       };
+      force = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Whether to force overwrite existing files";
+      };
     };
   };
-
   userOpts = _: {
     options = {
       configFiles = lib.mkOption {
@@ -40,6 +43,22 @@
       };
     };
   };
+
+  mkLinkScript = baseDir: name: file: let
+    target =
+      if file.text != null
+      then pkgs.writeText name file.text
+      else file.source;
+    fullPath = "${baseDir}/${name}";
+    parentDir = builtins.dirOf fullPath;
+    forceFlag =
+      if file.force
+      then "-f"
+      else "";
+  in ''
+    mkdir -p "${parentDir}"
+    ln -s ${forceFlag} "${target}" "${fullPath}" 2>/dev/null || true
+  '';
 in {
   options = {
     users.users = lib.mkOption {type = lib.types.attrsOf (lib.types.submodule userOpts);};
@@ -60,12 +79,10 @@ in {
         type = lib.types.path;
         default = "/home/${username}/.local/state";
       };
-
       runtimeDir = lib.mkOption {
         type = lib.types.str;
         default = "/run/user/1000";
       };
-
       configFile = lib.mkOption {
         type = lib.types.attrsOf fileType;
         default = {};
@@ -100,24 +117,19 @@ in {
       XDG_STATE_HOME = cfg.stateHome;
     };
 
-    systemd.tmpfiles.rules = lib.flatten (
-      lib.mapAttrsToList (
-        user: userCfg: let
-          mkRules = baseDir: files:
-            lib.mapAttrsToList (
-              name: file:
-                if file.text != null
-                then "L+ ${baseDir}/${name} - - - - ${pkgs.writeText name file.text}"
-                else "L+ ${baseDir}/${name} - - - - ${file.source}"
-            )
-            files;
-        in
-          (mkRules cfg.configHome userCfg.configFiles)
-          ++ (mkRules cfg.cacheHome userCfg.cacheFiles)
-          ++ (mkRules cfg.dataHome userCfg.dataFiles)
-          ++ (mkRules cfg.stateHome userCfg.stateFiles)
-      )
-      config.users.users
-    );
+    system.activationScripts.xdgUserFiles = lib.stringAfter ["users"] ''
+      ${lib.concatStringsSep "\n" (
+        lib.flatten (
+          lib.mapAttrsToList (
+            user: userCfg:
+              (lib.mapAttrsToList (mkLinkScript cfg.configHome) userCfg.configFiles)
+              ++ (lib.mapAttrsToList (mkLinkScript cfg.cacheHome) userCfg.cacheFiles)
+              ++ (lib.mapAttrsToList (mkLinkScript cfg.dataHome) userCfg.dataFiles)
+              ++ (lib.mapAttrsToList (mkLinkScript cfg.stateHome) userCfg.stateFiles)
+          )
+          config.users.users
+        )
+      )}
+    '';
   };
 }

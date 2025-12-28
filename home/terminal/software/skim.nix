@@ -34,10 +34,6 @@ in {
       tiebreak: "index,begin,end,length"
     '';
 
-    "fish/conf.d/skim.fish".source = pkgs.symlinkJoin {
-      name = "skim.fish";
-      paths = ["${pkgs.skim}/share/skim"];
-      target = "key-bindings.fish";
-    };
+    "fish/conf.d/skim.fish".source = "${pkgs.skim}/share/fish/vendor_completions.d/sk.fish";
   };
 }

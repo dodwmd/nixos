@@ -76,6 +76,6 @@ in {
         };
       };
     };
-    "fish/completions/mods.fish".source = "${pkgs.mods}/share/fish/completions/mods.fish";
+    "fish/completions/mods.fish".source = "${pkgs.mods}/share/fish/vendor_completions.d/mods.fish";
   };
 }

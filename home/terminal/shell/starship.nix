@@ -77,10 +77,10 @@ in {
       time.disabled = true;
       cmd_duration.disabled = true;
     };
-    "fish/conf.d/starship.fish".source = pkgs.symlinkJoin {
-      name = "starship.fish";
-      paths = ["${pkgs.starship}/share/fish/vendor_completions.d"];
-      target = "starship.fish";
-    };
+    "fish/conf.d/starship.fish".text = ''
+      starship init fish | source
+    '';
+
+    "fish/completions/starship.fish".source = "${pkgs.starship}/share/fish/vendor_completions.d/starship.fish";
   };
 }
