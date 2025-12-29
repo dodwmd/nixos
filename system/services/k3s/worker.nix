@@ -77,7 +77,9 @@ in
         serverAddr = cfg.serverAddr;
         
         extraFlags = lib.concatStringsSep " " (
-          []
+          [
+            "--with-node-id"
+          ]
           ++ (optional (config.homelab.k3s-cluster.nodeIP != null) "--node-ip=${config.homelab.k3s-cluster.nodeIP}")
           ++ (map (label: "--node-label=${label}") cfg.nodeLabels)
           ++ (map (taint: "--node-taint=${taint}") cfg.nodeTaints)
