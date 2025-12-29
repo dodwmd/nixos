@@ -37,9 +37,9 @@
     "rd.udev.log_level=info"
   ];
 
-  # K3s worker configuration (temporarily disabled)
+  # K3s worker configuration
   homelab.k3s-worker = {
-    enable = false;  # Temporarily disabled for rebuild
+    enable = true;
     serverAddr = "https://192.168.1.20:6443";
     nodeLabels = [
       "worker=true"
