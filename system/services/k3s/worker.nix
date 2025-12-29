@@ -85,9 +85,9 @@ in
           ++ (optional cfg.enableGPU "--container-runtime-endpoint=/run/containerd/containerd.sock")
         );
       }
-      (mkIf (config ? age && config.age ? secrets && config.age.secrets ? k3s-token) {
-        tokenFile = config.age.secrets.k3s-token.path;
-      })
+      {
+        tokenFile = "/etc/k3s/token";
+      }
     ];
     
     # GPU support configuration

@@ -74,9 +74,9 @@ in
           ++ (optional (cfg.datastoreEndpoint != null) "--datastore-endpoint=${cfg.datastoreEndpoint}")
         );
       }
-      // (optionalAttrs (config ? age && config.age ? secrets && config.age.secrets ? k3s-token) {
-        tokenFile = config.age.secrets.k3s-token.path;
-      }));
+      // {
+        tokenFile = "/etc/k3s/token";
+      });
     
     # Create kubeconfig symlink for easier access
     system.activationScripts.k3s-kubeconfig = ''
