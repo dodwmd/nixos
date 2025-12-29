@@ -16,6 +16,14 @@
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  
+  # Show boot messages instead of splash screen
+  boot.plymouth.enable = lib.mkForce false;
+  boot.kernelParams = [
+    "systemd.show_status=true"
+    "rd.systemd.show_status=true"
+    "rd.udev.log_level=info"
+  ];
 
   # K3s master configuration (joining existing cluster)
   homelab.k3s-master = {
