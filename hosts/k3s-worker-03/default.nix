@@ -49,14 +49,6 @@
     ];
   };
 
-  users.users.dodwmd = {
-    isNormalUser = true;
-    createHome = true;
-    extraGroups = [ "wheel" "docker" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaqAx711E4IolsUvuE/JTv4CJNXL7e9ulZsZZN/XWVx michael@dodwell.us"
-    ];
-  };
 
   # SSH configuration
   services.openssh = {
