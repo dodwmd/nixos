@@ -41,12 +41,6 @@
     # nodeIP will be auto-detected from DHCP
   };
 
-  # Storage configuration for KubeVirt
-  fileSystems."/mnt/vms/roblox-dev" = {
-    device = "/dev/disk/by-uuid/your-uuid-here";  # Update with actual UUID
-    fsType = "ext4";
-    options = [ "defaults" ];
-  };
 
   # Users
   users.users.admin = {
