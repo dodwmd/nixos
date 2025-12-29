@@ -30,7 +30,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   
   # Show boot messages instead of splash screen
-  boot.plymouth.enable = false;
+  boot.plymouth.enable = lib.mkForce false;
   boot.kernelParams = [
     "systemd.show_status=true"
     "rd.systemd.show_status=true"
