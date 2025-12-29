@@ -47,8 +47,9 @@ in
     };
     
     nodeIP = mkOption {
-      type = types.str;
-      description = "IP address for this node";
+      type = types.nullOr types.str;
+      default = null;
+      description = "IP address for this node (auto-detected if null)";
     };
     
     enableMetrics = mkOption {

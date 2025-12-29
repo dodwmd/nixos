@@ -8,17 +8,9 @@
   # System identification
   networking.hostName = "k3s-master-01";
   
-  # Network configuration (matching original)
-  networking.useDHCP = false;
-  networking.interfaces.eth0 = {
-    useDHCP = false;
-    macAddress = "60:BE:B4:23:64:2F";
-    ipv4.addresses = [{
-      address = "192.168.1.20";
-      prefixLength = 24;
-    }];
-  };
-  networking.defaultGateway = "192.168.1.1";
+  # Network configuration - use DHCP
+  networking.useDHCP = true;
+  networking.dhcpcd.enable = true;
   networking.nameservers = [ "192.168.1.1" "192.168.1.4" ];
 
   # Bootloader
@@ -39,7 +31,7 @@
   };
 
   homelab.k3s-cluster = {
-    nodeIP = "192.168.1.20";
+    # nodeIP will be auto-detected from DHCP
     enableTraefik = false;
     enableServiceLB = false;
   };

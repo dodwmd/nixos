@@ -55,7 +55,6 @@ in
         extraFlags = lib.concatStringsSep " " (
           [
             "--debug"
-            "--node-ip=${config.homelab.k3s-cluster.nodeIP}"
             "--cluster-cidr=${config.homelab.k3s-cluster.clusterCIDR}"
             "--service-cidr=${config.homelab.k3s-cluster.serviceCIDR}"
             "--cluster-dns=${config.homelab.k3s-cluster.clusterDNS}"
@@ -67,6 +66,7 @@ in
             "--etcd-expose-metrics=true"
             "--node-taint=node-role.kubernetes.io/master=true:NoSchedule"
           ]
+          ++ (optional (config.homelab.k3s-cluster.nodeIP != null) "--node-ip=${config.homelab.k3s-cluster.nodeIP}")
           ++ (map (component: "--disable=${component}") cfg.disableComponents)
           ++ (map (san: "--tls-san=${san}") cfg.tlsSan)
           ++ (optional cfg.clusterInit "--cluster-init")

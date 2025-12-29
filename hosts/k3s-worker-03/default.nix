@@ -8,21 +8,9 @@
   # System identification
   networking.hostName = "k3s-worker-03";
   
-  # Network configuration (matching original with systemd-networkd)
-  networking.useNetworkd = true;
-  networking.dhcpcd.enable = false;
-  networking.useDHCP = false;
-  networking.interfaces.enp3s0 = {
-    useDHCP = false;
-    ipv4.addresses = [{
-      address = "192.168.1.32";
-      prefixLength = 24;
-    }];
-  };
-  networking.defaultGateway = {
-    address = "192.168.1.1";
-    interface = "enp3s0";
-  };
+  # Network configuration - use DHCP
+  networking.useDHCP = true;
+  networking.dhcpcd.enable = true;
   networking.nameservers = [ "192.168.1.1" "192.168.1.4" ];
 
   # Bootloader
@@ -48,7 +36,7 @@
   };
 
   homelab.k3s-cluster = {
-    nodeIP = "192.168.1.32";
+    # nodeIP will be auto-detected from DHCP
   };
 
   # Users

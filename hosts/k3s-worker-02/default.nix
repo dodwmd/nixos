@@ -8,26 +8,34 @@
   # System identification
   networking.hostName = "k3s-worker-02";
   
-  # Network configuration (matching original with systemd-networkd)
-  networking.useNetworkd = true;
-  networking.dhcpcd.enable = false;
-  networking.useDHCP = false;
-  networking.interfaces.enp114s0 = {
-    useDHCP = false;
-    ipv4.addresses = [{
-      address = "192.168.1.31";
-      prefixLength = 24;
-    }];
-  };
-  networking.defaultGateway = {
-    address = "192.168.1.1";
-    interface = "enp114s0";
-  };
+  # Network configuration - use DHCP first to get it working
+  networking.useDHCP = true;
+  networking.dhcpcd.enable = true;
+  # Static IP config (commented out for now)
+  # networking.interfaces.enp114s0 = {
+  #   useDHCP = false;
+  #   ipv4.addresses = [{
+  #     address = "192.168.1.31";
+  #     prefixLength = 24;
+  #   }];
+  # };
+  # networking.defaultGateway = {
+  #   address = "192.168.1.1";
+  #   interface = "enp114s0";
+  # };
   networking.nameservers = [ "192.168.1.1" "192.168.1.4" ];
 
-  # Bootloader
+  # Bootloader with verbose boot messages
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  
+  # Show boot messages instead of splash screen
+  boot.plymouth.enable = false;
+  boot.kernelParams = [
+    "systemd.show_status=true"
+    "rd.systemd.show_status=true"
+    "rd.udev.log_level=info"
+  ];
 
   # K3s worker configuration
   homelab.k3s-worker = {
@@ -42,7 +50,7 @@
   };
 
   homelab.k3s-cluster = {
-    nodeIP = "192.168.1.31";
+    # nodeIP will be auto-detected from DHCP
   };
 
   # Users

@@ -8,21 +8,9 @@
   # System identification
   networking.hostName = "k3s-worker-01";
   
-  # Network configuration with systemd-networkd
-  networking.useNetworkd = true;
-  networking.dhcpcd.enable = false;
-  networking.useDHCP = false;
-  networking.interfaces.enp86s0 = {
-    useDHCP = false;
-    ipv4.addresses = [{
-      address = "192.168.1.30";
-      prefixLength = 24;
-    }];
-  };
-  networking.defaultGateway = {
-    address = "192.168.1.1";
-    interface = "enp86s0";
-  };
+  # Network configuration - use DHCP
+  networking.useDHCP = true;
+  networking.dhcpcd.enable = true;
   networking.nameservers = [ "192.168.1.1" "192.168.1.4" ];
 
   # Bootloader
@@ -42,7 +30,7 @@
   };
 
   homelab.k3s-cluster = {
-    nodeIP = "192.168.1.30";
+    # nodeIP will be auto-detected from DHCP
   };
 
   # Storage configuration for KubeVirt
