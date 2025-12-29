@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   users.users.dodwmd = {
     isNormalUser = true;
+    createHome = true;
     shell = pkgs.bash;
     extraGroups = [
       "adbusers"

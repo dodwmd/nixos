@@ -40,4 +40,7 @@
     algorithm = "zstd";
     memoryPercent = 25;
   };
+
+  # Enable SSH globally to ensure user SSH key setup works
+  services.openssh.enable = lib.mkDefault true;
 }
