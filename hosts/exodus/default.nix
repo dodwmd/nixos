@@ -283,5 +283,8 @@
     cryptsetup
     lvm2
     nfs-utils
+    brave
+    wine 
+    winetricks
   ];
 }
