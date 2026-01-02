@@ -102,6 +102,15 @@
       basePath = "essentials/skills/writing-documentation";
       hash = "sha256-7V1xG2FmzqWdnWmVV6WWKBAvY6QHWo+UKzh0Uu/Xg/w=";
     };
+
+    rust-engineer = fetchSkill {
+      name = "rust-engineer";
+      owner = "sammcj";
+      repo = "agentic-coding";
+      rev = "f2ee2fb7138b78856b68c9b874d6e3d406a2a8a4";
+      path = "Claude/skills_disabled/rust-engineer/SKILL.md";
+      hash = "sha256-vQpInoUbctAwT/eL/27Gr6UkuNH3Au8By2PCXM5z9AQ=";
+    };
   };
 
   allSkills = pkgs.runCommand "opencode-skills" {} ''

@@ -3,7 +3,7 @@
     google = {
       npm = "@ai-sdk/google";
       models = {
-        "gemini-3-pro-low" = {
+        "antigravity-gemini-3-pro-low" = {
           name = "Gemini 3 Pro Low (Antigravity)";
           limit = {
             context = 1048576;
@@ -14,7 +14,7 @@
             output = ["text"];
           };
         };
-        "gemini-3-pro-high" = {
+        "antigravity-gemini-3-pro-high" = {
           name = "Gemini 3 Pro High (Antigravity)";
           limit = {
             context = 1048576;
@@ -26,7 +26,7 @@
           };
         };
 
-        "gemini-3-flash" = {
+        "antigravity-gemini-3-flash" = {
           name = "Gemini 3 Flash (Antigravity)";
           limit = {
             context = 1048576;
@@ -38,7 +38,7 @@
           };
         };
 
-        "claude-sonnet-4-5" = {
+        "antigravity-claude-sonnet-4-5" = {
           name = "Claude Sonnet 4.5 (Antigravity)";
           limit = {
             context = 200000;
@@ -50,7 +50,7 @@
           };
         };
 
-        "claude-sonnet-4-5-thinking-low" = {
+        "antigravity-claude-sonnet-4-5-thinking-low" = {
           name = "Claude Sonnet 4.5 Thinking Low (Antigravity)";
           limit = {
             context = 200000;
@@ -61,7 +61,7 @@
             output = ["text"];
           };
         };
-        "claude-sonnet-4-5-thinking-medium" = {
+        "antigravity-claude-sonnet-4-5-thinking-medium" = {
           name = "Claude Sonnet 4.5 Thinking Medium (Antigravity)";
           limit = {
             context = 200000;
@@ -72,7 +72,7 @@
             output = ["text"];
           };
         };
-        "claude-sonnet-4-5-thinking-high" = {
+        "antigravity-claude-sonnet-4-5-thinking-high" = {
           name = "Claude Sonnet 4.5 Thinking High (Antigravity)";
           limit = {
             context = 200000;
@@ -84,7 +84,7 @@
           };
         };
 
-        "claude-opus-4-5-thinking-low" = {
+        "antigravity-claude-opus-4-5-thinking-low" = {
           name = "Claude Opus 4.5 Thinking Low (Antigravity)";
           limit = {
             context = 200000;
@@ -95,7 +95,7 @@
             output = ["text"];
           };
         };
-        "claude-opus-4-5-thinking-medium" = {
+        "antigravity-claude-opus-4-5-thinking-medium" = {
           name = "Claude Opus 4.5 Thinking Medium (Antigravity)";
           limit = {
             context = 200000;
@@ -106,7 +106,7 @@
             output = ["text"];
           };
         };
-        "claude-opus-4-5-thinking-high" = {
+        "antigravity-claude-opus-4-5-thinking-high" = {
           name = "Claude Opus 4.5 Thinking High (Antigravity)";
           limit = {
             context = 200000;
@@ -118,7 +118,7 @@
           };
         };
 
-        "gpt-oss-120b-medium" = {
+        "antigravity-gpt-oss-120b-medium" = {
           name = "GPT-OSS 120B Medium (Antigravity)";
           limit = {
             context = 131072;
