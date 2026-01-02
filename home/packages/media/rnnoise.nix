@@ -1,7 +1,7 @@
 {pkgs, ...}: let
   configFile = "pipewire/pipewire.conf.d/99-input-denoising.conf";
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     rnnoise
     rnnoise-plugin
   ];

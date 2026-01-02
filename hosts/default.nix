@@ -25,8 +25,6 @@
 
           inputs.agenix.nixosModules.default
           inputs.chaotic.nixosModules.default
-          inputs.home-manager.nixosModules.home-manager
-          inputs.nix-index-db.nixosModules.nix-index
         ];
     };
   };

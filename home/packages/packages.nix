@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     # messaging
     telegram-desktop
     vesktop

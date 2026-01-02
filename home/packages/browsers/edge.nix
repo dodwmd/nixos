@@ -15,5 +15,5 @@
     '';
   };
 in {
-  home.packages = [edgeWrapped];
+  users.users.dodwmd.packages = [edgeWrapped];
 }

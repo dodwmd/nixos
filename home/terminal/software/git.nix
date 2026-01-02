@@ -3,7 +3,7 @@
   ignoreFile = "git/ignore";
   toINI = (pkgs.formats.ini {}).generate;
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     git
     delta
     gnupg

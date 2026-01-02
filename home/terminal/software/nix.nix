@@ -6,13 +6,14 @@
   direnvConfigFile = "direnv/direnv.toml";
   direnvRcFile = "direnv/direnvrc";
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     alejandra
     deadnix
     statix
     self.packages.${stdenv.hostPlatform.system}.repl
     direnv
     nix-direnv
+    gnumake  # For Makefile support
   ];
 
   # Direnv configuration
@@ -44,7 +45,7 @@ in {
     };
   };
 
-  home.sessionVariables = {
+  environment.sessionVariables = {
     DIRENV_LOG_FORMAT = "";
   };
 }

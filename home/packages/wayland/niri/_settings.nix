@@ -4,7 +4,7 @@ in {
   include = "noctalia.kdl";
   environment = {
     CLUTTER_BACKEND = "wayland";
-    DISPLAY = null;
+    # DISPLAY = null; # Commented out to allow XWayland apps like Steam to work
     MOZ_ENABLE_WAYLAND = "1";
     NIXOS_OZONE_WL = "1";
     QT_QPA_PLATFORM = "wayland;xcb";
@@ -20,6 +20,7 @@ in {
     ["wl-paste" "--watch" "cliphist" "store"]
     ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]
     ["qs" "-c" "noctalia"]
+    ["xwayland-satellite" ":1"]  # Start XWayland support for X11 apps like Steam
   ];
 
   input = {

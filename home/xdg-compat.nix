@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.xdg;
-  username = "linuxmobile";
+  username = "dodwmd";
   fileType = lib.types.submodule {
     options = {
       text = lib.mkOption {
@@ -110,7 +110,10 @@ in {
       stateFiles = cfg.stateFile;
     };
 
-    home.sessionVariables = {
+    # Add user packages to system packages so they're actually installed
+    environment.systemPackages = config.users.users.${username}.packages or [];
+
+    environment.sessionVariables = {
       XDG_CONFIG_HOME = cfg.configHome;
       XDG_CACHE_HOME = cfg.cacheHome;
       XDG_DATA_HOME = cfg.dataHome;

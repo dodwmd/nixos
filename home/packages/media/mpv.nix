@@ -5,7 +5,7 @@
 }: let
   configFile = "mpv/mpv.conf";
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     mpv
     mpvScripts.mpris
   ];

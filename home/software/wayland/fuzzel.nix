@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = [pkgs.fuzzel];
+  users.users.dodwmd.packages = [pkgs.fuzzel];
   
   xdg.configFile."fuzzel/fuzzel.ini".text = ''
     [main]

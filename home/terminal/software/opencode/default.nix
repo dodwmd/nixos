@@ -36,7 +36,7 @@
 
   configFile = "opencode/config.json";
 in {
-  home.packages = [
+  users.users.dodwmd.packages = [
     opencodeWrapped
   ];
 

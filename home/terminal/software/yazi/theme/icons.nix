@@ -2,7 +2,7 @@
   configFile = "yazi/theme.toml";
   toTOML = (pkgs.formats.toml {}).generate;
 in {
-  home.packages = [pkgs.yazi];
+  users.users.dodwmd.packages = [pkgs.yazi];
   xdg.configFile."${configFile}".source = toTOML "theme.toml" {
     icons = {
       "*" = "";

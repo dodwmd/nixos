@@ -1,10 +1,8 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     fish
     grc
-    (writeShellScriptBin "hx" ''
-      ${pkgs.helix}/bin/hx "$@"
-    '')
+    # hx is provided by the helix configuration with LSP support
   ];
 
   xdg.configFile = {

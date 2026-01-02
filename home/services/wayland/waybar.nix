@@ -1,7 +1,5 @@
-{pkgs, ...}: {
-  programs.waybar = {
-    enable = true;
-    settings = {
+{pkgs, ...}: let
+  waybarConfig = {
       mainBar = {
         layer = "top";
         position = "top";
@@ -62,9 +60,9 @@
           tooltip = false;
         };
       };
-    };
+  };
 
-    style = ''
+  waybarStyle = ''
       * {
         font-family: "SF Mono", monospace;
         font-size: 13px;
@@ -120,5 +118,9 @@
         color: #c0caf5;
       }
     '';
-  };
+in {
+  users.users.dodwmd.packages = with pkgs; [waybar];
+  
+  xdg.configFile."waybar/config".text = builtins.toJSON waybarConfig;
+  xdg.configFile."waybar/style.css".text = waybarStyle;
 }

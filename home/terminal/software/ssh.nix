@@ -5,7 +5,7 @@
 }: let
   sshConfigFile = "ssh/config";
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     openssh
   ];
 
@@ -29,21 +29,13 @@ in {
     Include ~/.ssh/config.d/*
   '';
 
-  home.sessionVariables = {
-    SSH_AUTH_SOCK = "/run/user/1000/gnupg/S.gpg-agent.ssh";
+  # Enable SSH agent system-wide
+  programs.ssh = {
+    startAgent = true;
+    agentTimeout = "1h";
   };
 
-  systemd.user.services.ssh-agent = {
-    Unit = {
-      Description = "SSH agent service";
-    };
-    Install = {
-      WantedBy = ["default.target"];
-    };
-    Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.openssh}/bin/ssh-agent -D -a /run/user/1000/ssh-agent.socket";
-      Restart = "on-failure";
-    };
+  environment.sessionVariables = {
+    SSH_AUTH_SOCK = "/run/user/1000/gnupg/S.gpg-agent.ssh";
   };
 }

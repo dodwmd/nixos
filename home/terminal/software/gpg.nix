@@ -6,7 +6,7 @@
   gpgConfigFile = "gnupg/gpg.conf";
   agentConfigFile = "gnupg/gpg-agent.conf";
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     gnupg
     pinentry-gnome3
   ];
@@ -45,7 +45,7 @@ in {
     '';
   };
 
-  home.sessionVariables = {
+  environment.sessionVariables = {
     GPG_TTY = "$(tty)";
     SSH_AUTH_SOCK = "/run/user/1000/gnupg/S.gpg-agent.ssh";
   };

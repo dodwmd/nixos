@@ -6,7 +6,7 @@
   configFile = "gammastep/config.ini";
   toINI = (pkgs.formats.ini {}).generate;
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     (gammastep.override {
       withRandr = false;
       withDrm = false;
@@ -15,22 +15,12 @@ in {
     })
   ];
 
-  systemd.user.services.gammastep = {
-    Unit = {
-      Description = "Gammastep colour temperature adjuster";
-      Documentation = ["https://gitlab.com/chinstrap/gammastep/"];
-      After = ["graphical-session.target"];
-      PartOf = ["graphical-session.target"];
-    };
-    Install = {
-      WantedBy = ["graphical-session.target"];
-    };
-    Service = {
-      ExecStart = "${pkgs.gammastep}/bin/gammastep -c ${config.xdg.configHome}/${configFile}";
-      Restart = "on-failure";
-      RestartSec = "3";
-    };
-  };
+  # Create a simple script to start gammastep - user can run manually or add to their session
+  environment.systemPackages = with pkgs; [
+    (writeShellScriptBin "start-gammastep" ''
+      ${gammastep}/bin/gammastep -c ${config.xdg.configHome}/${configFile} &
+    '')
+  ];
 
   xdg.configFile."${configFile}".source = toINI "config.ini" {
     manual = {

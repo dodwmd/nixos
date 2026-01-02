@@ -49,16 +49,19 @@
     XDG_VIDEOS_DIR="$HOME/Videos"
   '';
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     xdg-utils
     (writeShellScriptBin "xdg-terminal-exec" ''foot start "$@"'')
   ];
 
   xdg = {
-    mimeApps = {
-      enable = true;
-      defaultApplications = associations;
-    };
     configFile."user-dirs.dirs".source = userDirsConfig;
+    configFile."mimeapps.list".text = ''
+      [Default Applications]
+      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${v}") associations)}
+      
+      [Added Associations]
+      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${v}") associations)}
+    '';
   };
 }

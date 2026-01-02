@@ -5,7 +5,7 @@
 }: let
   configFile = "ghostty/config";
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     ghostty
   ];
 

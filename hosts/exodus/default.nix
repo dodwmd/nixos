@@ -8,6 +8,7 @@
     ./hardware-configuration.nix
     ../../system/services/tdarr-node.nix
     ../../system/services/ollama.nix
+    ../../home/profiles/exodus/packages.nix
   ];
 
   # Allow unfree packages (needed for NVIDIA drivers)
@@ -244,6 +245,9 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     gamescopeSession.enable = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
   };
   
   # Enable XWayland for Steam and other X11 apps
@@ -259,6 +263,9 @@
     WLR_NO_HARDWARE_CURSORS = "1";
     LIBVA_DRIVER_NAME = "nvidia";
     NVD_BACKEND = "direct";
+    
+    # XWayland and Steam support
+    DISPLAY = ":1";
   };
 
   # Additional systemd hardening

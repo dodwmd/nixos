@@ -79,7 +79,7 @@
     };
   };
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     twitch-hls-client
     mpv
   ];

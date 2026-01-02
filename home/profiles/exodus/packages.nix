@@ -1,6 +1,6 @@
 {pkgs, lib, ...}: {
   # Additional packages for exodus that aren't in the base kaku config
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     # Wayland launcher
     fuzzel
     
@@ -34,19 +34,17 @@
     # steam is enabled at system level via programs.steam.enable
   ];
   
-  # Bash configuration (since user shell is bash)
+  # System-wide bash configuration
   programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    historyControl = ["ignoredups" "ignorespace"];
-    historySize = 10000;
-    historyFileSize = 100000;
-    
-    bashrcExtra = ''
+    completion.enable = true;
+    interactiveShellInit = ''
       # Configure byobu to use tmux
       export BYOBU_BACKEND=tmux
       
-      # Editor set by programs.neovim.defaultEditor
+      # History settings
+      export HISTCONTROL=ignoredups:ignorespace
+      export HISTSIZE=10000
+      export HISTFILESIZE=100000
       
       # Aliases
       alias ls='eza --icons'
@@ -57,7 +55,7 @@
     '';
   };
   
-  # Use neovim as vim/vi
+  # System-wide neovim configuration
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -66,16 +64,16 @@
   };
   
   # Override EDITOR to use neovim instead of helix
-  home.sessionVariables.EDITOR = lib.mkForce "nvim";
+  environment.sessionVariables.EDITOR = lib.mkForce "nvim";
   
-  # Tmux configuration
+  # System-wide tmux configuration
   programs.tmux = {
     enable = true;
     terminal = "screen-256color";
     historyLimit = 10000;
   };
   
-  # Direnv for nix-shell integration
+  # System-wide direnv configuration
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;

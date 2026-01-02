@@ -6,11 +6,11 @@
   configFile = "starship/starship.toml";
   toTOML = (pkgs.formats.toml {}).generate;
 in {
-  home.sessionVariables = {
+  environment.sessionVariables = {
     STARSHIP_CONFIG = "${config.xdg.configHome}/${configFile}";
     STARSHIP_LOG = "error";
   };
-  home.packages = [pkgs.starship];
+  users.users.dodwmd.packages = [pkgs.starship];
   xdg.configFile = {
     "${configFile}".source = toTOML "starship.toml" {
       add_newline = true;

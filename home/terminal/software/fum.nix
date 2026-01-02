@@ -1,7 +1,7 @@
 {pkgs, ...}: let
   configFile = "fum/config.jsonc";
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     fum
     playerctl
   ];

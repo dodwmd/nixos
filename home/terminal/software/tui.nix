@@ -4,7 +4,7 @@
   lib,
   ...
 }: {
-  home.packages = with pkgs;
+  users.users.dodwmd.packages = with pkgs;
     [
       # archives
       zip
@@ -35,7 +35,6 @@
       tuicam
       wiremix
       zfxtop
-      opencode
     ]
     ++ (let
       mynixpkgs = inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system};

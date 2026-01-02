@@ -2,7 +2,7 @@
   configFile = "discordo/config.toml";
   toTOML = (pkgs.formats.toml {}).generate;
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     discordo
   ];
 

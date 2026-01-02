@@ -40,7 +40,7 @@
       done
     '';
 in {
-  home.packages = [
+  users.users.dodwmd.packages = [
     helixWithLSP
   ];
 

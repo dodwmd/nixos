@@ -14,6 +14,6 @@
     '';
   };
 in {
-  home.packages = [chromiumWrapped];
-  home.sessionVariables = chromiumFlags.sessionVariables;
+  users.users.dodwmd.packages = [chromiumWrapped];
+  environment.sessionVariables = chromiumFlags.sessionVariables;
 }

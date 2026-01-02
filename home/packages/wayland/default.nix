@@ -1,6 +1,6 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [wl-clipboard];
-  home.sessionVariables = {
+  users.users.dodwmd.packages = with pkgs; [wl-clipboard];
+  environment.sessionVariables = {
     SDL_VIDEODRIVER = "wayland";
     XDG_SESSION_TYPE = "wayland";
     XDG_CURRENT_DESKTOP = "niri:GNOME";

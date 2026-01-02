@@ -6,7 +6,7 @@
   configFile = "yazi/yazi.toml";
   toTOML = (pkgs.formats.toml {}).generate;
 in {
-  home.packages = [pkgs.yazi];
+  users.users.dodwmd.packages = [pkgs.yazi];
   xdg.configFile."${configFile}".source = toTOML "yazi.toml" {
     mgr = {
       layout = [1 4 3];

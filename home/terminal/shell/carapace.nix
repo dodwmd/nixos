@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     carapace
     carapace-bridge
     zsh
@@ -11,7 +11,7 @@
     inshellisense
   ];
 
-  home.sessionVariables = {
+  environment.sessionVariables = {
     CARAPACE_BRIDGES = "fish,zsh,bash,inshellisense";
     CARAPACE_CACHE_DIR = "${config.xdg.cacheHome}/carapace";
   };

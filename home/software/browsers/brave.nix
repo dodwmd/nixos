@@ -12,5 +12,5 @@ in {
   };
 
   xdg.configFile = chromiumFlags.configFile;
-  home.sessionVariables = chromiumFlags.sessionVariables;
+  environment.sessionVariables = chromiumFlags.sessionVariables;
 }

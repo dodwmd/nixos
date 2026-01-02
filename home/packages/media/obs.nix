@@ -18,7 +18,7 @@
     '';
   };
 in {
-  home.packages = [
+  users.users.dodwmd.packages = [
     obsWrapped
   ];
 }

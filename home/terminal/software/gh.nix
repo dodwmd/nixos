@@ -3,7 +3,7 @@
   hostsFile = "gh/hosts.yml";
   toYAML = (pkgs.formats.yaml {}).generate;
 in {
-  home.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     gh
   ];
 

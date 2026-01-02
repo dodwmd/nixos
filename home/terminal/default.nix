@@ -7,7 +7,7 @@
     ./shell
     ./software
   ];
-  home.sessionVariables = {
+  environment.sessionVariables = {
     LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
     LESKEY = "${config.xdg.configHome}/less/lesskey";
     XAUTHORITY = "/run/user/1000/Xauthority";

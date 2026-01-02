@@ -1,16 +1,17 @@
 { config, pkgs, lib, ... }:
 
 {
+  # Enable bash system-wide
   programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    historyControl = [ "ignoredups" "ignorespace" ];
-    historySize = 10000;
-    historyFileSize = 100000;
-    
-    bashrcExtra = ''
+    completion.enable = true;
+    interactiveShellInit = ''
       # Configure byobu to use tmux
       export BYOBU_BACKEND=tmux
+      
+      # History settings
+      export HISTCONTROL=ignoredups:ignorespace
+      export HISTSIZE=10000
+      export HISTFILESIZE=100000
       
       # Aliases
       alias ls='eza --icons'
@@ -22,11 +23,9 @@
     '';
   };
 
-  # Tmux configuration (for when using tmux directly)
-  programs.tmux = {
-    enable = true;
-    terminal = "screen-256color";
-    historyLimit = 10000;
-  };
-
+  # Add tmux package
+  users.users.dodwmd.packages = with pkgs; [
+    tmux
+    byobu
+  ];
 }
