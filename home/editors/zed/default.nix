@@ -36,7 +36,7 @@
       done
     '';
 in {
-  users.users.linuxmobile.packages = [
+  home.packages = [
     zedWithLSP
   ];
 }

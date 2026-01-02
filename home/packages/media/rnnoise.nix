@@ -1,7 +1,7 @@
 {pkgs, ...}: let
   configFile = "pipewire/pipewire.conf.d/99-input-denoising.conf";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     rnnoise
     rnnoise-plugin
   ];

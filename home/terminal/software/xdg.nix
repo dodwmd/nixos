@@ -11,7 +11,7 @@
   xdgAssociations = type: program: list:
     builtins.listToAttrs (map (e: {
         name = "${type}/${e}";
-        value = program;
+        value = builtins.head program;  # home-manager expects string, not list
       })
       list);
 
@@ -25,16 +25,16 @@
 
   associations =
     {
-      "application/pdf" = ["org.gnome.Papers.desktop"];
-      "application/zip" = ["org.gnome.FileRoller.desktop"];
-      "application/x-7z-compressed" = ["org.gnome.FileRoller.desktop"];
-      "application/x-rar-compressed" = ["org.gnome.FileRoller.desktop"];
-      "application/x-tar" = ["org.gnome.FileRoller.desktop"];
-      "application/gzip" = ["org.gnome.FileRoller.desktop"];
-      "text/html" = browser;
-      "text/plain" = ["org.gnome.TextEditor.desktop"];
-      "text/markdown" = ["org.gnome.TextEditor.desktop"];
-      "x-scheme-handler/chrome" = ["helium.desktop"];
+      "application/pdf" = "org.gnome.Papers.desktop";
+      "application/zip" = "org.gnome.FileRoller.desktop";
+      "application/x-7z-compressed" = "org.gnome.FileRoller.desktop";
+      "application/x-rar-compressed" = "org.gnome.FileRoller.desktop";
+      "application/x-tar" = "org.gnome.FileRoller.desktop";
+      "application/gzip" = "org.gnome.FileRoller.desktop";
+      "text/html" = builtins.head browser;
+      "text/plain" = "org.gnome.TextEditor.desktop";
+      "text/markdown" = "org.gnome.TextEditor.desktop";
+      "x-scheme-handler/chrome" = "helium.desktop";
     }
     // image // video // audio // browserTypes;
 
@@ -49,22 +49,16 @@
     XDG_VIDEOS_DIR="$HOME/Videos"
   '';
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     xdg-utils
     (writeShellScriptBin "xdg-terminal-exec" ''foot start "$@"'')
   ];
 
   xdg = {
-    mime = {
+    mimeApps = {
       enable = true;
       defaultApplications = associations;
     };
     configFile."user-dirs.dirs".source = userDirsConfig;
-    configFile."mimeapps.list".text = ''
-      [Default Applications]
-      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${lib.concatStringsSep ";" v}") associations)}
-      [Added Associations]
-      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${lib.concatStringsSep ";" v}") associations)}
-    '';
   };
 }

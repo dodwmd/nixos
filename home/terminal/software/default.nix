@@ -1,0 +1,31 @@
+{
+  imports = [
+    ./atuin.nix
+    ./autojump.nix
+    ./bat.nix
+    ./bottom.nix
+    ./command-not-found.nix
+    ./discordo.nix
+    ./fum.nix
+    ./fzf.nix
+    ./gh.nix
+    ./git.nix
+    ./glow.nix
+    ./gpg.nix
+    ./lazygit.nix
+    ./mods.nix
+    ./nix-your-shell.nix
+    ./nix.nix
+    ./opencode
+    ./pay-respects.nix
+    ./prs.nix
+    ./skim.nix
+    ./ssh.nix
+    ./television.nix
+    ./tui.nix
+    ./twitch.nix
+    ./xdg.nix
+    ./yazi
+    ./zoxide.nix
+  ];
+}

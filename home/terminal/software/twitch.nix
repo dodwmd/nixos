@@ -79,7 +79,7 @@
     };
   };
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     twitch-hls-client
     mpv
   ];

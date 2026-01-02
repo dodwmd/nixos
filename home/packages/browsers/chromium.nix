@@ -14,6 +14,6 @@
     '';
   };
 in {
-  users.users.linuxmobile.packages = [chromiumWrapped];
-  environment.sessionVariables = chromiumFlags.sessionVariables;
+  home.packages = [chromiumWrapped];
+  home.sessionVariables = chromiumFlags.sessionVariables;
 }

@@ -6,7 +6,7 @@
   direnvConfigFile = "direnv/direnv.toml";
   direnvRcFile = "direnv/direnvrc";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     alejandra
     deadnix
     statix
@@ -44,7 +44,7 @@ in {
     };
   };
 
-  environment.sessionVariables = {
+  home.sessionVariables = {
     DIRENV_LOG_FORMAT = "";
   };
 }

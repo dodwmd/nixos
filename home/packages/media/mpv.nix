@@ -5,7 +5,7 @@
 }: let
   configFile = "mpv/mpv.conf";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     mpv
     mpvScripts.mpris
   ];

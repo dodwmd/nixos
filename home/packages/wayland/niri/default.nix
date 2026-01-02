@@ -10,11 +10,11 @@
 
   finalConfig = toKDL.generate "niri-config.kdl" (settings // {binds = binds;} // rules);
 in {
-  environment.sessionVariables = {
+  home.sessionVariables = {
     NIRI_CONFIG = "$HOME/.config/niri/config.kdl";
   };
 
-  users.users.linuxmobile.packages = with pkgs; [niri];
+  home.packages = with pkgs; [niri];
 
   xdg.configFile."niri/config.kdl".text = builtins.readFile finalConfig;
 }

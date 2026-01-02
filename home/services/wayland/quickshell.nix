@@ -50,7 +50,7 @@
       done
     '';
 in {
-  users.users.linuxmobile.packages =
+  home.packages =
     [
       quickshellWrapped
     ]

@@ -2,7 +2,7 @@
   configFile = "glow/glow.yml";
   toYAML = (pkgs.formats.yaml {}).generate;
 in {
-  users.users.linuxmobile.packages = [pkgs.glow];
+  home.packages = [pkgs.glow];
   xdg.configFile."${configFile}".source = toYAML "glow.yml" {
     style = "auto";
     mouse = false;

@@ -18,7 +18,7 @@
     '';
   };
 in {
-  users.users.linuxmobile.packages = [
+  home.packages = [
     obsWrapped
   ];
 }

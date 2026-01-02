@@ -1,18 +1,29 @@
-{inputs, ...}: {
-  imports = [
-    (inputs.import-tree ./editors)
-    (inputs.import-tree ./packages)
-    (inputs.import-tree ./services)
-    ./terminal
-    ./xdg-compat.nix
-    inputs.nix-index-db.nixosModules.nix-index
-  ];
+{inputs, self, ...}: {
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = {inherit inputs self;};
+    users.dodwmd = {
+      imports = [
+        ./editors
+        ./packages  
+        ./services
+        ./terminal
+      ];
 
-  programs = {
-    nix-index = {
-      enable = true;
-      enableFishIntegration = true;
+      programs = {
+        nix-index = {
+          enable = true;
+          enableFishIntegration = true;
+        };
+      };
+
+      # Basic home-manager settings
+      home = {
+        username = "dodwmd";
+        homeDirectory = "/home/dodwmd";
+        stateVersion = "24.11";
+      };
     };
-    nix-index-database.comma.enable = true;
   };
 }

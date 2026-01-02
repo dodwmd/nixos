@@ -110,7 +110,7 @@ in {
       stateFiles = cfg.stateFile;
     };
 
-    environment.sessionVariables = {
+    home.sessionVariables = {
       XDG_CONFIG_HOME = cfg.configHome;
       XDG_CACHE_HOME = cfg.cacheHome;
       XDG_DATA_HOME = cfg.dataHome;

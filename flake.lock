@@ -199,6 +199,26 @@
         "type": "github"
       }
     },
+    "home-manager_3": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1767104570,
+        "narHash": "sha256-GKgwu5//R+cLdKysZjGqvUEEOGXXLdt93sNXeb2M/Lk=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "e4e78a2cbeaddd07ab7238971b16468cc1d14daf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "import-tree": {
       "locked": {
         "lastModified": 1763762820,
@@ -242,15 +262,15 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1764699449,
-        "narHash": "sha256-N/Z3aCwz6+lhl57mmWHm6UEoY4URusAlNdmC7An58MI=",
-        "owner": "linuxmobile",
+        "lastModified": 1767211273,
+        "narHash": "sha256-d1U/sfvP249zise6LPef3gWAEjehtZINTAfcddGwAL0=",
+        "owner": "dodwmd",
         "repo": "mynixpkgs",
-        "rev": "f0fcee431869938df74364ea29996f8f4650a2d0",
+        "rev": "9b9469ce8d570a4dae28ae1642f16def21e5ec5e",
         "type": "github"
       },
       "original": {
-        "owner": "linuxmobile",
+        "owner": "dodwmd",
         "repo": "mynixpkgs",
         "type": "github"
       }
@@ -368,6 +388,7 @@
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
+        "home-manager": "home-manager_3",
         "import-tree": "import-tree",
         "mynixpkgs": "mynixpkgs",
         "nix-index-db": "nix-index-db",

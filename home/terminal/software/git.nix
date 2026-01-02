@@ -3,7 +3,7 @@
   ignoreFile = "git/ignore";
   toINI = (pkgs.formats.ini {}).generate;
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     git
     delta
     gnupg

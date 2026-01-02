@@ -7,6 +7,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../system/services/tdarr-node.nix
+    ../../system/services/ollama.nix
   ];
 
   # Allow unfree packages (needed for NVIDIA drivers)
@@ -287,4 +288,13 @@
     wine 
     winetricks
   ];
+
+  # nix-index-database configuration
+  programs = {
+    nix-index = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+    nix-index-database.comma.enable = true;
+  };
 }

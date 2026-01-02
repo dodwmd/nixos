@@ -1,6 +1,6 @@
 {pkgs, ...}: {
-  users.users.linuxmobile.packages = with pkgs; [wl-clipboard];
-  environment.sessionVariables = {
+  home.packages = with pkgs; [wl-clipboard];
+  home.sessionVariables = {
     SDL_VIDEODRIVER = "wayland";
     XDG_SESSION_TYPE = "wayland";
     XDG_CURRENT_DESKTOP = "niri:GNOME";

@@ -2,7 +2,7 @@
   configFile = "lazygit/config.yml";
   toYAML = (pkgs.formats.yaml {}).generate;
 in {
-  users.users.linuxmobile.packages = [pkgs.lazygit];
+  home.packages = [pkgs.lazygit];
   xdg.configFile."${configFile}".source = toYAML "config.yml" {
     disableStartupPopups = true;
     git = {

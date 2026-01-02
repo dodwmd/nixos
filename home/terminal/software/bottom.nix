@@ -23,7 +23,7 @@
     '';
   };
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     bottom
     btopAlias
     htopAlias

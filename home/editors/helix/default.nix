@@ -40,7 +40,7 @@
       done
     '';
 in {
-  users.users.linuxmobile.packages = [
+  home.packages = [
     helixWithLSP
   ];
 

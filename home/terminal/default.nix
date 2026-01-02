@@ -1,17 +1,16 @@
 {
   config,
-  inputs,
   ...
 }: {
   imports = [
-    (inputs.import-tree ./emulators)
-    (inputs.import-tree ./shell)
-    (inputs.import-tree ./software)
+    ./emulators
+    ./shell
+    ./software
   ];
-  environment.sessionVariables = {
+  home.sessionVariables = {
     LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
     LESKEY = "${config.xdg.configHome}/less/lesskey";
-    XAUTHORITY = "${config.xdg.runtimeDir}/Xauthority";
+    XAUTHORITY = "/run/user/1000/Xauthority";
 
     EDITOR = "hx";
     DIRENV_LOG_FORMAT = "";

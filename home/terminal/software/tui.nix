@@ -1,9 +1,10 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }: {
-  users.users.linuxmobile.packages = with pkgs;
+  home.packages = with pkgs;
     [
       # archives
       zip
@@ -36,14 +37,17 @@
       zfxtop
       opencode
     ]
-    ++ (with inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}; [
-      bmm
-      dawn
-      dfft
-      lightview
-      nekot
-      omm
-      orchat
-      prs
-    ]);
+    ++ (let
+      mynixpkgs = inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system};
+    in
+      lib.filter (pkg: pkg != null) [
+        (mynixpkgs.bmm or null)
+        (mynixpkgs.dawn or null)
+        (mynixpkgs.dfft or null)
+        (mynixpkgs.lightview or null)
+        (mynixpkgs.nekot or null)
+        (mynixpkgs.omm or null)
+        (mynixpkgs.orchat or null)
+        (mynixpkgs.prs or null)
+      ]);
 }

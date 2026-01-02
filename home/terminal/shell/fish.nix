@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     fish
     grc
     (writeShellScriptBin "hx" ''

@@ -15,19 +15,18 @@
     # get these into the module system
     specialArgs = {inherit inputs self;};
   in {
-    aesthetic = nixosSystem {
+    exodus = nixosSystem {
       inherit specialArgs;
       modules =
         desktop
-        ++ laptop
         ++ [
-          ./aesthetic
-          "${mod}/services/gnome-services.nix"
-          "${mod}/core/limine.nix"
+          ./exodus
           "${home}"
 
           inputs.agenix.nixosModules.default
           inputs.chaotic.nixosModules.default
+          inputs.home-manager.nixosModules.home-manager
+          inputs.nix-index-db.nixosModules.nix-index
         ];
     };
   };

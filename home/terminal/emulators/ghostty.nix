@@ -5,7 +5,7 @@
 }: let
   configFile = "ghostty/config";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     ghostty
   ];
 

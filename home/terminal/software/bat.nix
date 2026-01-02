@@ -9,12 +9,12 @@
     ${pkgs.coreutils}/bin/col -bx | ${pkgs.bat}/bin/bat -l man -p "$@"
   '';
 in {
-  environment.sessionVariables = {
+  home.sessionVariables = {
     MANPAGER = "${manPager}/bin/manpager";
     MANROFFOPT = "-c";
   };
 
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     bat
     manPager
   ];

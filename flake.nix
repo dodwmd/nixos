@@ -55,10 +55,15 @@
 
     import-tree.url = "github:vic/import-tree";
 
-    mynixpkgs.url = "github:linuxmobile/mynixpkgs";
+    mynixpkgs.url = "github:dodwmd/mynixpkgs";
 
     nix-index-db = {
       url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

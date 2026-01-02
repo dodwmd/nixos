@@ -3,7 +3,7 @@
   hostsFile = "gh/hosts.yml";
   toYAML = (pkgs.formats.yaml {}).generate;
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     gh
   ];
 

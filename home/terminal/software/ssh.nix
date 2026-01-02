@@ -5,7 +5,7 @@
 }: let
   sshConfigFile = "ssh/config";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     openssh
   ];
 
@@ -29,16 +29,20 @@ in {
     Include ~/.ssh/config.d/*
   '';
 
-  environment.sessionVariables = {
-    SSH_AUTH_SOCK = "${config.xdg.runtimeDir}/gnupg/S.gpg-agent.ssh";
+  home.sessionVariables = {
+    SSH_AUTH_SOCK = "/run/user/1000/gnupg/S.gpg-agent.ssh";
   };
 
   systemd.user.services.ssh-agent = {
-    description = "SSH agent service";
-    wantedBy = ["default.target"];
-    serviceConfig = {
+    Unit = {
+      Description = "SSH agent service";
+    };
+    Install = {
+      WantedBy = ["default.target"];
+    };
+    Service = {
       Type = "simple";
-      ExecStart = "${pkgs.openssh}/bin/ssh-agent -D -a ${config.xdg.runtimeDir}/ssh-agent.socket";
+      ExecStart = "${pkgs.openssh}/bin/ssh-agent -D -a /run/user/1000/ssh-agent.socket";
       Restart = "on-failure";
     };
   };

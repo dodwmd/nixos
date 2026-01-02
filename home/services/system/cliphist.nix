@@ -5,24 +5,26 @@
 }: let
   configFile = "cliphist/cliphistrc";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     cliphist
     wl-clipboard
   ];
 
   systemd.user.services.cliphist = {
-    description = "Clipboard management daemon";
-    wantedBy = ["graphical-session.target"];
-    after = ["graphical-session.target"];
-    partOf = ["graphical-session.target"];
-
-    serviceConfig = {
+    Unit = {
+      Description = "Clipboard management daemon";
+      After = ["graphical-session.target"];
+      PartOf = ["graphical-session.target"];
+    };
+    Install = {
+      WantedBy = ["graphical-session.target"];
+    };
+    Service = {
       ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist -max-dedupe-search 10 -max-items 500 store";
       Restart = "on-failure";
       Type = "simple";
+      Environment = "PATH=${pkgs.lib.makeBinPath [pkgs.cliphist pkgs.wl-clipboard]}";
     };
-
-    path = [pkgs.cliphist pkgs.wl-clipboard];
   };
 
   xdg.configFile."${configFile}".text = ''

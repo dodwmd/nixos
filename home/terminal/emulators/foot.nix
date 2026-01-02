@@ -7,7 +7,7 @@
   configFile = "foot/foot.ini";
   toINI = (pkgs.formats.ini {}).generate;
 in {
-  users.users.linuxmobile.packages = with pkgs; [foot libsixel];
+  home.packages = with pkgs; [foot libsixel];
   xdg.configFile."${configFile}".source = toINI "foot.ini" {
     main = {
       font = "Cozette:size=10:fontfeatures=calt:fontfeatures=dlig:fontfeatures=fbarc:fontfeatures=liga,PragmataProMonoLiga Nerd Font:size=8";

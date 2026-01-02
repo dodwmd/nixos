@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     # messaging
     telegram-desktop
     vesktop
@@ -27,7 +27,7 @@
 
     inkscape
     scrcpy
-    (inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}.multiviewer.overrideAttrs (old: {
+    (inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}.multiviewer.overrideAttrs (old: {
       buildInputs = (old.buildInputs or []) ++ [pkgs.makeWrapper];
       postInstall = ''
         wrapProgram $out/bin/multiviewer \

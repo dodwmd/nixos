@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     carapace
     carapace-bridge
     zsh
@@ -11,7 +11,7 @@
     inshellisense
   ];
 
-  environment.sessionVariables = {
+  home.sessionVariables = {
     CARAPACE_BRIDGES = "fish,zsh,bash,inshellisense";
     CARAPACE_CACHE_DIR = "${config.xdg.cacheHome}/carapace";
   };

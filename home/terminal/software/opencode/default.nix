@@ -36,7 +36,7 @@
 
   configFile = "opencode/config.json";
 in {
-  users.users.linuxmobile.packages = [
+  home.packages = [
     opencodeWrapped
   ];
 
@@ -44,13 +44,12 @@ in {
     "${configFile}".text = builtins.toJSON {
       "$schema" = "https://opencode.ai/config.json";
       plugin = ["opencode-antigravity-auth@1.2.6"];
-      small_model = "google/gemma-3n-e4b-it:free";
+      small_model = "ollama/qwen2.5-coder:14b";
       autoupdate = false;
       share = "disabled";
 
       disabled_providers = [
         "amazon-bedrock"
-        "anthropic"
         "azure-openai"
         "azure-cognitive-services"
         "baseten"
@@ -70,7 +69,6 @@ in {
         "lmstudio"
         "moonshot-ai"
         "nebius-token-factory"
-        "ollama"
         "ollama-cloud"
         "openai"
         "opencode-zen"
@@ -83,7 +81,8 @@ in {
         "zenmux"
       ];
 
-      enabled_providers = ["openrouter" "google"];
+      # Enable local Ollama + Anthropic for fallback
+      enabled_providers = ["ollama" "anthropic" "openrouter" "google"];
 
       mcp = {
         gh_grep = {

@@ -6,7 +6,7 @@
   configFile = "gammastep/config.ini";
   toINI = (pkgs.formats.ini {}).generate;
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  home.packages = with pkgs; [
     (gammastep.override {
       withRandr = false;
       withDrm = false;
@@ -16,13 +16,16 @@ in {
   ];
 
   systemd.user.services.gammastep = {
-    description = "Gammastep colour temperature adjuster";
-    documentation = ["https://gitlab.com/chinstrap/gammastep/"];
-    wantedBy = ["graphical-session.target"];
-    after = ["graphical-session.target"];
-    partOf = ["graphical-session.target"];
-
-    serviceConfig = {
+    Unit = {
+      Description = "Gammastep colour temperature adjuster";
+      Documentation = ["https://gitlab.com/chinstrap/gammastep/"];
+      After = ["graphical-session.target"];
+      PartOf = ["graphical-session.target"];
+    };
+    Install = {
+      WantedBy = ["graphical-session.target"];
+    };
+    Service = {
       ExecStart = "${pkgs.gammastep}/bin/gammastep -c ${config.xdg.configHome}/${configFile}";
       Restart = "on-failure";
       RestartSec = "3";
