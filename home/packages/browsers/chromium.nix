@@ -15,5 +15,4 @@
   };
 in {
   users.users.dodwmd.packages = [chromiumWrapped];
-  environment.sessionVariables = chromiumFlags.sessionVariables;
 }

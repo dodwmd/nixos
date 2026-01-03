@@ -41,15 +41,4 @@
     "--no-pings"
   ];
 
-  sessionVariables = {
-    # Use lib.mkDefault so host configuration can override
-    LIBVA_DRIVER_NAME = "nvidia"; # Changed from radeonsi to nvidia
-    LIBVA_MESSAGING_LEVEL = "1";
-    LIBGL_ALWAYS_SOFTWARE = "0";
-    ENABLE_VAAPI = "1";
-    ENABLE_VDPAU = "1";
-    VAAPI_DISABLE_ENCODER_CHECKING = "1";
-    EGL_PLATFORM = "wayland";
-    # Removed AMD-specific variables
-  };
 }

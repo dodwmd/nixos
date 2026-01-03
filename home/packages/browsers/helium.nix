@@ -17,5 +17,4 @@
   };
 in {
   users.users.dodwmd.packages = [heliumWrapped];
-  environment.sessionVariables = chromiumFlags.sessionVariables;
 }

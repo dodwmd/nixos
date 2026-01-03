@@ -4,7 +4,10 @@ in {
   include = "noctalia.kdl";
   environment = {
     CLUTTER_BACKEND = "wayland";
-    # DISPLAY = null; # Commented out to allow XWayland apps like Steam to work
+    # DISPLAY will be set automatically by niri's xwayland-satellite integration
+    # EGL_PLATFORM is explicitly unset to prevent Xwayland from trying to use EGL
+    # which causes crashes when EGL providers are not available
+    EGL_PLATFORM = null;
     MOZ_ENABLE_WAYLAND = "1";
     NIXOS_OZONE_WL = "1";
     QT_QPA_PLATFORM = "wayland;xcb";
@@ -20,7 +23,7 @@ in {
     ["wl-paste" "--watch" "cliphist" "store"]
     ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]
     ["qs" "-c" "noctalia"]
-    ["xwayland-satellite" ":1"]  # Start XWayland support for X11 apps like Steam
+    # xwayland-satellite is managed by systemd user service
   ];
 
   input = {

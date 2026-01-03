@@ -3,6 +3,10 @@
   pkgs,
   ...
 }: {
+  imports = [
+    ./xwayland-satellite.nix
+  ];
+
   services = {
     printing = {
       enable = true;

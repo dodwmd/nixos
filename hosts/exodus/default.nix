@@ -181,9 +181,16 @@
   };
   
   # X11 and Wayland keyboard layout
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+  # Enable xserver for proper xwayland wrapping with NVIDIA, but don't start a display manager
+  services.xserver = {
+    enable = true;
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
+    # Don't start any display manager - we use niri/Wayland only
+    displayManager.startx.enable = lib.mkForce false;
+    autorun = false; # Prevent X server from starting automatically
   };
 
   # User configuration is in system/core/users.nix
@@ -239,7 +246,7 @@
     };
   };
 
-  # Enable Steam
+  # Enable Steam with performance optimizations
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
@@ -248,24 +255,41 @@
     extraCompatPackages = with pkgs; [
       proton-ge-bin
     ];
+    # Performance optimizations
+    extraPackages = with pkgs; [
+      gamescope
+      mangohud
+    ];
   };
   
-  # Enable XWayland for Steam and other X11 apps
-  programs.xwayland.enable = true;
+  # XWayland is provided by xwayland-satellite service (see home/services/wayland/xwayland-satellite.nix)
 
   # Enable NVIDIA driver
   services.xserver.videoDrivers = ["nvidia"];
+  
+  # Override xwayland to disable glamor (EGL) to prevent crashes
+  nixpkgs.overlays = [(final: prev: {
+    xwayland = prev.xwayland.overrideAttrs (old: {
+      mesonFlags = (old.mesonFlags or []) ++ ["-Dglamor=false"];
+    });
+  })];
+
 
   # NVIDIA environment variables for Wayland
   environment.sessionVariables = {
-    GBM_BACKEND = "nvidia-drm";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     WLR_NO_HARDWARE_CURSORS = "1";
-    LIBVA_DRIVER_NAME = "nvidia";
-    NVD_BACKEND = "direct";
     
-    # XWayland and Steam support
-    DISPLAY = ":1";
+    # Unset EGL_PLATFORM to prevent Xwayland from trying to use EGL
+    # which causes crashes when EGL providers are not available
+    EGL_PLATFORM = lib.mkForce null;
+    
+    # Gaming performance optimizations
+    __GL_SHADER_DISK_CACHE = "1";
+    __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
+    __GL_THREADED_OPTIMIZATIONS = "1";
+    PROTON_ENABLE_NVAPI = "1";
+    DXVK_HUD = "fps,memory,gpuload";
+    MANGOHUD = "1";
   };
 
   # Additional systemd hardening

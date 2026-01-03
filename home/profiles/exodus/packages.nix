@@ -13,8 +13,7 @@
     vscode
     windsurf
     
-    # XWayland support for niri
-    xwayland-satellite
+    # XWayland support for niri is managed via systemd service
     
     # Terminal tools
     byobu
