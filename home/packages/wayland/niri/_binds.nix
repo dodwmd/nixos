@@ -43,7 +43,6 @@
   "Mod+V".spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "launcher" "clipboard"];
   "Mod+E".spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "launcher" "emoji"];
   "Mod+U".spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "settings" "toggle"];
-  "Alt+Space".spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "launcher" "toggle"];
   "Mod+D".spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "launcher" "toggle"];
   "Print".screenshot-screen = {};
   "Mod+Shift+Alt+S".screenshot-window = {};

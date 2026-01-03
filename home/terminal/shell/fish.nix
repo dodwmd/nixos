@@ -21,7 +21,6 @@
           set -gx TWT_TOKEN (cat /run/agenix/twt)
         end
 
-
         set -gx NIXPKGS_ALLOW_UNFREE 1
         set -gx NIXPKGS_ALLOW_INSECURE 1
         set -gx EDITOR hx
@@ -32,21 +31,31 @@
         # Vi keybindings
         fish_vi_key_bindings
 
-        # Custom binding
-        for mode in insert default
-          bind -M $mode ctrl-backspace backward-kill-word
-          bind -M $mode ctrl-z undo
-          bind -M $mode ctrl-b beginning-of-line
-          bind -M $mode ctrl-e end-of-line
+        # Custom key bindings function (REQUIRED to properly unbind keys)
+        function fish_user_key_bindings
+          # Custom bindings
+          for mode in insert default
+            bind -M $mode ctrl-backspace backward-kill-word
+            bind -M $mode ctrl-z undo
+            bind -M $mode ctrl-b beginning-of-line
+            bind -M $mode ctrl-e end-of-line
+          end
+
+          bind -M insert \cx\ce edit_command_buffer
+          bind -M default \cx\ce edit_command_buffer
+
+          # History search with prefix (like nushell)
+          bind -M insert up history-prefix-search-backward
+          bind -M insert down history-prefix-search-forward
+          bind -M default up history-prefix-search-backward
+          bind -M default down history-prefix-search-forward
+
+          # UNBIND alt-s and alt-v completely (for Zellij)
+          bind -M insert alt-s ""
+          bind -M default alt-s ""
+          bind -M insert alt-v ""
+          bind -M default alt-v ""
         end
-
-        # History search with prefix (like nushell)
-        bind -M insert up history-prefix-search-backward
-        bind -M insert down history-prefix-search-forward
-
-        # Same for normal mode
-        bind -M default up history-prefix-search-backward
-        bind -M default down history-prefix-search-forward
 
         # Cursor shapes per mode
         set fish_cursor_default block
@@ -65,9 +74,8 @@
 
         # Plugin settings
         set -Ux fifc_editor hx
-        set -U fifc_keybinding \cx
+        set -U fifc_keybinding \cv
         set -g __done_min_cmd_duration 10000
-        set -g sudope_sequence \cs
       '';
     };
 
