@@ -18,36 +18,84 @@ in {
       command_timeout = 500;
 
       format = ''
-        [┌───](bold bright-blue) $hostname $os
-        [│](bold bright-blue) $directory$git_branch$git_status$nix_shell
-        [└─>](bold bright-blue) $character
-      '';
+        $status$username$hostname$directory$git_branch$git_status$cmd_duration$nix_shell
+        $character'';
 
-      os = {
-        format = "on [($name $codename$version $symbol )]($style)";
-        style = "bold bright-blue";
+      status = {
         disabled = false;
-      };
-
-      hostname = {
-        ssh_only = false;
-        format = "[$hostname]($style)";
-        style = "bold bright-red";
-        disabled = false;
+        format = "[$symbol](bold $style) ";
+        symbol = "│";
+        success_symbol = "[│](bold white)";
+        style = "red";
+        map_symbol = false;
+        recognize_signal_code = false;
+        pipestatus = false;
       };
 
       character = {
         format = "$symbol";
-        success_symbol = "[❯](bold bright-green) ";
-        error_symbol = "[✗](bold bright-red) ";
-        vicmd_symbol = "[](bold yellow) ";
-        disabled = false;
+        success_symbol = "[│](bold white) ";
+        error_symbol = "[│](bold red) ";
+        vicmd_symbol = "[│](bold green) ";
+      };
+
+      jobs.disabled = true;
+
+      username = {
+        format = "[$user]($style)@";
+        style_user = "bold yellow";
+        style_root = "bold red";
+        show_always = false;
+      };
+
+      hostname = {
+        format = "[$hostname]($style) ";
+        style = "bold yellow";
+        ssh_only = true;
+      };
+
+      directory = {
+        format = "[$path]($style)";
+        style = "cyan";
+        truncation_length = 1;
+        truncation_symbol = "";
+        home_symbol = "~";
+        repo_root_format = "[$repo_root]($repo_root_style)";
+        repo_root_style = "bold white";
+      };
+
+      git_branch = {
+        format = " [$branch]($style)";
+        style = "green";
+        symbol = "";
+      };
+
+      git_status = {
+        format = " [$all_status$ahead_behind]($style)";
+        style = "yellow";
+        untracked = "[?]";
+        modified = "[!]";
+        staged = "[+]";
+        deleted = "[x]";
+        renamed = "[»]";
+        stashed = "";
+        ahead = "[↑]";
+        behind = "[↓]";
+        diverged = "[↕]";
+      };
+
+      cmd_duration = {
+        format = " [$duration]($style)";
+        style = "yellow";
+        min_time = 2000;
+        show_milliseconds = true;
       };
 
       nix_shell = {
         disabled = false;
         heuristic = false;
-        format = "[   ](fg:bright-blue bold)";
+        format = " [nix]($style)";
+        style = "bold blue";
         impure_msg = "";
         pure_msg = "";
         unknown_msg = "";
@@ -75,7 +123,6 @@ in {
       helm.disabled = true;
       battery.disabled = true;
       time.disabled = true;
-      cmd_duration.disabled = true;
     };
     "fish/conf.d/starship.fish".text = ''
       starship init fish | source

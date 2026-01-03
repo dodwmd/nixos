@@ -9,7 +9,6 @@
 
   xdg.configFile = {
     "fish/config.fish" = {
-      force = true;
       text = ''
         if test -f /run/agenix/openrouter
           set -gx OPENROUTER_API_KEY (cat /run/agenix/openrouter)
@@ -80,7 +79,6 @@
     };
 
     "fish/functions/fcd.fish" = {
-      force = true;
       text = ''
         function fcd
           set -l dir (fd --type d | sk | string trim)
@@ -92,7 +90,6 @@
     };
 
     "fish/functions/installed.fish" = {
-      force = true;
       text = ''
         function installed
           nix-store --query --requisites /run/current-system/ | string replace -r '.*?-(.*)' '$1' | sort | uniq | sk
@@ -101,7 +98,6 @@
     };
 
     "fish/functions/installedall.fish" = {
-      force = true;
       text = ''
         function installedall
           nix-store --query --requisites /run/current-system/ | sk | wl-copy
@@ -110,7 +106,6 @@
     };
 
     "fish/functions/fm.fish" = {
-      force = true;
       text = ''
         function fm
           set -l tmp (mktemp -t "yazi-cwd.XXXXX")
@@ -125,7 +120,6 @@
     };
 
     "fish/functions/gitgrep.fish" = {
-      force = true;
       text = ''
         function gitgrep
           git ls-files | rg $argv
@@ -134,7 +128,6 @@
     };
 
     "fish/conf.d/abbreviations.fish" = {
-      force = true;
       text = ''
         abbr -a z "zoxide query"
         abbr -a zi "zoxide query -i"
@@ -142,7 +135,6 @@
     };
 
     "fish/conf.d/aliases.fish" = {
-      force = true;
       text = ''
         alias cleanup="sudo nix-collect-garbage --delete-older-than 1d"
         alias listgen="sudo nix-env -p /nix/var/nix/profiles/system --list-generations"

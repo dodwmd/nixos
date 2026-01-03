@@ -16,11 +16,6 @@
         type = lib.types.nullOr lib.types.path;
         default = null;
       };
-      force = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-        description = "Whether to force overwrite existing files";
-      };
     };
   };
   userOpts = _: {
@@ -51,13 +46,21 @@
       else file.source;
     fullPath = "${baseDir}/${name}";
     parentDir = builtins.dirOf fullPath;
-    forceFlag =
-      if file.force
-      then "-f"
-      else "";
   in ''
     mkdir -p "${parentDir}"
-    ln -s ${forceFlag} "${target}" "${fullPath}" 2>/dev/null || true
+    if [ -L "${fullPath}" ]; then
+      current_target=$(readlink "${fullPath}")
+      if [ "$current_target" != "${target}" ]; then
+        rm -f "${fullPath}"
+        ln -s "${target}" "${fullPath}"
+      fi
+    elif [ -e "${fullPath}" ]; then
+      # Regular file exists, replace it
+      rm -f "${fullPath}"
+      ln -s "${target}" "${fullPath}"
+    else
+      ln -s "${target}" "${fullPath}"
+    fi
   '';
 in {
   options = {
