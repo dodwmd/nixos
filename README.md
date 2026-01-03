@@ -21,6 +21,8 @@
 
 ### ⚠ <sup><sub><samp>PLEASE RESPECT THE CREDITS IF YOU USE SOMETHING FROM MY DESKTOP/SETUP.</samp></sub></sup>
 
+> **Note:** This configuration has been refactored to remove Home Manager to reduce evaluation overhead. While projects like `hjem` and `hjem-rum` were considered, a pure NixOS approach was chosen for simplicity and performance.
+
 ---
 
 <pre align="center"><p align="center"><a href="#seedling--setup">SETUP</a> • <a href="#herb--guides">GUIDES</a> • <a href="#four_leaf_clover--key-bindings">KEYBINDS</a> • <a href="https://linu.dev/kaku">GALLERY</a></p></pre>
@@ -34,10 +36,10 @@
 </a>
 
 - **Window Manager** • [Niri](https://github.com/YaLTeR/niri/)🎨 Scrolleable WM!
-- **Shell** • [Nu](https://www.nushell.sh/) 🐚 with
+- **Shell** • [Fish](https://fishshell.com/) 🐟 with
   [starship](https://github.com/starship/starship) Cross Shell Platform!
 - **Terminal** • [Ghostty](https://ghostty.org/) 💻 A powerful Hyped term
-- **Panel** • [DMS Quickshell](https://github.com/AvengeMedia/DankMaterialShell) 🍧 The Best GOAT DMS-Quickshell :3!
+- **Panel** • DMS 🍧 by noctalia!
 - **File Manager** • [Yazi](https://github.com/sxyazi/yazi) 🔖 Rustacean File
   Manager!
 - **GUI Basic-IDE** • [Helix](https://docs.helix-editor.com/) ✴️ Rustacean vim
@@ -134,12 +136,6 @@ nixos-install --flake .#aesthetic
 passwd YourUser
 ```
 
-- Install w/ Home-Manager the config
-
-```bash
-home-manager switch --flake 'github:linuxmobile/kaku#linudev@aesthetic'
-```
-
 ### 🌸 <samp>SCREENSHOTS</samp>
 
 |                           |                           |
@@ -157,16 +153,10 @@ If you're using this NixOS configuration flake locally, you can simplify the pro
 To switch your system configuration with `nh`, use:
 
 ```bash
-nh os switch .#aesthetic
+NH_FLAKE=/home/linuxmobile/Dev/kaku/ nh os switch
 ```
 
-Similarly, to apply home-manager configurations:
-
-```bash
-nh home switch .#linudev@aesthetic
-```
-
-This avoids needing to type out the full `nixos-rebuild` or `home-manager` commands manually and provides a cleaner workflow when iterating on your setup.
+This avoids needing to type out the full `nixos-rebuild` command manually and provides a cleaner workflow when iterating on your setup.
 
 > 💡 Make sure `nh` is installed in your system environment or user profile.
 
