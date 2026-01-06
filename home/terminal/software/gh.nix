@@ -1,16 +1,10 @@
 {pkgs, ...}: let
-  configFile = "gh/config.yml";
-  hostsFile = "gh/hosts.yml";
   toYAML = (pkgs.formats.yaml {}).generate;
-in {
-  users.users.dodwmd.packages = with pkgs; [
-    gh
-  ];
-
-  xdg.configFile."${configFile}".source = toYAML "config.yml" {
+  
+  ghConfig = toYAML "config.yml" {
     version = 1;
     git_protocol = "https";
-    editor = "hx";
+    editor = "nvim";
     prompt = "enabled";
     prefer_editor_prompt = "disabled";
     pager = "less -FR";
@@ -20,10 +14,23 @@ in {
     http_unix_socket = "";
     browser = "helium";
   };
-
-  xdg.configFile."${hostsFile}".text = ''
+  
+  ghHosts = pkgs.writeText "gh-hosts.yml" ''
     github.com:
       git_protocol: https
-      user: linuxmobile
+      user: dodwmd
+  '';
+in {
+  users.users.dodwmd.packages = with pkgs; [
+    gh
+  ];
+
+  # Create gh config files using activation script
+  system.activationScripts.gh-config = ''
+    mkdir -p /home/dodwmd/.config/gh
+    cp ${ghConfig} /home/dodwmd/.config/gh/config.yml
+    cp ${ghHosts} /home/dodwmd/.config/gh/hosts.yml
+    chown -R dodwmd:users /home/dodwmd/.config/gh
+    chmod 644 /home/dodwmd/.config/gh/*.yml
   '';
 }

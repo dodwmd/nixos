@@ -10,9 +10,9 @@
 
     # services
     ../../services/wayland/gammastep.nix
-    # ../../services/wayland/quickshell.nix  # Disabled - using waybar instead
     ../../services/wayland/waybar.nix
     ../../services/wayland/mako.nix
+    ../../services/wayland/swayidle.nix
 
     # media services
     ../../services/media/playerctl.nix

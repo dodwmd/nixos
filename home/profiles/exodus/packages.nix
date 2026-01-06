@@ -13,6 +13,10 @@
     vscode
     windsurf
     
+    # Essential tools missing from old config
+    imv           # Image viewer
+    gsimplecal    # Calendar popup for waybar
+    
     # XWayland support for niri is managed via systemd service
     
     # Terminal tools
@@ -78,7 +82,4 @@
     nix-direnv.enable = true;
   };
   
-  xdg.configFile."direnv/direnvrc".text = ''
-    source ${pkgs.nix-direnv}/share/nix-direnv/direnvrc
-  '';
 }

@@ -14,6 +14,7 @@
           format = "{:%a %b %d  %H:%M:%S}";
           interval = 1;
           tooltip-format = "<tt><small>{calendar}</small></tt>";
+          on-click = "${pkgs.gsimplecal}/bin/gsimplecal";
           calendar = {
             mode = "month";
             format = {

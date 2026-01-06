@@ -39,7 +39,7 @@
     _props.allow-when-locked = true;
     spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "brightness" "decrease"];
   };
-  "Ctrl+Alt+L".spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "lockScreen" "lock"];
+  "Ctrl+Alt+L".spawn._args = ["${pkgs.swaylock-effects}/bin/swaylock" "-f" "-c" "000000"];
   "Mod+V".spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "launcher" "clipboard"];
   "Mod+E".spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "launcher" "emoji"];
   "Mod+U".spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "settings" "toggle"];

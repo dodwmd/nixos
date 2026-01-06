@@ -23,6 +23,7 @@ in {
     ["wl-paste" "--watch" "cliphist" "store"]
     ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]
     ["qs" "-c" "noctalia"]
+    ["swayidle" "-w" "timeout" "600" "swaylock -f -c 000000" "timeout" "1200" "systemctl suspend" "before-sleep" "swaylock -f -c 000000"]
     # xwayland-satellite is managed by systemd user service
   ];
 
