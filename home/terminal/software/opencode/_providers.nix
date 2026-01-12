@@ -51,7 +51,7 @@
         };
 
         "antigravity-claude-sonnet-4-5-thinking-low" = {
-          name = "Claude Sonnet 4.5 Thinking Low (Antigravity)";
+          name = "Claude Sonnet 4.5 Low (Antigravity)";
           limit = {
             context = 200000;
             output = 64000;
@@ -62,7 +62,7 @@
           };
         };
         "antigravity-claude-sonnet-4-5-thinking-medium" = {
-          name = "Claude Sonnet 4.5 Thinking Medium (Antigravity)";
+          name = "Claude Sonnet 4.5 Medium (Antigravity)";
           limit = {
             context = 200000;
             output = 64000;
@@ -73,7 +73,7 @@
           };
         };
         "antigravity-claude-sonnet-4-5-thinking-high" = {
-          name = "Claude Sonnet 4.5 Thinking High (Antigravity)";
+          name = "Claude Sonnet 4.5 High (Antigravity)";
           limit = {
             context = 200000;
             output = 64000;
@@ -85,7 +85,7 @@
         };
 
         "antigravity-claude-opus-4-5-thinking-low" = {
-          name = "Claude Opus 4.5 Thinking Low (Antigravity)";
+          name = "Claude Opus 4.5 Low (Antigravity)";
           limit = {
             context = 200000;
             output = 64000;
@@ -96,7 +96,7 @@
           };
         };
         "antigravity-claude-opus-4-5-thinking-medium" = {
-          name = "Claude Opus 4.5 Thinking Medium (Antigravity)";
+          name = "Claude Opus 4.5 Medium (Antigravity)";
           limit = {
             context = 200000;
             output = 64000;
@@ -107,7 +107,7 @@
           };
         };
         "antigravity-claude-opus-4-5-thinking-high" = {
-          name = "Claude Opus 4.5 Thinking High (Antigravity)";
+          name = "Claude Opus 4.5 High (Antigravity)";
           limit = {
             context = 200000;
             output = 64000;
@@ -117,7 +117,6 @@
             output = ["text"];
           };
         };
-
         "antigravity-gpt-oss-120b-medium" = {
           name = "GPT-OSS 120B Medium (Antigravity)";
           limit = {
@@ -127,6 +126,50 @@
           modalities = {
             input = ["text" "image" "pdf"];
             output = ["text"];
+          };
+        };
+        "gemini-2.5-flash" = {
+          "name" = "Gemini 2.5 Flash (Gemini)";
+          "limit" = {
+            "context" = 1048576;
+            "output" = 65536;
+          };
+          "modalities" = {
+            "input" = ["text" "image" "pdf"];
+            "output" = ["text"];
+          };
+        };
+        "gemini-2.5-pro" = {
+          "name" = "Gemini 2.5 Pro (Gemini)";
+          "limit" = {
+            "context" = 1048576;
+            "output" = 65536;
+          };
+          "modalities" = {
+            "input" = ["text" "image" "pdf"];
+            "output" = ["text"];
+          };
+        };
+        "gemini-3-flash-preview" = {
+          "name" = "Gemini 3 Flash Preview (Gemini)";
+          "limit" = {
+            "context" = 1048576;
+            "output" = 65536;
+          };
+          "modalities" = {
+            "input" = ["text" "image" "pdf"];
+            "output" = ["text"];
+          };
+        };
+        "gemini-3-pro-preview" = {
+          "name" = "Gemini 3 Pro Preview (Gemini)";
+          "limit" = {
+            "context" = 1048576;
+            "output" = 65535;
+          };
+          "modalities" = {
+            "input" = ["text" "image" "pdf"];
+            "output" = ["text"];
           };
         };
       };

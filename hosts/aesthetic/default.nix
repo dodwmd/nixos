@@ -13,14 +13,20 @@
     ];
 
     secrets = {
-      openrouter = {
-        file = "${self}/secrets/openrouter.age";
+      discordo = {
+        file = "${self}/secrets/discordo.age";
         owner = "linuxmobile";
         group = "users";
         mode = "0400";
       };
       github = {
         file = "${self}/secrets/github.age";
+        owner = "linuxmobile";
+        group = "users";
+        mode = "0400";
+      };
+      openrouter = {
+        file = "${self}/secrets/openrouter.age";
         owner = "linuxmobile";
         group = "users";
         mode = "0400";

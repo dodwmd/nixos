@@ -10,6 +10,9 @@
   xdg.configFile = {
     "fish/config.fish" = {
       text = ''
+        if test -f /run/agenix/discordo
+          set -gx DISCORDO_TOKEN (cat /run/agenix/discordo)
+        end
         if test -f /run/agenix/openrouter
           set -gx OPENROUTER_API_KEY (cat /run/agenix/openrouter)
         end
@@ -54,6 +57,8 @@
           bind -M default alt-s ""
           bind -M insert alt-v ""
           bind -M default alt-v ""
+          bind -M insert alt-z ""
+          bind -M default alt-z ""
         end
 
         # Cursor shapes per mode
