@@ -12,6 +12,7 @@
       text = ''
         if test -f /run/agenix/discordo
           set -gx DISCORDO_TOKEN (cat /run/agenix/discordo)
+          set -gx OXICORD_TOKEN (cat /run/agenix/discordo)
         end
         if test -f /run/agenix/openrouter
           set -gx OPENROUTER_API_KEY (cat /run/agenix/openrouter)

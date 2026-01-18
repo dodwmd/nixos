@@ -242,11 +242,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1767404062,
-        "narHash": "sha256-mpdcAR3qIuTFbKcHSQaEPX9vXLu5izsXeO4ffGXl1J0=",
+        "lastModified": 1768163326,
+        "narHash": "sha256-+vJlFI4pYxnqUsL6DIPJw6gvEJ0Mjh/v9chxGuBgz3Y=",
         "owner": "linuxmobile",
         "repo": "mynixpkgs",
-        "rev": "1eb11ea897fae40696765e04114ae92e32ff5eb2",
+        "rev": "2f8e0a405094037b85b9fe0f6158c0fe7b4a2543",
         "type": "github"
       },
       "original": {
@@ -368,11 +368,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768080384,
-        "narHash": "sha256-9LsJ123idZdq2rDtF1AvpzDQnhkPZWT2UFG7jTxICa8=",
+        "lastModified": 1768526824,
+        "narHash": "sha256-mgkRpfcpHV+wtJv5PwfImSQVqkmX98XLXKiAzD/EIkg=",
         "owner": "anomalyco",
         "repo": "opencode",
-        "rev": "f882cca98a2b245b695880499dfc4101d4ed924c",
+        "rev": "d8ef9f808d0f81c7606c06e54593f52f4272e96a",
         "type": "github"
       },
       "original": {
