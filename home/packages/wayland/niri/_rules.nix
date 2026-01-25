@@ -1,7 +1,7 @@
 {
   window-rule = [
     {
-      geometry-corner-radius._args = [12.0 12.0 12.0 12.0];
+      # geometry-corner-radius._args = [12.0 12.0 12.0 12.0];
       clip-to-geometry = true;
       draw-border-with-background = false;
     }

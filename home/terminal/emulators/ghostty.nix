@@ -16,8 +16,8 @@ in {
       } {
         theme = "noctalia";
         scrollback-limit = "10000";
-        font-family = "Cozette";
-        font-size = "13";
+        font-family = "GT Pressura Mono Trial";
+        font-size = "9";
         font-feature = "calt,dlig,fina,ss13,ss15";
         cursor-style = "bar";
         cursor-style-blink = "true";

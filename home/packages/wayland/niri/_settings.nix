@@ -78,7 +78,7 @@ in {
     background-color = "transparent";
     focus-ring.off = {};
     border = {
-      width = 2;
+      width = 1;
     };
     shadow.off = {};
     preset-column-widths.proportion = [0.25 0.5 0.75 1.0];

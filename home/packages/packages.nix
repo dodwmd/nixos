@@ -27,6 +27,7 @@
 
     inkscape
     scrcpy
+    android-tools
     (inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}.multiviewer.overrideAttrs (old: {
       buildInputs = (old.buildInputs or []) ++ [pkgs.makeWrapper];
       postInstall = ''

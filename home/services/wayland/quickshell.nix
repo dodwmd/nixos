@@ -18,6 +18,8 @@
       swww
       wl-clipboard
       wget
+      python3
+      imagemagick
     ]
     ++ (with pkgs.kdePackages; [
       qtbase
