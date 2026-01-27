@@ -41,7 +41,7 @@
       name = "readarr";
       description = "Readarr ebook management";
       port = 8787;
-      image = "lscr.io/linuxserver/readarr:develop";
+      image = "lscr.io/linuxserver/readarr:latest";
     })
 
     (mkMediaService {
