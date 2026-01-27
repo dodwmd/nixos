@@ -47,6 +47,9 @@ with lib;
       statdPort = config.homelab.nfs-server.statdPort;
     };
 
+    # Enable UDP for NFSv3 (needed by Kodi/Shield clients)
+    services.nfs.settings.nfsd.udp = true;
+
     # Override rpcbind to enable remote calls if requested
     nixpkgs.config.packageOverrides = mkIf config.homelab.nfs-server.enableRmtcalls (pkgs: {
       rpcbind = pkgs.rpcbind.overrideAttrs (oldAttrs: {
