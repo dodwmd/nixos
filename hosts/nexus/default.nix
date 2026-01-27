@@ -46,9 +46,9 @@
   homelab.nfs-server = {
     enable = true;
     exports = ''
-      /tank 192.168.1.0/24(rw,sync,no_subtree_check,no_root_squash)
-      /tank/data 192.168.1.0/24(rw,sync,no_subtree_check,no_root_squash)
-      /tank/config 192.168.1.0/24(rw,sync,no_subtree_check,no_root_squash)
+      /tank 192.168.1.0/24(rw,sync,no_subtree_check,no_root_squash,insecure)
+      /tank/data 192.168.1.0/24(rw,sync,no_subtree_check,no_root_squash,insecure)
+      /tank/config 192.168.1.0/24(rw,sync,no_subtree_check,no_root_squash,insecure)
     '';
     lockdPort = 4001;
     mountdPort = 4002;
