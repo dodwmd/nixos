@@ -1,0 +1,49 @@
+{
+  config,
+  pkgs,
+  ...
+}: {
+  # Desktop boot configuration - quiet boot with plymouth
+  boot = {
+    bootspec.enable = true;
+
+    initrd = {
+      systemd.enable = true;
+    };
+    supportedFilesystems = ["ntfs"];
+
+    # use latest kernel
+    kernelPackages = pkgs.linuxPackages_latest;
+
+    # Quiet boot for desktop
+    consoleLogLevel = 3;
+    kernelParams = [
+      "quiet"
+      "systemd.show_status=auto"
+      "rd.udev.log_level=3"
+      "plymouth.use-simpledrm"
+    ];
+
+    loader = {
+      # systemd-boot on UEFI (can be overridden by host for GRUB)
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+
+    # Pretty boot splash
+    plymouth.enable = true;
+
+    tmp = {
+      useTmpfs = true;
+      cleanOnBoot = true;
+    };
+  };
+
+  systemd.services.nix-daemon = {
+    environment = {
+      TMPDIR = "/var/tmp";
+    };
+  };
+
+  environment.systemPackages = [config.boot.kernelPackages.cpupower];
+}

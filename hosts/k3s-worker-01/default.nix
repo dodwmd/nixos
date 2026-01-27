@@ -1,29 +1,23 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
 
-  # System identification
-  networking.hostName = "k3s-worker-01";
-  
-  # Network configuration - use DHCP
-  networking.useDHCP = true;
-  networking.dhcpcd.enable = true;
-  networking.nameservers = [ "192.168.1.1" "192.168.1.4" ];
-
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  
-  # Show boot messages instead of splash screen
-  boot.plymouth.enable = lib.mkForce false;
-  boot.kernelParams = [
-    "systemd.show_status=true"
-    "rd.systemd.show_status=true"
-    "rd.udev.log_level=info"
-  ];
+  # K3s host common configuration
+  homelab.k3s-host = {
+    enable = true;
+    hostname = "k3s-worker-01";
+    upgradeTime = "03:00"; # Stagger from masters
+    allowReboot = true; # Workers can reboot
+    cpuGovernor = "ondemand"; # Workers can scale
+    showBootMessages = true; # Show boot messages
+    extraPackages = with pkgs; [nvme-cli]; # This worker has NVMe storage
+  };
 
   # K3s worker configuration
   homelab.k3s-worker = {
@@ -40,81 +34,6 @@
   homelab.k3s-cluster = {
     # nodeIP will be auto-detected from DHCP
   };
-
-
-  # Users
-  users.users.admin = {
-    isNormalUser = true;
-    createHome = true;
-    extraGroups = [ "wheel" "docker" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII1Vk18qExSQM6rksG500xD/mgACFpNyh7mRnrhVVUQx michael@dodwell.us"
-    ];
-  };
-
-
-  # SSH configuration
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "prohibit-password";
-      PasswordAuthentication = false;
-    };
-  };
-
-  programs.ssh = {
-    extraConfig = ''
-      Host *
-        ForwardAgent yes
-        AddKeysToAgent yes
-    '';
-  };
-
-  # Mosh for better remote shell
-  programs.mosh.enable = true;
-
-  # Hardware-specific
-  hardware.cpu.intel.updateMicrocode = true;
-  
-  # System packages
-  environment.systemPackages = with pkgs; [
-    nvme-cli
-    vim
-    git
-    tmux
-    wget
-    curl
-    jq
-    yq
-    dig
-    traceroute
-    iperf3
-  ];
-
-  # Performance tuning
-  powerManagement.cpuFreqGovernor = "ondemand";
-
-  # Containerd overlayfs optimization
-  virtualisation.containerd.settings.plugins."io.containerd.snapshotter.v1.overlayfs".root = "/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs";
-
-  # Auto-upgrade with reboot
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = true;
-    dates = "03:00";
-  };
-
-  # Disable nh cleanup to avoid conflict with manual nix.gc
-  programs.nh.clean.enable = lib.mkForce false;
-
-  # Garbage collection
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
-
-
 
   # System state version
   system.stateVersion = "25.11";

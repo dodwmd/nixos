@@ -33,7 +33,6 @@
     {
       match = [
         {_props = {app-id = "zen";};}
-        {_props = {app-id = "helium";};}
         {_props = {app-id = "firefox";};}
         {_props = {app-id = "chromium-browser";};}
         {_props = {app-id = "xdg-desktop-portal-gtk";};}
@@ -43,7 +42,6 @@
     {
       match = [
         {_props = {app-id = "zen";};}
-        {_props = {app-id = "helium";};}
         {_props = {app-id = "firefox";};}
         {_props = {app-id = "chromium-browser";};}
         {_props = {app-id = "edge";};}

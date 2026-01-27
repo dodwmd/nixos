@@ -1,23 +1,24 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
 
-  # System identification
-  networking.hostName = "k3s-worker-03";
-  
-  # Network configuration - use DHCP
-  networking.useDHCP = true;
-  networking.dhcpcd.enable = true;
-  networking.nameservers = [ "192.168.1.1" "192.168.1.4" ];
+  # K3s host common configuration
+  homelab.k3s-host = {
+    enable = true;
+    hostname = "k3s-worker-03";
+    upgradeTime = "04:00"; # Stagger from other workers
+    allowReboot = true; # Workers can reboot
+    cpuGovernor = "performance"; # High-performance node
+    showBootMessages = true; # Show boot messages
+  };
 
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # K3s worker configuration (high-performance node)
+  # K3s worker configuration
   homelab.k3s-worker = {
     enable = true;
     serverAddr = "https://192.168.1.20:6443";
@@ -26,6 +27,7 @@
       "hardware=ms-a01"
       "storage=nvme-ssd"
       "compute=high-performance"
+      "gpu=amd-radv"
     ];
     maxPods = 150;
     kubeletArgs = {
@@ -39,41 +41,7 @@
     # nodeIP will be auto-detected from DHCP
   };
 
-  # Users
-  users.users.admin = {
-    isNormalUser = true;
-    createHome = true;
-    extraGroups = [ "wheel" "docker" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaqAx711E4IolsUvuE/JTv4CJNXL7e9ulZsZZN/XWVx michael@dodwell.us"
-    ];
-  };
 
-
-  # SSH configuration
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "prohibit-password";
-      PasswordAuthentication = false;
-    };
-  };
-
-  programs.ssh = {
-    extraConfig = ''
-      Host *
-        ForwardAgent yes
-        AddKeysToAgent yes
-    '';
-  };
-
-  # Mosh for better remote shell
-  programs.mosh.enable = true;
-
-  # Hardware-specific - MS-A01 Mini PC with AMD Ryzen
-  hardware.cpu.amd.updateMicrocode = true;
-  hardware.cpu.intel.updateMicrocode = true;  # Some MS-A01 variants
-  
   # AMD GPU support (Rembrandt iGPU)
   hardware.graphics = {
     enable = true;
@@ -82,13 +50,8 @@
     # ROCm packages can be added later if needed for compute workloads
   };
 
-  # Thermal management
-  services.thermald.enable = true;
 
-  # Performance tuning
-  powerManagement.cpuFreqGovernor = "performance";
-
-  # Network optimizations (use mkDefault to allow security.nix to override)
+  # Network optimizations for high-performance workloads
   boot.kernel.sysctl = {
     "net.core.rmem_max" = lib.mkDefault 134217728;
     "net.core.wmem_max" = lib.mkDefault 134217728;
@@ -97,52 +60,6 @@
     "net.core.netdev_max_backlog" = lib.mkDefault 5000;
   };
 
-  # Enhanced containerd settings for high-performance workloads
-  virtualisation.containerd.settings = {
-    plugins."io.containerd.grpc.v1.cri" = {
-      containerd = {
-        default_runtime_name = "runc";
-        runtimes.runc = {
-          runtime_type = "io.containerd.runc.v2";
-          options = {
-            SystemdCgroup = true;
-          };
-        };
-      };
-    };
-  };
-
-  # Auto-upgrade with reboot (staggered time)
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = true;
-    dates = "04:00";
-  };
-
-  # Disable nh cleanup to avoid conflict with manual nix.gc
-  programs.nh.clean.enable = lib.mkForce false;
-
-  # Garbage collection
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
-
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-    tmux
-    wget
-    curl
-    jq
-    yq
-    dig
-    traceroute
-    iperf3
-  ];
 
   # System state version
   system.stateVersion = "25.11";

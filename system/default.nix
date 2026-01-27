@@ -6,7 +6,7 @@ let
 
   # Desktop workstation profile
   desktop = base ++ [
-    ./core/boot.nix
+    ./core/boot-desktop.nix
 
     ./hardware/graphics.nix
     ./hardware/fwupd.nix
@@ -31,7 +31,7 @@ let
 
   # Server profile (minimal, no desktop)
   server = base ++ [
-    ./core/boot.nix
+    ./core/boot-server.nix
     ./core/podman.nix
     # Note: network/default.nix is for desktop NetworkManager, servers configure networking directly
   ];

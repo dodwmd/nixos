@@ -1,9 +1,8 @@
-_: let
+{pkgs, ...}: let
   pointer = "Bibata-Original-Ice";
 in {
-  include = "noctalia.kdl";
+  # Don't include noctalia.kdl - use direct configuration instead
   environment = {
-    CLUTTER_BACKEND = "wayland";
     # DISPLAY will be set automatically by niri's xwayland-satellite integration
     # EGL_PLATFORM is explicitly unset to prevent Xwayland from trying to use EGL
     # which causes crashes when EGL providers are not available
@@ -20,15 +19,15 @@ in {
   };
 
   spawn-at-startup = [
-    ["wl-paste" "--watch" "cliphist" "store"]
-    ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]
-    ["qs" "-c" "noctalia"]
-    ["swayidle" "-w" "timeout" "600" "swaylock -f -c 000000" "timeout" "1200" "systemctl suspend" "before-sleep" "swaylock -f -c 000000"]
+    # ["wl-paste" "--watch" "cliphist" "store"]  # Disabled - interferes with simple vim paste
+    # ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]  # Disabled - interferes with simple vim paste
+    ["${pkgs.waybar}/bin/waybar"]
+    ["swayidle" "-w" "timeout" "600" "${pkgs.swaylock-effects}/bin/swaylock -f -c 000000" "timeout" "1200" "systemctl suspend" "before-sleep" "${pkgs.swaylock-effects}/bin/swaylock -f -c 000000"]
     # xwayland-satellite is managed by systemd user service
   ];
 
   input = {
-    keyboard.xkb.layout = "latam";
+    keyboard.xkb.layout = "us";
     touchpad = {
       click-method = "button-areas";
       dwt = {};
@@ -49,7 +48,8 @@ in {
 
   output = [
     {
-      _args = ["eDP-1"];
+      _args = ["DP-1"];
+      mode = "1920x1080@60.000";
       scale = 1.0;
       position._props = {
         x = 0;
@@ -58,11 +58,11 @@ in {
     }
     {
       _args = ["HDMI-A-1"];
-      mode = "1920x1080";
+      mode = "1920x1080@60.000";
       scale = 1.0;
       position._props = {
-        x = 0;
-        y = -1080;
+        x = 1920;
+        y = 0;
       };
     }
   ];

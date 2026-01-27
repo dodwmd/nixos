@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  chromiumFlags = import ./chromium-flags.nix {inherit pkgs;};
+  chromiumFlags = import ../../packages/browsers/_chromium-flags.nix;
 in {
   programs.chromium = {
     enable = true;

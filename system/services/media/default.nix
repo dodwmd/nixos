@@ -4,14 +4,11 @@ with lib;
 
 {
   imports = [
-    ./sonarr.nix
-    ./radarr.nix
-    ./prowlarr.nix
-    ./lidarr.nix
-    ./readarr.nix
-    ./bazarr.nix
+    # Generated media services (*arr stack + jellyseerr)
+    ./services.nix
+
+    # Complex services with unique configuration
     ./jellyfin.nix
-    ./jellyseerr.nix
     ./tdarr.nix
     ./aria2.nix
     ./adguard.nix

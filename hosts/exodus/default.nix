@@ -8,11 +8,15 @@
     ./hardware-configuration.nix
     ../../system/services/tdarr-node.nix
     ../../system/services/ollama.nix
-    ../../home/profiles/exodus/packages.nix
+    ../../home/profiles/desktop/packages.nix
+    ../../home/packages/wayland/niri
   ];
 
   # Allow unfree packages (needed for NVIDIA drivers)
   nixpkgs.config.allowUnfree = true;
+
+  # Enable desktop user
+  homelab.users.desktopUser.enable = true;
 
   boot = {
     # load modules on boot
@@ -193,11 +197,7 @@
     autorun = false; # Prevent X server from starting automatically
   };
 
-  # User configuration is in system/core/users.nix
-  # SSH key override
-  users.users.dodwmd.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII1Vk18qExSQM6rksG500xD/mgACFpNyh7mRnrhVVUQx michael@dodwell.us"
-  ];
+  # User configuration is now handled by homelab.users.desktopUser
 
   security.tpm2.enable = true;
 
@@ -209,6 +209,8 @@
       enable = true;
       killUnconfinedConfinables = true;
     };
+    # Enable PAM authentication for swaylock
+    pam.services.swaylock = {};
   };
 
   services = {

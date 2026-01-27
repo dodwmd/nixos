@@ -12,7 +12,7 @@
       co = "pr checkout";
     };
     http_unix_socket = "";
-    browser = "helium";
+    browser = "brave";
   };
   
   ghHosts = pkgs.writeText "gh-hosts.yml" ''

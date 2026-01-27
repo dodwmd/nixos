@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  browser = ["helium.desktop"];
+  browser = ["brave-browser.desktop"];
   imageViewer = ["lightview.desktop"];
   videoPlayer = ["mpv.desktop"];
   audioPlayer = ["io.bassi.Amberol.desktop"];
@@ -34,7 +34,7 @@
       "text/html" = builtins.head browser;
       "text/plain" = "org.gnome.TextEditor.desktop";
       "text/markdown" = "org.gnome.TextEditor.desktop";
-      "x-scheme-handler/chrome" = "helium.desktop";
+      "x-scheme-handler/chrome" = "brave-browser.desktop";
     }
     // image // video // audio // browserTypes;
 
@@ -54,14 +54,17 @@ in {
     (writeShellScriptBin "xdg-terminal-exec" ''foot start "$@"'')
   ];
 
-  xdg = {
-    configFile."user-dirs.dirs".source = userDirsConfig;
-    configFile."mimeapps.list".text = ''
-      [Default Applications]
-      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${v}") associations)}
-      
-      [Added Associations]
-      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${v}") associations)}
-    '';
-  };
+  # XDG MIME associations moved to system/programs/xdg.nix
+  # xdg = {
+  #   configFile."user-dirs.dirs".source = userDirsConfig;
+  #   configFile."mimeapps.list".text = ''
+  #     [Default Applications]
+  #     ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${v}") associations)}
+  #     
+  #     [Added Associations]
+  #     ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${v}") associations)}
+  #   '';
+  # };
+
+  environment.etc."xdg/user-dirs.dirs".source = userDirsConfig;
 }

@@ -11,7 +11,6 @@ in {
       "zen"
       "zen-browser"
       "mozilla zen"
-      "helium"
     ];
     debug = false;
     keybinds = {

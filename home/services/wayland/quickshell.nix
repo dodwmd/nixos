@@ -8,7 +8,7 @@
       accountsservice
       brightnessctl
       cava
-      cliphist
+      # cliphist  # Disabled - interferes with simple vim paste
       ddcutil
       elogind
       glib

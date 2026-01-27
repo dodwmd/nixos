@@ -1,34 +1,27 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
   ];
 
-  # System identification
-  networking.hostName = "k3s-master-02";
-  
-  # Network configuration - use DHCP
-  networking.useDHCP = true;
-  networking.dhcpcd.enable = true;
-  networking.nameservers = [ "192.168.1.1" "192.168.1.4" ];
-
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  
-  # Show boot messages instead of splash screen
-  boot.plymouth.enable = lib.mkForce false;
-  boot.kernelParams = [
-    "systemd.show_status=true"
-    "rd.systemd.show_status=true"
-    "rd.udev.log_level=info"
-  ];
+  # K3s host common configuration
+  homelab.k3s-host = {
+    enable = true;
+    hostname = "k3s-master-02";
+    upgradeTime = "02:30"; # Stagger from master-01
+    allowReboot = false;
+    cpuGovernor = "ondemand"; # Thermal management priority for fanless N95
+    showBootMessages = true; # Show boot messages for this master
+  };
 
   # K3s master configuration (joining existing cluster)
   homelab.k3s-master = {
     enable = true;
-    clusterInit = false;
+    clusterInit = false; # Join existing cluster
     serverAddr = "https://192.168.1.20:6443";
     tlsSan = [
       "192.168.1.20"
@@ -44,72 +37,6 @@
     enableTraefik = false;
     enableServiceLB = false;
   };
-
-  # Users
-  users.users.admin = {
-    isNormalUser = true;
-    createHome = true;
-    extraGroups = [ "wheel" "docker" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOaqAx711E4IolsUvuE/JTv4CJNXL7e9ulZsZZN/XWVx michael@dodwell.us"
-    ];
-  };
-
-
-  # SSH configuration
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "prohibit-password";
-      PasswordAuthentication = false;
-    };
-  };
-
-  programs.ssh = {
-    extraConfig = ''
-      Host *
-        ForwardAgent yes
-        AddKeysToAgent yes
-    '';
-  };
-
-  # Mosh for better remote shell
-  programs.mosh.enable = true;
-
-  # Performance tuning
-  powerManagement.cpuFreqGovernor = "performance";
-
-  # Auto-upgrade (staggered time)
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = false;
-    dates = "02:30";
-  };
-
-  # Disable nh cleanup to avoid conflict with manual nix.gc
-  programs.nh.clean.enable = lib.mkForce false;
-
-  # Garbage collection
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
-
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-    tmux
-    wget
-    curl
-    jq
-    yq
-    dig
-    traceroute
-    iperf3
-  ];
 
   # System state version
   system.stateVersion = "25.11";

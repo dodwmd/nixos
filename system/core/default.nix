@@ -1,7 +1,7 @@
 {lib, ...}: {
   imports = [
     ./security.nix
-    ./users.nix
+    ./user-roles.nix
     ../nix
     ../programs/fish.nix
   ];
@@ -26,7 +26,7 @@
   # don't touch this
   system = {
     switch.enable = true;
-    stateVersion = lib.mkDefault "25.05";
+    stateVersion = lib.mkDefault "25.11";
   };
 
   time = {
