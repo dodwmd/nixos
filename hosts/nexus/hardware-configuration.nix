@@ -24,21 +24,6 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  fileSystems."/tank" =
-    { device = "tank";
-      fsType = "zfs";
-    };
-
-  fileSystems."/tank/config" =
-    { device = "tank/config";
-      fsType = "zfs";
-    };
-
-  fileSystems."/tank/data" =
-    { device = "tank/data";
-      fsType = "zfs";
-    };
-
   swapDevices =
     [ { device = "/dev/disk/by-uuid/58cbb37f-8fac-40b0-a7ff-42dd9c2228ae"; }
     ];
