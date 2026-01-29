@@ -29,7 +29,6 @@
       gtt
       meteor-git
       nix-search-tv
-      reddit-tui
       scope-tui
       tuicam
       wiremix

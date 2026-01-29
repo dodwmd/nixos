@@ -38,8 +38,8 @@
 - **Window Manager** • [Niri](https://github.com/YaLTeR/niri/)🎨 Scrolleable WM!
 - **Shell** • [Fish](https://fishshell.com/) 🐟 with
   [starship](https://github.com/starship/starship) Cross Shell Platform!
-- **Terminal** • [Ghostty](https://ghostty.org/) 💻 A powerful Hyped term
-- **Panel** • DMS 🍧 by noctalia!
+- **Terminal** • [Ghostty](https://ghostty.org/) 💻 Powerful Hyped term
+- **Panel** • [Noctalia!](https://noctalia.dev/) 🍧 Beautiful and minimalist desktop shell
 - **File Manager** • [Yazi](https://github.com/sxyazi/yazi) 🔖 Rustacean File
   Manager!
 - **GUI Basic-IDE** • [Helix](https://docs.helix-editor.com/) ✴️ Rustacean vim

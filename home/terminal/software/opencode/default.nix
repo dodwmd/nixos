@@ -45,7 +45,7 @@ in {
   xdg.configFile = {
     "${configFile}".text = builtins.toJSON {
       "$schema" = "https://opencode.ai/config.json";
-      plugin = ["opencode-antigravity-auth@1.3.2-beta.1"];
+      plugin = ["opencode-antigravity-auth@1.4.1"];
       small_model = "google/gemma-3n-e4b-it:free";
       autoupdate = false;
       share = "disabled";
