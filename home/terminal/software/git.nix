@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   configFile = "git/config";
   ignoreFile = "git/ignore";
   toINI = (pkgs.formats.ini {}).generate;
@@ -34,6 +38,7 @@ in {
       editor = "hx";
       pager = "${pkgs.delta}/bin/delta";
       whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
+      excludesFile = "${config.xdg.configHome}/${ignoreFile}";
     };
     delta = {
       features = "unobtrusive-line-numbers decorations";
@@ -113,5 +118,7 @@ in {
     *result*
     .direnv
     node_modules
+    .opencode/
+    AGENTS.md
   '';
 }
