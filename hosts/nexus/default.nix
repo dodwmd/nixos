@@ -68,9 +68,23 @@
     gid = 3000;
   };
 
-  homelab.media.sonarr.enable = true;
-  homelab.media.radarr.enable = true;
+  # PostgreSQL for media services (Step 1: enable this first, migrate, then enable usePostgresql)
+  homelab.media.postgresql.enable = true;
+
+  # Core *arr services - set usePostgresql = true AFTER running migration
+  homelab.media.sonarr = {
+    enable = true;
+    usePostgresql = false;  # Enable after: sudo arr-migrate-to-postgres migrate sonarr
+  };
+  homelab.media.radarr = {
+    enable = true;
+    usePostgresql = false;  # Enable after: sudo arr-migrate-to-postgres migrate radarr
+  };
+
+  # Prowlarr stays on SQLite (doesn't support env var config)
   homelab.media.prowlarr.enable = true;
+
+  # Other services on SQLite (can migrate later if needed)
   homelab.media.lidarr.enable = true;
   homelab.media.readarr.enable = true;
   homelab.media.bazarr.enable = true;

@@ -14,6 +14,7 @@
       description = "Sonarr TV show management";
       port = 8989;
       image = "lscr.io/linuxserver/sonarr:latest";
+      supportsPostgresql = true;
     })
 
     (mkMediaService {
@@ -21,6 +22,7 @@
       description = "Radarr movie management";
       port = 7878;
       image = "lscr.io/linuxserver/radarr:latest";
+      supportsPostgresql = true;
     })
 
     (mkMediaService {
@@ -28,6 +30,7 @@
       description = "Prowlarr indexer management";
       port = 9696;
       image = "lscr.io/linuxserver/prowlarr:latest";
+      supportsPostgresql = false; # Prowlarr doesn't support env var config for PostgreSQL
     })
 
     (mkMediaService {
@@ -35,13 +38,15 @@
       description = "Lidarr music management";
       port = 8686;
       image = "lscr.io/linuxserver/lidarr:latest";
+      supportsPostgresql = true;
     })
 
     (mkMediaService {
       name = "readarr";
       description = "Readarr ebook management";
       port = 8787;
-      image = "lscr.io/linuxserver/readarr:latest";
+      image = "lscr.io/linuxserver/readarr:develop";
+      supportsPostgresql = true;
     })
 
     (mkMediaService {
@@ -49,6 +54,7 @@
       description = "Bazarr subtitle management";
       port = 6767;
       image = "lscr.io/linuxserver/bazarr:latest";
+      supportsPostgresql = false; # Bazarr is SQLite only
     })
 
     (mkMediaService {
@@ -56,6 +62,7 @@
       description = "Jellyseerr media request management";
       port = 5055;
       image = "fallenbagel/jellyseerr:latest";
+      supportsPostgresql = false; # Jellyseerr is SQLite only
     })
   ];
 in {

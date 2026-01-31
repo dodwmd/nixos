@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption mkEnableOption mkIf types;
+  inherit (lib) mkOption mkEnableOption mkIf types optionalAttrs;
 
   # Generator function for media services
   mkMediaService = {
@@ -15,6 +15,7 @@
     image, # Docker image URL
     extraVolumes ? [], # Additional volume mounts beyond standard config/data/downloads
     extraEnvironment ? {}, # Additional environment variables
+    supportsPostgresql ? true, # Whether this service supports PostgreSQL
   }: {
     options.homelab.media.${name} = {
       enable = mkEnableOption "Enable ${description}";
@@ -54,31 +55,51 @@
         default = 3000;
         description = "Group ID for ${description}";
       };
+
+      usePostgresql = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Use PostgreSQL instead of SQLite for ${description}";
+      };
     };
 
     config = mkIf config.homelab.media.${name}.enable {
-      virtualisation.oci-containers.containers.${name} = {
+      virtualisation.oci-containers.containers.${name} = let
+        serviceCfg = config.homelab.media.${name};
+        upperName = lib.toUpper name;
+
+        # PostgreSQL environment variables for *arr apps
+        postgresEnv = optionalAttrs (supportsPostgresql && serviceCfg.usePostgresql) {
+          "${upperName}__POSTGRES__HOST" = "127.0.0.1";
+          "${upperName}__POSTGRES__PORT" = toString config.homelab.media.postgresql.port;
+          "${upperName}__POSTGRES__USER" = "media";
+          "${upperName}__POSTGRES__PASSWORD" = "";
+          "${upperName}__POSTGRES__MAINDB" = "${name}-main";
+          "${upperName}__POSTGRES__LOGDB" = "${name}-log";
+        };
+      in {
         inherit image;
         autoStart = true;
 
         environment =
           {
-            PUID = toString config.homelab.media.${name}.uid;
-            PGID = toString config.homelab.media.${name}.gid;
+            PUID = toString serviceCfg.uid;
+            PGID = toString serviceCfg.gid;
             TZ = config.time.timeZone;
           }
-          // extraEnvironment;
+          // extraEnvironment
+          // postgresEnv;
 
         volumes =
           [
-            "${config.homelab.media.${name}.configPath}:/config"
-            "${config.homelab.media.${name}.dataPath}:/data"
-            "${config.homelab.media.${name}.downloadsPath}:/downloads"
+            "${serviceCfg.configPath}:/config"
+            "${serviceCfg.dataPath}:/data"
+            "${serviceCfg.downloadsPath}:/downloads"
           ]
           ++ extraVolumes;
 
         ports = [
-          "${toString config.homelab.media.${name}.port}:${toString internalPort}"
+          "${toString serviceCfg.port}:${toString internalPort}"
         ];
 
         extraOptions = [
@@ -88,6 +109,12 @@
       };
 
       networking.firewall.allowedTCPPorts = [config.homelab.media.${name}.port];
+
+      # Ensure PostgreSQL is started before this service if using PostgreSQL
+      systemd.services."podman-${name}" = mkIf (supportsPostgresql && config.homelab.media.${name}.usePostgresql) {
+        after = [ "postgresql.service" "postgresql-media-grants.service" ];
+        requires = [ "postgresql.service" ];
+      };
     };
   };
 in {

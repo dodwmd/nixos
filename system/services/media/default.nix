@@ -4,6 +4,9 @@ with lib;
 
 {
   imports = [
+    # PostgreSQL for media services
+    ./postgresql.nix
+
     # Generated media services (*arr stack + jellyseerr)
     ./services.nix
 
