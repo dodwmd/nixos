@@ -7,13 +7,6 @@
 let
   inherit (lib) mkOption mkEnableOption mkIf types;
   cfg = config.homelab.media.postgresql;
-
-  # Migration script as a derivation
-  migrationScript = pkgs.writeShellApplication {
-    name = "arr-migrate-to-postgres";
-    runtimeInputs = with pkgs; [ pgloader sqlite postgresql_16 coreutils gnugrep ];
-    text = builtins.readFile ./scripts/migrate-to-postgres.sh;
-  };
 in {
   options.homelab.media.postgresql = {
     enable = mkEnableOption "PostgreSQL for media services";
@@ -28,12 +21,6 @@ in {
       type = types.package;
       default = pkgs.postgresql_16;
       description = "PostgreSQL package to use";
-    };
-
-    configBase = mkOption {
-      type = types.str;
-      default = "/tank/config";
-      description = "Base path where *arr config directories are located";
     };
   };
 
@@ -86,13 +73,6 @@ in {
         done
       '';
     };
-
-    # Install migration tools
-    environment.systemPackages = [
-      migrationScript
-      pkgs.pgloader
-      pkgs.sqlite
-    ];
 
     # Open firewall for local network (for external DB tools)
     networking.firewall.allowedTCPPorts = [ cfg.port ];
