@@ -69,7 +69,8 @@ check_prerequisites() {
 }
 
 check_postgres() {
-    if ! psql -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" -U "$POSTGRES_USER" -c "SELECT 1" &> /dev/null; then
+    # Use sonarr-main as test database (always exists when postgresql module is enabled)
+    if ! psql -h "$POSTGRES_HOST" -p "$POSTGRES_PORT" -U "$POSTGRES_USER" -d sonarr-main -c "SELECT 1" &> /dev/null; then
         log_error "Cannot connect to PostgreSQL at $POSTGRES_HOST:$POSTGRES_PORT as $POSTGRES_USER"
         exit 1
     fi

@@ -82,6 +82,7 @@ in {
           ${cfg.package}/bin/psql -c "GRANT ALL PRIVILEGES ON DATABASE \"$db\" TO media;" 2>/dev/null || true
           ${cfg.package}/bin/psql -d "$db" -c "GRANT ALL ON SCHEMA public TO media;" 2>/dev/null || true
           ${cfg.package}/bin/psql -d "$db" -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO media;" 2>/dev/null || true
+          ${cfg.package}/bin/psql -d "$db" -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO media;" 2>/dev/null || true
         done
       '';
     };
