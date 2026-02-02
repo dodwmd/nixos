@@ -34,6 +34,7 @@
       wiremix
       zfxtop
       opencode
+      kanban
     ]
     ++ (with inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}; [
       bmm

@@ -13,5 +13,6 @@
     GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
     XCURSOR_THEME = "Bibata-Original-Ice";
     XCURSOR_SIZE = "20";
+    QS_ICON_THEME = "WhiteSur";
   };
 }
