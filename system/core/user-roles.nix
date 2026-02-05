@@ -47,6 +47,9 @@ in {
         openssh.authorizedKeys.keys =
           (import ./ssh-keys.nix).sshKeys.dodwmd;
       };
+
+      users.users.root.openssh.authorizedKeys.keys =
+        (import ./ssh-keys.nix).sshKeys.dodwmd;
     })
 
     # Server admin user (for K3s, nexus, etc)
@@ -60,6 +63,9 @@ in {
         openssh.authorizedKeys.keys =
           (import ./ssh-keys.nix).sshKeys.dodwmd;
       };
+
+      users.users.root.openssh.authorizedKeys.keys =
+        (import ./ssh-keys.nix).sshKeys.dodwmd;
     })
   ];
 }

@@ -1,7 +1,10 @@
-.PHONY: help switch test build boot check update clean gc list-generations diff hosts
+.PHONY: help switch test build boot check update clean gc list-generations diff hosts remote remote-rebuild
 
 # Default host (can be overridden: make switch HOST=k3s-master-01)
 HOST ?= exodus
+
+# SSH target for remote operations (defaults to HOST if not set)
+TARGET ?= $(HOST)
 
 # Default target
 help:
@@ -22,6 +25,10 @@ help:
 	@echo "  list-generations   - List all system generations"
 	@echo "  fmt                - Format nix files with alejandra"
 	@echo ""
+	@echo "Remote deployment:"
+	@echo "  remote HOST=name [TARGET=addr]         - Initial install via nixos-anywhere"
+	@echo "  remote-rebuild HOST=name [TARGET=addr] - Rebuild remote host via nixos-rebuild"
+	@echo ""
 	@echo "Available hosts:"
 	@echo "  exodus, k3s-master-01, k3s-master-02, k3s-worker-01,"
 	@echo "  k3s-worker-02, k3s-worker-03, nexus"
@@ -30,6 +37,8 @@ help:
 	@echo "  make switch                    # Build and switch exodus (default)"
 	@echo "  make switch HOST=k3s-master-01 # Build and switch k3s-master-01"
 	@echo "  make build HOST=nexus          # Build nexus configuration"
+	@echo "  make remote HOST=nexus         # Install nixos on nexus via nixos-anywhere"
+	@echo "  make remote-rebuild HOST=nexus TARGET=192.168.1.50 # Rebuild with explicit IP"
 
 # List available hosts
 hosts:
@@ -52,6 +61,32 @@ build:
 boot:
 	@echo "Setting $(HOST) as boot default..."
 	sudo nixos-rebuild boot --flake path:$(PWD)#$(HOST)
+
+# Remote deployment (requires HOST to be explicitly set)
+remote:
+ifeq ($(HOST),exodus)
+	$(error HOST must be set for remote deployment, e.g. make remote HOST=nexus)
+endif
+	@echo "Installing NixOS on $(TARGET) with $(HOST) configuration via nixos-anywhere..."
+	@# Prepare extra-files with pre-provisioned host key if available
+	$(eval EXTRA_FILES_DIR := $(shell mktemp -d))
+	@if [ -f "$(PWD)/secrets/host-keys/$(HOST).age" ]; then \
+		echo "Decrypting pre-provisioned host key for $(HOST)..."; \
+		mkdir -p "$(EXTRA_FILES_DIR)/etc/ssh"; \
+		nix-shell -p age --run "age -d -i ~/.ssh/id_ed25519 $(PWD)/secrets/host-keys/$(HOST).age" > "$(EXTRA_FILES_DIR)/etc/ssh/ssh_host_ed25519_key"; \
+		chmod 600 "$(EXTRA_FILES_DIR)/etc/ssh/ssh_host_ed25519_key"; \
+		cp "$(PWD)/secrets/host-keys/$(HOST).pub" "$(EXTRA_FILES_DIR)/etc/ssh/ssh_host_ed25519_key.pub"; \
+		chmod 644 "$(EXTRA_FILES_DIR)/etc/ssh/ssh_host_ed25519_key.pub"; \
+	fi
+	nix run github:nix-community/nixos-anywhere -- --flake path:$(PWD)#$(HOST) --ssh-option "IdentityFile=~/.ssh/id_ed25519" --extra-files "$(EXTRA_FILES_DIR)" root@$(TARGET)
+	@rm -rf "$(EXTRA_FILES_DIR)"
+
+remote-rebuild:
+ifeq ($(HOST),exodus)
+	$(error HOST must be set for remote rebuild, e.g. make remote-rebuild HOST=nexus)
+endif
+	@echo "Rebuilding $(HOST) on $(TARGET)..."
+	nixos-rebuild switch --flake path:$(PWD)#$(HOST) --target-host root@$(TARGET)
 
 # Maintenance
 check:

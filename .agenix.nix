@@ -1,18 +1,27 @@
 let
   dodwmd = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII1Vk18qExSQM6rksG500xD/mgACFpNyh7mRnrhVVUQx michael@dodwell.us";
-  
+
   users = [ dodwmd ];
-  
-  systems = [
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC..." # k3s-master-01 host key (get with: ssh-keyscan k3s-master-01)
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC..." # k3s-master-02 host key
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC..." # k3s-worker-01 host key
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC..." # k3s-worker-02 host key
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC..." # k3s-worker-03 host key
-  ];
-  
+
+  # Pre-provisioned host keys (stable across reinstalls)
+  k3s-master-01 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN80oYbXgsgOPOL5ncrtEXpJk00vgQyPuWtiZwGlPSyt root@k3s-master-01";
+  k3s-master-02 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEiPNfiLg+a8PPNaB/emEP0DJnuVaJPLVQck/IESYUCn root@k3s-master-02";
+  k3s-worker-01 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILbeGoKL3dfjdr0RVUrnGF+Veza4c3JTNwU5GG85Gy2m root@k3s-worker-01";
+  k3s-worker-02 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC9C+c9uwvbVcaVOUhhZPHJt6vy3k5nrC+5p0n7wHlqV root@k3s-worker-02";
+  k3s-worker-03 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF5zZPFDXB8Q0fOjrRbcf+5mrxNaVrWyndYDZnlVQMap root@k3s-worker-03";
+
+  systems = [ k3s-master-01 k3s-master-02 k3s-worker-01 k3s-worker-02 k3s-worker-03 ];
+
   allKeys = users ++ systems;
 in
 {
-  "k3s-token.age".publicKeys = allKeys;
+  # K3s cluster token - all k3s nodes + user can decrypt
+  "secrets/k3s-token.age".publicKeys = allKeys;
+
+  # Host private keys - only user (exodus) can decrypt, for bootstrapping via nixos-anywhere
+  "secrets/host-keys/k3s-master-01.age".publicKeys = users ++ [ k3s-master-01 ];
+  "secrets/host-keys/k3s-master-02.age".publicKeys = users ++ [ k3s-master-02 ];
+  "secrets/host-keys/k3s-worker-01.age".publicKeys = users ++ [ k3s-worker-01 ];
+  "secrets/host-keys/k3s-worker-02.age".publicKeys = users ++ [ k3s-worker-02 ];
+  "secrets/host-keys/k3s-worker-03.age".publicKeys = users ++ [ k3s-worker-03 ];
 }

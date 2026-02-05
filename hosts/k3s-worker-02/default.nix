@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
+    ./disko.nix
   ];
 
   # K3s host common configuration

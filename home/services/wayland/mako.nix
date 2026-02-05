@@ -17,7 +17,7 @@
     
     # Behavior
     default-timeout=5000
-    ignore-timeout=0
+    ignore-timeout=1
     
     # Font
     font=SF Mono 11

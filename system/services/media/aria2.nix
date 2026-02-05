@@ -21,7 +21,7 @@ let
       UPDATE_TRACKERS = "true";
       TZ = config.time.timeZone;
       BT_MAX_PEERS = "128";
-      MAX_CONCURRENT_DOWNLOADS = "20";
+      MAX_CONCURRENT_DOWNLOADS = "200";
       MAX_CONNECTION_PER_SERVER = "21";
       SPLIT = "21";
       MIN_SPLIT_SIZE = "10M";

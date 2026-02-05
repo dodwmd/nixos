@@ -1,18 +1,18 @@
 { config, pkgs, ... }:
 
 {
-  # Mount nexus NFS data share (NFSv4 - /tank is fsid=0, /tank/data is /data)
+  # Mount nexus NFS data share
   fileSystems."/mnt/nexus-data" = {
-    device = "192.168.1.7:/data";
+    device = "192.168.1.7:/tank/data";
     fsType = "nfs";
-    options = [ "vers=4.1" "rsize=1048576" "wsize=1048576" "hard" "x-systemd.automount" "noauto" ];
+    options = [ "vers=3" "rsize=1048576" "wsize=1048576" "hard" "x-systemd.automount" "noauto" ];
   };
 
-  # Mount nexus config share (NFSv4 - /tank/config is /config)
+  # Mount nexus config share
   fileSystems."/mnt/nexus-config" = {
-    device = "192.168.1.7:/config";
+    device = "192.168.1.7:/tank/config";
     fsType = "nfs";
-    options = [ "vers=4.1" "rsize=1048576" "wsize=1048576" "hard" "x-systemd.automount" "noauto" ];
+    options = [ "vers=3" "rsize=1048576" "wsize=1048576" "hard" "x-systemd.automount" "noauto" ];
   };
 
   # Enable NVIDIA Container Toolkit for Podman

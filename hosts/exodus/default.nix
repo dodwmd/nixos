@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }: {
   imports = [
@@ -270,11 +271,14 @@
   services.xserver.videoDrivers = ["nvidia"];
   
   # Override xwayland to disable glamor (EGL) to prevent crashes
-  nixpkgs.overlays = [(final: prev: {
-    xwayland = prev.xwayland.overrideAttrs (old: {
-      mesonFlags = (old.mesonFlags or []) ++ ["-Dglamor=false"];
-    });
-  })];
+  nixpkgs.overlays = [
+    (final: prev: {
+      xwayland = prev.xwayland.overrideAttrs (old: {
+        mesonFlags = (old.mesonFlags or []) ++ ["-Dglamor=false"];
+      });
+    })
+    inputs.antigravity-nix.overlays.default
+  ];
 
 
   # NVIDIA environment variables for Wayland

@@ -3,9 +3,10 @@
   users.users.dodwmd.packages = with pkgs; [
     # Wayland launcher
     fuzzel
-    
+
     # Applications from old dodwmd config
     bitwarden-desktop
+    google-antigravity
     signal-desktop
     slack
     spotify

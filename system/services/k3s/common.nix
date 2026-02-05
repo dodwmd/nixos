@@ -1,5 +1,5 @@
 # Common K3s configuration module for all nodes
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, self, ... }:
 
 with lib;
 
@@ -43,8 +43,9 @@ in
     tokenFile = mkOption {
       type = types.nullOr types.path;
       default = null;
-      description = "Path to file containing the shared secret token (managed by agenix)";
+      description = "Path to file containing the shared secret token";
     };
+
     
     nodeIP = mkOption {
       type = types.nullOr types.str;
@@ -72,6 +73,15 @@ in
   };
   
   config = mkIf cfg.enable {
+    # Deploy k3s token via agenix
+    age.secrets.k3s-token = {
+      file = "${self}/secrets/k3s-token.age";
+      path = "/etc/k3s/token";
+      mode = "0600";
+      owner = "root";
+      group = "root";
+    };
+
     # Base system packages needed for K3s
     environment.systemPackages = with pkgs; [
       kubectl

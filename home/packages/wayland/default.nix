@@ -8,5 +8,7 @@
     QT_QPA_PLATFORMTHEME = "qt6ct";
     WLR_RENDERER = "vulkan";
     GTK_USE_PORTAL = 1;
+    # Set default browser for applications like Zoom
+    BROWSER = "brave";
   };
 }

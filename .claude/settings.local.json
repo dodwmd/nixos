@@ -10,7 +10,32 @@
       "Bash(git add:*)",
       "Bash(nix flake show:*)",
       "Bash(grep:*)",
-      "Bash(ssh nexus:*)"
+      "Bash(ssh nexus:*)",
+      "WebSearch",
+      "WebFetch(domain:www.msi.com)",
+      "Bash(python3:*)",
+      "Bash(nix-shell:*)",
+      "Bash(nix flake lock:*)",
+      "Bash(nix flake update:*)",
+      "Bash(git -C /home/dodwmd/code/nixos diff --stat)",
+      "Bash(ssh:*)",
+      "Bash(ssh-keyscan:*)",
+      "Bash(for host in k3s-master-01 k3s-master-02 k3s-worker-01 k3s-worker-02 k3s-worker-03)",
+      "Bash(done)",
+      "WebFetch(domain:github.com)",
+      "Bash(command -v:*)",
+      "WebFetch(domain:wiki.servarr.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(chmod:*)",
+      "Bash(make remote-build:*)",
+      "Bash(make remote-rebuild:*)",
+      "Bash(git commit:*)",
+      "Bash(git reset:*)",
+      "Bash(git push)",
+      "Bash(KUBECONFIG=\"$HOME/code/homelab/k3s-kubeconfig\" kubectl describe:*)",
+      "Bash(KUBECONFIG=\"$HOME/code/homelab/k3s-kubeconfig\" kubectl get pods:*)",
+      "Bash(ping:*)",
+      "Bash(getent:*)"
     ]
   }
 }

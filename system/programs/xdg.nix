@@ -44,9 +44,10 @@ in {
     config = {
       common = {
         default = ["gnome" "gtk"];
-        "org.freedesktop.impl.portal.ScreenCast" = "gnome";
-        "org.freedesktop.impl.portal.Screenshot" = "gnome";
-        "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
+        # Use wlr portal for screen sharing on Niri (wlroots-based compositor)
+        "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+        "org.freedesktop.impl.portal.Screenshot" = "wlr";
+        "org.freedesktop.impl.portal.RemoteDesktop" = "wlr";
         "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
       };
     };

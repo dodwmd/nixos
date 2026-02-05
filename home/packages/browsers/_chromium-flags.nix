@@ -1,28 +1,16 @@
 {
   flags = [
-    # Wayland support
-    "--ozone-platform=wayland"
-    "--enable-features=WaylandWindowDecorations"
-    # GPU and Video Acceleration Flags
-    "--use-vulkan=native"
-    "--enable-dawn-backend=vulkan"
+    # Use XWayland (native Wayland breaks with NVIDIA EGL/glamor disabled)
+    "--ozone-platform=x11"
+    # GPU settings
     "--ignore-gpu-blocklist"
     "--enable-gpu-rasterization"
     "--enable-zero-copy"
-    "--enable-raw-draw"
-    "--enable-drdc"
     "--disable-gpu-driver-bug-workarounds"
-    "--disable-features=UseChromeOSDirectVideoDecoder"
-    "--enable-features=UseOzonePlatform,Vulkan,SkiaGraphite,VaapiVideoEncoder,VaapiVideoDecoder,CanvasOopRasterization,VaapiIgnoreDriverChecks,OverlayScrollbar,ParallelDownloading"
+    "--enable-features=CanvasOopRasterization,OverlayScrollbar,ParallelDownloading"
     # Performance
-    "--enable-hardware-overlays"
-    "--enable-accelerated-video-decode"
-    "--enable-accelerated-video-encode"
-    "--enable-accelerated-mjpeg-decode"
     "--enable-oop-rasterization"
-    "--enable-webgl-developer-extensions"
     "--enable-accelerated-2d-canvas"
-    "--enable-direct-composition"
     "--enable-gpu-compositing"
     # Smooth browsing
     "--enable-media-router"
