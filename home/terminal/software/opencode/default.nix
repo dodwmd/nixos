@@ -1,13 +1,9 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: let
+{pkgs, ...}: let
   languages = import ./_languages.nix {inherit pkgs;};
   providers = import ./_providers.nix;
   skills = import ./_skills.nix {inherit pkgs;};
 
-  opencode = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  inherit (pkgs) opencode;
 
   opencodeEnv = pkgs.buildEnv {
     name = "opencode-env";
@@ -15,7 +11,6 @@
       languages.packages
       ++ skills.packages;
   };
-
   opencodeInitScript = pkgs.writeShellScript "opencode-init" ''
     mkdir -p "$HOME/.local/cache/opencode/node_modules/@opencode-ai"
     mkdir -p "$HOME/.config/opencode/node_modules/@opencode-ai"
@@ -27,7 +22,6 @@
     fi
     exec ${opencode}/bin/opencode "$@"
   '';
-
   opencodeWrapped =
     pkgs.runCommand "opencode-wrapped" {
       buildInputs = [pkgs.makeWrapper];
@@ -35,7 +29,7 @@
       mkdir -p $out/bin
       makeWrapper ${opencodeInitScript} $out/bin/opencode \
         --prefix PATH : ${opencodeEnv}/bin \
-        --set OPENCODE_LIBC ${pkgs.glibc}/lib/libc.so.6
+        --prefix LD_LIBRARY_PATH : "${pkgs.lib.makeLibraryPath [pkgs.stdenv.cc.cc.lib]}"
     '';
   configFile = "opencode/config.json";
 in {
@@ -45,7 +39,7 @@ in {
   xdg.configFile = {
     "${configFile}".text = builtins.toJSON {
       "$schema" = "https://opencode.ai/config.json";
-      plugin = ["opencode-antigravity-auth@1.4.3-beta.0"];
+      plugin = ["opencode-antigravity-auth@1.5.0-beta.0" "opencode-mem"];
       small_model = "google/gemma-3n-e4b-it:free";
       autoupdate = false;
       share = "disabled";
@@ -74,7 +68,6 @@ in {
         "ollama"
         "ollama-cloud"
         "openai"
-        "opencode-zen"
         "sap-ai-core"
         "ovhcloud-ai-endpoints"
         "together-ai"
@@ -83,7 +76,7 @@ in {
         "zai"
         "zenmux"
       ];
-      enabled_providers = ["openrouter" "google"];
+      enabled_providers = ["openrouter" "google" "opencode"];
       mcp = {
         gh_grep = {
           type = "remote";
@@ -104,8 +97,7 @@ in {
           timeout = 10000;
         };
       };
-      formatter = languages.formatter;
-      lsp = languages.lsp;
+      inherit (languages) formatter lsp;
       provider = providers.config;
     };
     "opencode/skill".source = skills.skillsSource + "/skill";

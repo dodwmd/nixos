@@ -39,6 +39,19 @@
       '';
     };
 
+  localSkill = {
+    name,
+    path,
+  }:
+    pkgs.stdenv.mkDerivation {
+      name = "opencode-skill-${name}";
+      src = path;
+      installPhase = ''
+        mkdir -p $out
+        cp SKILL.md $out/SKILL.md
+      '';
+    };
+
   skills = {
     technical-writing = fetchSkill {
       name = "technical-writing";
@@ -101,6 +114,11 @@
       rev = "bdd6f84e38e460246079dd44755c587522ddf60e";
       path = "readme/SKILL.md";
       hash = "sha256-M6ZSxwrq9tGkxJi6BVoSRh6+fPlQPUmZVg595wldsNI=";
+    };
+
+    memory-aware-architect = localSkill {
+      name = "memory-aware-architect";
+      path = ./skills/memory-aware-architect;
     };
   };
 

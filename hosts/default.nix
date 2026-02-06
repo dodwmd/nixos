@@ -27,7 +27,6 @@
           "${home}"
 
           inputs.agenix.nixosModules.default
-          inputs.chaotic.nixosModules.default
         ];
     };
   };

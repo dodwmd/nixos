@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   self,
@@ -40,10 +41,10 @@
     };
   };
 
+  nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];
   boot = {
     # load modules on boot
-    kernelModules = ["amdgpu" "v4l2loopback" "i2c-dev" "efivarfs"];
-    kernelPackages = lib.mkForce pkgs.linuxPackages_cachyos;
+    kernelPackages = lib.mkForce pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto;
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
     kernelParams = [
       "amd_pstate=active" # Enable AMD P-state CPU scaling driver
