@@ -1,4 +1,4 @@
-.PHONY: help switch test build boot check update clean gc list-generations diff hosts remote remote-rebuild
+.PHONY: help switch test build boot check update clean gc list-generations diff hosts remote remote-rebuild rekey update-host-key
 
 # Default host (can be overridden: make switch HOST=k3s-master-01)
 HOST ?= exodus
@@ -28,6 +28,10 @@ help:
 	@echo "Remote deployment:"
 	@echo "  remote HOST=name [TARGET=addr]         - Initial install via nixos-anywhere"
 	@echo "  remote-rebuild HOST=name [TARGET=addr] - Rebuild remote host via nixos-rebuild"
+	@echo ""
+	@echo "Secrets management:"
+	@echo "  rekey                                  - Re-encrypt all agenix secrets"
+	@echo "  update-host-key HOST=name              - Pull host key from HOST and rekey secrets"
 	@echo ""
 	@echo "Available hosts:"
 	@echo "  exodus, k3s-master-01, k3s-master-02, k3s-worker-01,"
@@ -86,7 +90,7 @@ ifeq ($(HOST),exodus)
 	$(error HOST must be set for remote rebuild, e.g. make remote-rebuild HOST=nexus)
 endif
 	@echo "Rebuilding $(HOST) on $(TARGET)..."
-	nixos-rebuild switch --flake path:$(PWD)#$(HOST) --target-host root@$(TARGET)
+	nixos-rebuild switch --flake path:$(PWD)#$(HOST) --target-host $(TARGET) --sudo
 
 # Maintenance
 check:
@@ -116,3 +120,26 @@ diff:
 # Format nix files
 fmt:
 	nix fmt
+
+# Secrets management
+rekey:
+	@echo "Re-encrypting all agenix secrets..."
+	RULES=./.agenix.nix nix run github:ryantm/agenix -- -r -i ~/.ssh/id_ed25519
+
+update-host-key:
+ifeq ($(HOST),exodus)
+	$(error HOST must be set, e.g. make update-host-key HOST=k3s-master-01)
+endif
+	@echo "Pulling host key from $(HOST) and updating secrets..."
+	@ssh $(TARGET) 'cat /etc/ssh/ssh_host_ed25519_key.pub' > /tmp/$(HOST)-host-key.pub
+	@echo "Public key: $$(cat /tmp/$(HOST)-host-key.pub)"
+	@ssh $(TARGET) 'sudo cat /etc/ssh/ssh_host_ed25519_key' > /tmp/$(HOST)-host-key
+	@chmod 600 /tmp/$(HOST)-host-key
+	@PUB_KEY=$$(awk '{print $$1" "$$2}' /tmp/$(HOST)-host-key.pub); \
+	nix-shell -p age --run "age \
+		-r 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII1Vk18qExSQM6rksG500xD/mgACFpNyh7mRnrhVVUQx dodwmd@exodus' \
+		-r \"$$PUB_KEY\" \
+		/tmp/$(HOST)-host-key" > secrets/host-keys/$(HOST).age
+	@rm -f /tmp/$(HOST)-host-key /tmp/$(HOST)-host-key.pub
+	@echo "Host key encrypted to secrets/host-keys/$(HOST).age"
+	@echo "Now update .agenix.nix with the new public key, then run: make rekey"

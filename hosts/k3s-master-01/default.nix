@@ -37,6 +37,9 @@
     enableServiceLB = false;
   };
 
+  # PXE netboot server (primary)
+  homelab.netboot-server.enable = true;
+
   # System state version
   system.stateVersion = "25.11";
 }

@@ -36,6 +36,20 @@
     # nodeIP will be auto-detected from DHCP
   };
 
+  # Cisco IP phone TFTP provisioning
+  homelab.voip.cisco-provisioning = {
+    enable = true;
+    asteriskAddr = "192.168.1.202";
+    phones = {
+      "office" = {
+        mac = "F47F35A342D1";
+        extension = "1000";
+        displayName = "Cisco Phone";
+        authPassword = "cisco123";
+      };
+    };
+  };
+
   # System state version
   system.stateVersion = "25.11";
 }

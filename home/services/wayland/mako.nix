@@ -17,7 +17,7 @@
     
     # Behavior
     default-timeout=5000
-    ignore-timeout=1
+    ignore-timeout=0
     
     # Font
     font=SF Mono 11
@@ -40,8 +40,7 @@
     
     [urgency=critical]
     border-color=#f7768e
-    default-timeout=0
-    ignore-timeout=1
+    default-timeout=10000
   '';
 in {
   users.users.dodwmd.packages = with pkgs; [mako];

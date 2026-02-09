@@ -62,6 +62,7 @@
       description = "Jellyseerr media request management";
       port = 5055;
       image = "fallenbagel/jellyseerr:latest";
+      configMountPath = "/app/config";
       supportsPostgresql = false; # Jellyseerr is SQLite only
     })
   ];

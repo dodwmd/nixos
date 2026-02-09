@@ -15,6 +15,7 @@
     image, # Docker image URL
     extraVolumes ? [], # Additional volume mounts beyond standard config/data/downloads
     extraEnvironment ? {}, # Additional environment variables
+    configMountPath ? "/config", # Config mount path inside container (e.g., "/app/config" for jellyseerr)
     supportsPostgresql ? true, # Whether this service supports PostgreSQL
   }: {
     options.homelab.media.${name} = {
@@ -92,7 +93,7 @@
 
         volumes =
           [
-            "${serviceCfg.configPath}:/config"
+            "${serviceCfg.configPath}:${configMountPath}"
             "${serviceCfg.dataPath}:/data"
             "${serviceCfg.downloadsPath}:/downloads"
           ]

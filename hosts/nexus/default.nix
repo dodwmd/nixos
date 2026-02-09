@@ -72,21 +72,31 @@
   homelab.media.postgresql.enable = true;
 
   # Core *arr services with PostgreSQL (migrated)
+  # downloadsPath must match the corresponding aria2 container's download directory
+  # so that paths reported by aria2 resolve correctly inside the *arr container
   homelab.media.sonarr = {
     enable = true;
     usePostgresql = true;
+    downloadsPath = "/tank/data/downloads/tv";
   };
   homelab.media.radarr = {
     enable = true;
     usePostgresql = true;
+    downloadsPath = "/tank/data/downloads/movies";
   };
 
   # Prowlarr stays on SQLite (doesn't support env var config)
   homelab.media.prowlarr.enable = true;
 
   # Other services on SQLite (can migrate later if needed)
-  homelab.media.lidarr.enable = true;
-  homelab.media.readarr.enable = true;
+  homelab.media.lidarr = {
+    enable = true;
+    downloadsPath = "/tank/data/downloads/music";
+  };
+  homelab.media.readarr = {
+    enable = true;
+    downloadsPath = "/tank/data/downloads/books";
+  };
   homelab.media.bazarr.enable = true;
   
   homelab.media.jellyfin = {
@@ -187,6 +197,9 @@
           chunked_transfer_encoding on;
         '';
       };
+      "jellyseerr.home.dodwell.us" = {
+        proxyPass = "http://127.0.0.1:5055";
+      };
       "adguard.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:8053";
       };
@@ -197,6 +210,17 @@
         proxyPass = "http://127.0.0.1:3000";
       };
     };
+  };
+
+  # Redirect requests.home.dodwell.us -> jellyseerr.home.dodwell.us
+  security.acme.certs."requests.home.dodwell.us" = {
+    dnsProvider = config.homelab.nginx-proxy.dnsProvider;
+    webroot = null;
+  };
+  services.nginx.virtualHosts."requests.home.dodwell.us" = {
+    forceSSL = true;
+    enableACME = true;
+    locations."/".return = "301 https://jellyseerr.home.dodwell.us$request_uri";
   };
 
   # User configuration - use centralized server user

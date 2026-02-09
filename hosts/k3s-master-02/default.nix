@@ -38,6 +38,9 @@
     enableServiceLB = false;
   };
 
+  # Netboot PXE server (standby - enable if k3s-master-01 is down)
+  homelab.netboot-server.enable = false;
+
   # System state version
   system.stateVersion = "25.11";
 }

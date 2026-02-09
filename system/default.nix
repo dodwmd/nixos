@@ -48,11 +48,13 @@ let
   # K3s master profile (extends server)
   k3s-master = server ++ [
     ./services/k3s
+    ./services/netboot
   ];
 
   # K3s worker profile (extends server)
   k3s-worker = server ++ [
     ./services/k3s
+    ./services/voip/cisco-phone-provisioning.nix
   ];
 in {
   inherit desktop laptop server media-server k3s-master k3s-worker;

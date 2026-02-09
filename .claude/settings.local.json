@@ -35,7 +35,18 @@
       "Bash(KUBECONFIG=\"$HOME/code/homelab/k3s-kubeconfig\" kubectl describe:*)",
       "Bash(KUBECONFIG=\"$HOME/code/homelab/k3s-kubeconfig\" kubectl get pods:*)",
       "Bash(ping:*)",
-      "Bash(getent:*)"
+      "Bash(getent:*)",
+      "WebFetch(domain:nixos.wiki)",
+      "WebFetch(domain:nix-community.github.io)",
+      "Bash(nix search:*)",
+      "WebFetch(domain:carlosvaz.com)",
+      "Bash(sudo curl:*)",
+      "Bash(tar:*)",
+      "Bash(git -C /home/dodwmd/code/nixos add system/services/netboot/default.nix)",
+      "WebFetch(domain:mynixos.com)",
+      "Bash(unzip:*)",
+      "Bash(make build:*)",
+      "Bash(nix eval:*)"
     ]
   }
 }

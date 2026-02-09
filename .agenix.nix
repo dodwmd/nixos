@@ -4,8 +4,8 @@ let
   users = [ dodwmd ];
 
   # Pre-provisioned host keys (stable across reinstalls)
-  k3s-master-01 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN80oYbXgsgOPOL5ncrtEXpJk00vgQyPuWtiZwGlPSyt root@k3s-master-01";
-  k3s-master-02 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEiPNfiLg+a8PPNaB/emEP0DJnuVaJPLVQck/IESYUCn root@k3s-master-02";
+  k3s-master-01 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOG3xfyiYGx0o7neZG83FUSkJOA8fDnW2fiPyE4D47zb root@k3s-master-01";
+  k3s-master-02 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEzdYTEpl7VuLWXEpGD2RrISgWiAVUuJ3QS1qD9Xu6cg root@k3s-master-02";
   k3s-worker-01 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILbeGoKL3dfjdr0RVUrnGF+Veza4c3JTNwU5GG85Gy2m root@k3s-worker-01";
   k3s-worker-02 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC9C+c9uwvbVcaVOUhhZPHJt6vy3k5nrC+5p0n7wHlqV root@k3s-worker-02";
   k3s-worker-03 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF5zZPFDXB8Q0fOjrRbcf+5mrxNaVrWyndYDZnlVQMap root@k3s-worker-03";

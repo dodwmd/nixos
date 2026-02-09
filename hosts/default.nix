@@ -81,6 +81,7 @@
         ++ [
           ./k3s-worker-03
           inputs.agenix.nixosModules.default
+          inputs.disko.nixosModules.disko
         ];
     };
 
