@@ -80,4 +80,6 @@
   "Mod+Shift+J".move-column-to-workspace-down = {};
   "Mod+Shift+Ctrl+J".move-column-to-monitor-down = {};
   "Mod+Shift+Ctrl+K".move-column-to-monitor-up = {};
+  "Mod+Ctrl+K".focus-window-or-monitor-up = {};
+  "Mod+Ctrl+J".focus-window-or-monitor-down = {};
 }

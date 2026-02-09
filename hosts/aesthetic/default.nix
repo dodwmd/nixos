@@ -46,6 +46,7 @@
     # load modules on boot
     kernelPackages = lib.mkForce pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto;
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
+    kernelModules = ["i2c-dev"];
     kernelParams = [
       "amd_pstate=active" # Enable AMD P-state CPU scaling driver
       "amd_iommu=force" # Force AMD IOMMU for better DMA protection
@@ -185,6 +186,7 @@
   hardware = {
     enableRedistributableFirmware = true;
     cpu.amd.updateMicrocode = true;
+    i2c.enable = true;
   };
 
   # Additional systemd hardening

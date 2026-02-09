@@ -10,6 +10,7 @@
       "video"
       "wheel"
       "kvm"
+      "i2c"
     ];
   };
 }
