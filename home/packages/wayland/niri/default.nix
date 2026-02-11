@@ -14,7 +14,7 @@ in {
     NIRI_CONFIG = "/etc/niri/config.kdl";
   };
 
-  users.users.dodwmd.packages = with pkgs; [niri swaylock-effects swayidle];
+  users.users.dodwmd.packages = with pkgs; [niri swaylock swayidle];
 
   environment.etc."niri/config.kdl".source = finalConfig;
 }

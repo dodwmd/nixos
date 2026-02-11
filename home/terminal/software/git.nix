@@ -101,9 +101,9 @@ in {
       gpgSign = "true";
     };
     user = {
-      email = "bdiez19@gmail.com";
-      name = "Braian A. Diez";
-      signingKey = "481EFFCF2C7B8C7B";
+      email = "1372930+dodwmd@users.noreply.github.com";
+      name = "Michael Dodwell";
+      signingKey = "0073269A0E6DEF0C";
     };
   };
 

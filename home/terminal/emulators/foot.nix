@@ -10,7 +10,7 @@ in {
   users.users.dodwmd.packages = with pkgs; [foot libsixel];
   xdg.configFile."${configFile}".source = toINI "foot.ini" {
     main = {
-      font = "Cozette:size=10:fontfeatures=calt:fontfeatures=dlig:fontfeatures=fbarc:fontfeatures=liga,PragmataProMonoLiga Nerd Font:size=8";
+      font = "Cozette:size=14:fontfeatures=calt:fontfeatures=dlig:fontfeatures=fbarc:fontfeatures=liga,PragmataProMonoLiga Nerd Font:size=12";
       horizontal-letter-offset = 0;
       vertical-letter-offset = 0;
       pad = "15x6center";
@@ -26,7 +26,7 @@ in {
     };
     desktop-notifications.command = "${lib.getExe pkgs.libnotify} -a \${app-id} -i \${app-id} \${title} \${body}";
     scrollback = {
-      lines = 1000;
+      lines = 100000;
       multiplier = 3;
       indicator-position = "relative";
       indicator-format = "line";

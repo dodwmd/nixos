@@ -3,9 +3,9 @@
   pkgs,
   ...
 }: {
-  # Add swaylock-effects to system packages
+  # Add swaylock to system packages
   environment.systemPackages = with pkgs; [
-    swaylock-effects
+    swaylock
   ];
 
   # Note: PAM authentication for swaylock must be configured at system level

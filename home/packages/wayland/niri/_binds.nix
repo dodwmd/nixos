@@ -39,7 +39,7 @@
     _props.allow-when-locked = true;
     spawn._args = ["${pkgs.brightnessctl}/bin/brightnessctl" "set" "5%-"];
   };
-  "Ctrl+Alt+L".spawn._args = ["${pkgs.swaylock-effects}/bin/swaylock" "-f" "-c" "000000"];
+  "Ctrl+Alt+L".spawn._args = ["${pkgs.swaylock}/bin/swaylock" "-f" "-c" "000000"];
   "Alt+Space".spawn._args = ["${pkgs.fuzzel}/bin/fuzzel"];
   "Mod+D".spawn._args = ["${pkgs.fuzzel}/bin/fuzzel"];
   "Print".screenshot = {};
@@ -64,7 +64,7 @@
   "Mod+Plus".set-column-width = "+10%";
   "Mod+Shift+Minus".set-window-height = "-10%";
   "Mod+Shift+Plus".set-window-height = "+10%";
-  "Mod+L".spawn._args = ["${pkgs.swaylock-effects}/bin/swaylock" "-f" "-c" "000000"];
+  "Mod+L".spawn._args = ["${pkgs.swaylock}/bin/swaylock" "-f" "-c" "000000"];
   "Mod+Left".focus-column-left = {};
   "Mod+Right".focus-column-right = {};
   "Mod+Down".focus-workspace-down = {};

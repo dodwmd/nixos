@@ -5,7 +5,7 @@
 }: {
   # Add swaylock as fallback (hyprlock may not be available)
   environment.systemPackages = with pkgs; [
-    swaylock-effects
+    swaylock
   ];
 
   # Create hyprlock config file

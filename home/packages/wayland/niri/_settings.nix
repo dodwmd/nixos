@@ -22,7 +22,7 @@ in {
     # ["wl-paste" "--watch" "cliphist" "store"]  # Disabled - interferes with simple vim paste
     # ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]  # Disabled - interferes with simple vim paste
     ["${pkgs.waybar}/bin/waybar"]
-    ["swayidle" "-w" "timeout" "600" "${pkgs.swaylock-effects}/bin/swaylock -f -c 000000" "timeout" "1200" "systemctl suspend" "before-sleep" "${pkgs.swaylock-effects}/bin/swaylock -f -c 000000"]
+    ["swayidle" "-w" "timeout" "600" "${pkgs.swaylock}/bin/swaylock -f -c 000000" "timeout" "1200" "systemctl suspend" "before-sleep" "${pkgs.swaylock}/bin/swaylock -f -c 000000"]
     # xwayland-satellite is managed by systemd user service
   ];
 

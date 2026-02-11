@@ -1,66 +1,64 @@
 {pkgs, ...}: let
   waybarConfig = {
-      mainBar = {
-        layer = "top";
-        position = "top";
-        height = 32;
-        spacing = 8;
+    layer = "top";
+    position = "top";
+    height = 32;
+    spacing = 8;
 
-        modules-left = [];
-        modules-center = ["clock"];
-        modules-right = ["cpu" "memory" "temperature" "custom/gpu" "tray"];
+    modules-left = [];
+    modules-center = ["clock"];
+    modules-right = ["cpu" "memory" "temperature" "custom/gpu" "tray"];
 
-        clock = {
-          format = "{:%a %b %d  %H:%M:%S}";
-          interval = 1;
-          tooltip-format = "<tt><small>{calendar}</small></tt>";
-          on-click = "${pkgs.gsimplecal}/bin/gsimplecal";
-          calendar = {
-            mode = "month";
-            format = {
-              months = "<span color='#c0caf5'><b>{}</b></span>";
-              days = "<span color='#c0caf5'>{}</span>";
-              today = "<span color='#f7768e'><b><u>{}</u></b></span>";
-            };
-          };
-        };
-
-        cpu = {
-          format = "CPU {usage}%";
-          interval = 2;
-          tooltip = true;
-          on-click = "${pkgs.foot}/bin/foot -e ${pkgs.btop}/bin/btop";
-        };
-
-        memory = {
-          format = "RAM {percentage}%";
-          interval = 2;
-          tooltip-format = "Used: {used:0.1f}G / {total:0.1f}G";
-          on-click = "${pkgs.foot}/bin/foot -e ${pkgs.btop}/bin/btop";
-        };
-
-        temperature = {
-          hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
-          critical-threshold = 80;
-          format = "SYS {temperatureC}°C";
-          format-critical = "SYS {temperatureC}°C ";
-          interval = 2;
-          on-click = "${pkgs.foot}/bin/foot -e ${pkgs.btop}/bin/btop";
-        };
-
-        tray = {
-          icon-size = 16;
-          spacing = 8;
-        };
-
-        "custom/gpu" = {
-          exec = "${pkgs.bash}/bin/bash -c \"nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader,nounits | awk -F, '{printf \\\"GPU %s%% %d%%%s°C\\\", \\$1, (\\$2/\\$3)*100, \\$4}'\"";
-          interval = 2;
-          format = "{}";
-          on-click = "${pkgs.foot}/bin/foot -e ${pkgs.nvtopPackages.nvidia}/bin/nvtop";
-          tooltip = false;
+    clock = {
+      format = "{:%a %b %d  %H:%M:%S}";
+      interval = 1;
+      tooltip-format = "<tt><small>{calendar}</small></tt>";
+      on-click = "${pkgs.gsimplecal}/bin/gsimplecal";
+      calendar = {
+        mode = "month";
+        format = {
+          months = "<span color='#c0caf5'><b>{}</b></span>";
+          days = "<span color='#c0caf5'>{}</span>";
+          today = "<span color='#f7768e'><b><u>{}</u></b></span>";
         };
       };
+    };
+
+    cpu = {
+      format = "CPU {usage}%";
+      interval = 2;
+      tooltip = true;
+      on-click = "${pkgs.foot}/bin/foot -e ${pkgs.btop}/bin/btop";
+    };
+
+    memory = {
+      format = "RAM {percentage}%";
+      interval = 2;
+      tooltip-format = "Used: {used:0.1f}G / {total:0.1f}G";
+      on-click = "${pkgs.foot}/bin/foot -e ${pkgs.btop}/bin/btop";
+    };
+
+    temperature = {
+      hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
+      critical-threshold = 80;
+      format = "SYS {temperatureC}°C";
+      format-critical = "SYS {temperatureC}°C ";
+      interval = 2;
+      on-click = "${pkgs.foot}/bin/foot -e ${pkgs.btop}/bin/btop";
+    };
+
+    tray = {
+      icon-size = 16;
+      spacing = 8;
+    };
+
+    "custom/gpu" = {
+      exec = "${pkgs.bash}/bin/bash -c \"nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader,nounits | awk -F, '{printf \\\"GPU %s%% %d%%%s°C\\\", \\$1, (\\$2/\\$3)*100, \\$4}'\"";
+      interval = 2;
+      format = "{}";
+      on-click = "${pkgs.foot}/bin/foot -e ${pkgs.nvtopPackages.nvidia}/bin/nvtop";
+      tooltip = false;
+    };
   };
 
   waybarStyle = ''
