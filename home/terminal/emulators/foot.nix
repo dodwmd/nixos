@@ -10,7 +10,7 @@ in {
   users.users.dodwmd.packages = with pkgs; [foot libsixel];
   xdg.configFile."${configFile}".source = toINI "foot.ini" {
     main = {
-      font = "Cozette:size=14:fontfeatures=calt:fontfeatures=dlig:fontfeatures=fbarc:fontfeatures=liga,PragmataProMonoLiga Nerd Font:size=12";
+      font = "JetBrainsMono Nerd Font:size=14,Cozette:size=14";
       horizontal-letter-offset = 0;
       vertical-letter-offset = 0;
       pad = "15x6center";

@@ -18,8 +18,8 @@
       };
       force = lib.mkOption {
         type = lib.types.bool;
-        default = false;
-        description = "Whether to force overwrite existing files";
+        default = true;
+        description = "Whether to force overwrite existing files (default: true since these are declaratively managed)";
       };
     };
   };
@@ -51,13 +51,23 @@
       else file.source;
     fullPath = "${baseDir}/${name}";
     parentDir = builtins.dirOf fullPath;
-    forceFlag =
-      if file.force
-      then "-f"
-      else "";
   in ''
     mkdir -p "${parentDir}"
-    ln -s ${forceFlag} "${target}" "${fullPath}" 2>/dev/null || true
+    if [ -e "${fullPath}" ] || [ -L "${fullPath}" ]; then
+      currentTarget=$(readlink -f "${fullPath}" 2>/dev/null || echo "")
+      newTarget=$(readlink -f "${target}" 2>/dev/null || echo "${target}")
+      if [ "$currentTarget" = "$newTarget" ]; then
+        : # already correct, skip
+      elif [ "${lib.boolToString file.force}" = "true" ]; then
+        echo "xdg-compat: replacing ${fullPath} -> ${target}"
+        rm -f "${fullPath}"
+        ln -s "${target}" "${fullPath}"
+      else
+        echo "xdg-compat: WARNING: ${fullPath} exists and differs from managed source, set force=true to overwrite" >&2
+      fi
+    else
+      ln -s "${target}" "${fullPath}"
+    fi
   '';
 in {
   options = {

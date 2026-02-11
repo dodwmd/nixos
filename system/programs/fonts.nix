@@ -14,6 +14,7 @@
       noto-fonts-color-emoji
 
       # nerdfonts
+      nerd-fonts.jetbrains-mono
       nerd-fonts.symbols-only
       cozette
 
