@@ -19,7 +19,7 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/D346-2B18";
+    { device = "/dev/disk/by-label/swap";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };

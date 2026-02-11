@@ -157,6 +157,7 @@
       grub = {
         enable = true;
         device = "nodev";
+        enableCryptodisk = true;
         efiSupport = true;
       };
       efi = {
@@ -294,8 +295,6 @@
     __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
     __GL_THREADED_OPTIMIZATIONS = "1";
     PROTON_ENABLE_NVAPI = "1";
-    DXVK_HUD = "fps,memory,gpuload";
-    MANGOHUD = "1";
   };
 
   # Additional systemd hardening

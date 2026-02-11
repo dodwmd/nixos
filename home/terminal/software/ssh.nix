@@ -35,7 +35,5 @@ in {
     agentTimeout = "1h";
   };
 
-  environment.sessionVariables = {
-    SSH_AUTH_SOCK = "/run/user/1000/gnupg/S.gpg-agent.ssh";
-  };
+  # SSH_AUTH_SOCK is managed by programs.ssh.startAgent above
 }

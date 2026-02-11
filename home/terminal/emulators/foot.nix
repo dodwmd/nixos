@@ -48,4 +48,9 @@ in {
       alpha = 1.0;
     };
   };
+
+  # Noctalia default dark theme for foot
+  # Normally generated at runtime by noctalia-shell, but since it's disabled
+  # we provide a static version using the Noctalia-default color scheme.
+  xdg.configFile."foot/themes/noctalia".source = ./foot-noctalia-theme;
 }

@@ -34,7 +34,6 @@ in {
       with-fingerprint
     '';
     "${agentConfigFile}".text = ''
-      enable-ssh-support
       enable-nushell-integration
       grab
       pinentry-program ${pkgs.pinentry-gnome3}/bin/pinentry
@@ -47,6 +46,5 @@ in {
 
   environment.sessionVariables = {
     GPG_TTY = "$(tty)";
-    SSH_AUTH_SOCK = "/run/user/1000/gnupg/S.gpg-agent.ssh";
   };
 }
