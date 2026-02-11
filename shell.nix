@@ -2,7 +2,7 @@
 
 let
   claude-code-flake = builtins.getFlake "github:sadjow/claude-code-nix";
-  claude-code = claude-code-flake.packages.${pkgs.system}.default;
+  claude-code = claude-code-flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 
 pkgs.mkShell {

@@ -29,14 +29,6 @@ in {
       "${direnvRcFile}".text = ''
         # Nix integration
         source ${pkgs.nix-direnv}/share/nix-direnv/direnvrc
-
-        # Custom stdlib
-        use flake
-
-        # Shell integration
-        layout python3 use python3
-        layout node use node
-        layout ruby use ruby
       '';
 
       "fish/conf.d/direnv.fish".source = pkgs.runCommand "direnv-fish-hook" {} ''
