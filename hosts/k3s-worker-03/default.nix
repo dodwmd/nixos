@@ -7,6 +7,7 @@
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
+    ../../system/services/llama-cpp.nix
   ];
 
   # K3s host common configuration
@@ -51,6 +52,12 @@
     # ROCm packages can be added later if needed for compute workloads
   };
 
+
+  # llama-cpp inference server (CPU-only, 96GB RAM)
+  homelab.llama-cpp = {
+    enable = true;
+    contextSize = 8192;
+  };
 
   # Network optimizations for high-performance workloads
   boot.kernel.sysctl = {
