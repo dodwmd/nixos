@@ -39,7 +39,7 @@ in {
   xdg.configFile = {
     "${configFile}".text = builtins.toJSON {
       "$schema" = "https://opencode.ai/config.json";
-      plugin = ["opencode-antigravity-auth@1.4.6" "opencode-mem"];
+      plugin = ["opencode-mem"];
       small_model = "google/gemma-3n-e4b-it:free";
       autoupdate = false;
       share = "disabled";
@@ -75,8 +75,9 @@ in {
         "xai"
         "zai"
         "zenmux"
+        "google"
       ];
-      enabled_providers = ["openrouter" "google" "opencode"];
+      enabled_providers = ["openrouter" "opencode"];
       mcp = {
         gh_grep = {
           type = "remote";

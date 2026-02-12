@@ -18,4 +18,8 @@ in {
     linuxmobile
     system
   ];
+  "gemini.age".publicKeys = [
+    linuxmobile
+    system
+  ];
 }

@@ -23,6 +23,9 @@
         if test -f /run/agenix/twt
           set -gx TWT_TOKEN (cat /run/agenix/twt)
         end
+        if test -f /run/agenix/gemini
+          set -gx GEMINI_API_KEY (cat /run/agenix/gemini)
+        end
 
         set -gx NIXPKGS_ALLOW_UNFREE 1
         set -gx NIXPKGS_ALLOW_INSECURE 1

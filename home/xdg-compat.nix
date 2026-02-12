@@ -16,6 +16,11 @@
         type = lib.types.nullOr lib.types.path;
         default = null;
       };
+      mutable = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "If true, copy the file instead of symlinking, allowing the application to modify it";
+      };
     };
   };
   userOpts = _: {
@@ -46,7 +51,25 @@
       else file.source;
     fullPath = "${baseDir}/${name}";
     parentDir = builtins.dirOf fullPath;
-  in ''
+  in if file.mutable then ''
+    # Mutable file: copy content instead of symlinking
+    mkdir -p "${parentDir}"
+    if [ -L "${fullPath}" ]; then
+      # Replace symlink with a copy
+      rm -f "${fullPath}"
+      cp "${target}" "${fullPath}"
+      chmod +w "${fullPath}"
+    elif [ -e "${fullPath}" ]; then
+      # File exists, don't overwrite to preserve user changes
+      # Only create if missing
+      :
+    else
+      # Create initial copy
+      cp "${target}" "${fullPath}"
+      chmod +w "${fullPath}"
+    fi
+  '' else ''
+    # Immutable file: use symlink
     mkdir -p "${parentDir}"
     if [ -L "${fullPath}" ]; then
       current_target=$(readlink "${fullPath}")

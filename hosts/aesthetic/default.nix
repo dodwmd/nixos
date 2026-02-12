@@ -38,6 +38,12 @@
         group = "users";
         mode = "0400";
       };
+      gemini = {
+        file = "${self}/secrets/gemini.age";
+        owner = "linuxmobile";
+        group = "users";
+        mode = "0400";
+      };
     };
   };
 
