@@ -35,7 +35,7 @@ in {
       gpgSign = "true";
     };
     core = {
-      editor = "hx";
+      editor = "nvim";
       pager = "${pkgs.delta}/bin/delta";
       whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
       excludesFile = "${config.xdg.configHome}/${ignoreFile}";

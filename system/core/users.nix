@@ -11,6 +11,7 @@
       "wheel"
       "kvm"
       "i2c"
+      "docker"
     ];
   };
 }

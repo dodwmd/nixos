@@ -44,6 +44,18 @@
         group = "users";
         mode = "0400";
       };
+      context7 = {
+        file = "${self}/secrets/context7.age";
+        owner = "linuxmobile";
+        group = "users";
+        mode = "0400";
+      };
+      exa = {
+        file = "${self}/secrets/exa.age";
+        owner = "linuxmobile";
+        group = "users";
+        mode = "0400";
+      };
     };
   };
 

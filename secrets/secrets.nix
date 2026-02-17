@@ -22,4 +22,12 @@ in {
     linuxmobile
     system
   ];
+  "context7.age".publicKeys = [
+    linuxmobile
+    system
+  ];
+  "exa.age".publicKeys = [
+    linuxmobile
+    system
+  ];
 }

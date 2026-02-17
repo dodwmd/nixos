@@ -17,7 +17,7 @@
 
 <p align="center"><img src="/assets/1.png" width=600px></p>
 
-<h2 align="center">革 | kaku</h2>
+<h1 align="center">芯 (Shin)</h1>
 
 ### ⚠ <sup><sub><samp>PLEASE RESPECT THE CREDITS IF YOU USE SOMETHING FROM MY DESKTOP/SETUP.</samp></sub></sup>
 
@@ -102,7 +102,7 @@ nix-shell -p nixVersions.stable git
 - Clone my Dotfiles
 
 ```bash
-git clone --depth 1 https://github.com/linuxmobile/kaku /mnt/etc/nixos
+git clone --depth 1 https://github.com/linuxmobile/shin /mnt/etc/nixos
 ```
 
 - Generate your Own Nix Hardware Settings:

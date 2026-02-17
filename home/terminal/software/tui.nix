@@ -34,8 +34,6 @@
       wiremix
       zfxtop
       opencode
-      kanban
-      gemini-cli
     ]
     ++ (with inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}; [
       bmm
@@ -44,7 +42,6 @@
       lightview
       nekot
       omm
-      orchat
       prs
     ]);
 }

@@ -41,6 +41,10 @@
         type = lib.types.attrsOf fileType;
         default = {};
       };
+      homeFiles = lib.mkOption {
+        type = lib.types.attrsOf fileType;
+        default = {};
+      };
     };
   };
 
@@ -51,43 +55,50 @@
       else file.source;
     fullPath = "${baseDir}/${name}";
     parentDir = builtins.dirOf fullPath;
-  in if file.mutable then ''
-    # Mutable file: copy content instead of symlinking
-    mkdir -p "${parentDir}"
-    if [ -L "${fullPath}" ]; then
-      # Replace symlink with a copy
-      rm -f "${fullPath}"
-      cp "${target}" "${fullPath}"
-      chmod +w "${fullPath}"
-    elif [ -e "${fullPath}" ]; then
-      # File exists, don't overwrite to preserve user changes
-      # Only create if missing
-      :
-    else
-      # Create initial copy
-      cp "${target}" "${fullPath}"
-      chmod +w "${fullPath}"
-    fi
-  '' else ''
-    # Immutable file: use symlink
-    mkdir -p "${parentDir}"
-    if [ -L "${fullPath}" ]; then
-      current_target=$(readlink "${fullPath}")
-      if [ "$current_target" != "${target}" ]; then
+  in
+    if file.mutable
+    then ''
+      mkdir -p "${parentDir}"
+      if [ -L "${fullPath}" ]; then
+        # Replace symlink with a copy
+        rm -f "${fullPath}"
+        cp "${target}" "${fullPath}"
+        chmod +w "${fullPath}"
+      elif [ -e "${fullPath}" ]; then
+        :
+      else
+        cp "${target}" "${fullPath}"
+        chmod +w "${fullPath}"
+      fi
+    ''
+    else ''
+      mkdir -p "${parentDir}"
+      if [ -L "${fullPath}" ]; then
+        current_target=$(readlink "${fullPath}")
+        if [ "$current_target" != "${target}" ]; then
+          rm -f "${fullPath}"
+          ln -s "${target}" "${fullPath}"
+        fi
+      elif [ -e "${fullPath}" ]; then
         rm -f "${fullPath}"
         ln -s "${target}" "${fullPath}"
+      else
+        ln -s "${target}" "${fullPath}"
       fi
-    elif [ -e "${fullPath}" ]; then
-      # Regular file exists, replace it
-      rm -f "${fullPath}"
-      ln -s "${target}" "${fullPath}"
-    else
-      ln -s "${target}" "${fullPath}"
-    fi
-  '';
+    '';
 in {
   options = {
     users.users = lib.mkOption {type = lib.types.attrsOf (lib.types.submodule userOpts);};
+    home = {
+      homeDirectory = lib.mkOption {
+        type = lib.types.path;
+        default = "/home/${username}";
+      };
+      file = lib.mkOption {
+        type = lib.types.attrsOf fileType;
+        default = {};
+      };
+    };
     xdg = {
       configHome = lib.mkOption {
         type = lib.types.path;
@@ -134,6 +145,7 @@ in {
       cacheFiles = cfg.cacheFile;
       dataFiles = cfg.dataFile;
       stateFiles = cfg.stateFile;
+      homeFiles = config.home.file;
     };
 
     environment.sessionVariables = {
@@ -152,6 +164,7 @@ in {
               ++ (lib.mapAttrsToList (mkLinkScript cfg.cacheHome) userCfg.cacheFiles)
               ++ (lib.mapAttrsToList (mkLinkScript cfg.dataHome) userCfg.dataFiles)
               ++ (lib.mapAttrsToList (mkLinkScript cfg.stateHome) userCfg.stateFiles)
+              ++ (lib.mapAttrsToList (mkLinkScript config.home.homeDirectory) userCfg.homeFiles)
           )
           config.users.users
         )

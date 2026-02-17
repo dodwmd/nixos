@@ -13,7 +13,7 @@
     LESKEY = "${config.xdg.configHome}/less/lesskey";
     XAUTHORITY = "${config.xdg.runtimeDir}/Xauthority";
 
-    EDITOR = "hx";
+    EDITOR = "nvim";
     DIRENV_LOG_FORMAT = "";
 
     # auto-run programs using nix-index-database

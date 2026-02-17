@@ -11,6 +11,7 @@ let
     ./programs
 
     ./services
+    ./services/docker.nix
     ./services/greetd.nix
     ./services/pipewire.nix
     ./services/xdg-portal-fix.nix

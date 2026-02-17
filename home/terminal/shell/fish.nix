@@ -26,11 +26,17 @@
         if test -f /run/agenix/gemini
           set -gx GEMINI_API_KEY (cat /run/agenix/gemini)
         end
+        if test -f /run/agenix/context7
+          set -gx CONTEXT7_API_KEY (cat /run/agenix/context7)
+        end
+        if test -f /run/agenix/exa
+          set -gx EXA_API_KEY (cat /run/agenix/exa)
+        end
 
         set -gx NIXPKGS_ALLOW_UNFREE 1
         set -gx NIXPKGS_ALLOW_INSECURE 1
-        set -gx EDITOR hx
-        set -gx VISUAL hx
+        set -gx EDITOR nvim
+        set -gx VISUAL nvim
 
         set -g fish_greeting
 
@@ -81,7 +87,7 @@
         set -g fish_color_search_match --background=normal
 
         # Plugin settings
-        set -Ux fifc_editor hx
+        set -Ux fifc_editor nvim
         set -U fifc_keybinding \cv
         set -g __done_min_cmd_duration 10000
       '';
