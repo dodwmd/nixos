@@ -59,10 +59,9 @@
     };
   };
 
-  nixpkgs.overlays = [inputs.nix-cachyos-kernel.overlays.pinned];
   boot = {
     # load modules on boot
-    kernelPackages = lib.mkForce pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto;
+    kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
     kernelModules = ["i2c-dev"];
     kernelParams = [

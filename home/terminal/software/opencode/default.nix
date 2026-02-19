@@ -39,7 +39,7 @@ in {
   xdg.configFile = {
     "${configFile}".text = builtins.toJSON {
       "$schema" = "https://opencode.ai/config.json";
-      plugin = ["opencode-mem"];
+      # plugin = [""];
       small_model = "google/gemma-3n-e4b-it:free";
       autoupdate = false;
       share = "disabled";

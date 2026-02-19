@@ -2,6 +2,7 @@
   users.users.linuxmobile.packages = with pkgs; [
     fish
     grc
+    zellij
     (writeShellScriptBin "hx" ''
       ${pkgs.helix}/bin/hx "$@"
     '')
@@ -10,33 +11,28 @@
   xdg.configFile = {
     "fish/config.fish" = {
       text = ''
-        if test -f /run/agenix/discordo
-          set -gx DISCORDO_TOKEN (cat /run/agenix/discordo)
-          set -gx OXICORD_TOKEN (cat /run/agenix/discordo)
-        end
-        if test -f /run/agenix/openrouter
-          set -gx OPENROUTER_API_KEY (cat /run/agenix/openrouter)
-        end
-        if test -f /run/agenix/github
-          set -gx GITHUB_TOKEN (cat /run/agenix/github)
-        end
-        if test -f /run/agenix/twt
-          set -gx TWT_TOKEN (cat /run/agenix/twt)
-        end
-        if test -f /run/agenix/gemini
-          set -gx GEMINI_API_KEY (cat /run/agenix/gemini)
-        end
-        if test -f /run/agenix/context7
-          set -gx CONTEXT7_API_KEY (cat /run/agenix/context7)
-        end
-        if test -f /run/agenix/exa
-          set -gx EXA_API_KEY (cat /run/agenix/exa)
+        for secret in discordo openrouter github twt gemini context7 exa
+          if test -f /run/agenix/$secret
+            set -l val (cat /run/agenix/$secret)
+            set -l up (string upper $secret)
+            switch $secret
+              case discordo
+                set -gx DISCORDO_TOKEN $val
+                set -gx OXICORD_TOKEN $val
+              case openrouter gemini context7 exa
+                set -gx "$up"_API_KEY $val
+              case '*'
+                set -gx "$up"_TOKEN $val
+            end
+          end
         end
 
         set -gx NIXPKGS_ALLOW_UNFREE 1
         set -gx NIXPKGS_ALLOW_INSECURE 1
         set -gx EDITOR nvim
         set -gx VISUAL nvim
+        set -gx ZELLIJ_AUTO_ATTACH true
+        set -gx ZELLIJ_AUTO_EXIT true
 
         set -g fish_greeting
 
@@ -90,6 +86,40 @@
         set -Ux fifc_editor nvim
         set -U fifc_keybinding \cv
         set -g __done_min_cmd_duration 10000
+
+        if status is-interactive
+          eval (zellij setup --generate-auto-start fish | string collect)
+        end
+      '';
+    };
+
+    "fish/functions/za.fish" = {
+      text = ''
+        function za
+          set -l sessions (zellij list-sessions 2>/dev/null)
+          if test (count $sessions) -ge 2
+            set -l target (zellij list-sessions | sk | string collect | string trim | string split ' ' -f1)
+            if test -n "$target"
+              zellij attach "$target"
+            end
+          else
+            zellij attach -c
+          end
+        end
+      '';
+    };
+
+    "fish/functions/zl.fish" = {
+      text = ''
+        function zl
+          set -l zj_layout_dir (zellij setup --check | rg "LAYOUT DIR" | rg -o '".*"' | string trim -c '"')
+          if test -d "$zj_layout_dir"
+            set -l zj_layout (fd --type f . "$zj_layout_dir" | string replace -r '.*/' "" | sk)
+            if test -n "$zj_layout"
+              zellij --layout "$zj_layout"
+            end
+          end
+        end
       '';
     };
 
@@ -98,7 +128,7 @@
         function fcd
           set -l dir (fd --type d | sk | string trim)
           if test -n "$dir"
-            cd $dir
+            z $dir
           end
         end
       '';
@@ -142,13 +172,6 @@
       '';
     };
 
-    "fish/conf.d/abbreviations.fish" = {
-      text = ''
-        abbr -a z "zoxide query"
-        abbr -a zi "zoxide query -i"
-      '';
-    };
-
     "fish/conf.d/aliases.fish" = {
       text = ''
         alias cleanup="sudo nix-collect-garbage --delete-older-than 1d"
@@ -170,6 +193,7 @@
         alias gcld="git clone --depth 1"
         alias koji="meteor"
         alias gitui="lazygit"
+        alias ls="eza --icons"
         alias l="eza -lF --time-style=long-iso --icons"
         alias ll="eza -h --git --icons --color=auto --group-directories-first -s extension"
         alias tree="eza --tree --icons --tree"
