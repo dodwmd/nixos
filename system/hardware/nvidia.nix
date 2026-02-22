@@ -9,6 +9,7 @@
       mesa
       # NVIDIA specific packages for better performance
       nvidia-vaapi-driver
+      egl-wayland
       # Graphics debugging/monitoring tools
       mesa-demos
       vulkan-tools

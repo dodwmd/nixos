@@ -320,9 +320,9 @@
     cryptsetup
     lvm2
     nfs-utils
-    brave
-    wine 
+    wine
     winetricks
+    steam-run
   ];
 
   # nix-index-database configuration

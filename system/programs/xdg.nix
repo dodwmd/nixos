@@ -44,17 +44,17 @@ in {
     config = {
       common = {
         default = ["gnome" "gtk"];
-        # Use wlr portal for screen sharing on Niri (wlroots-based compositor)
-        "org.freedesktop.impl.portal.ScreenCast" = "wlr";
-        "org.freedesktop.impl.portal.Screenshot" = "wlr";
-        "org.freedesktop.impl.portal.RemoteDesktop" = "wlr";
+        # Niri implements org.gnome.Mutter.ScreenCast D-Bus interface,
+        # so the GNOME portal handles screen sharing (not wlr)
+        "org.freedesktop.impl.portal.ScreenCast" = "gnome";
+        "org.freedesktop.impl.portal.Screenshot" = "gnome";
+        "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
         "org.freedesktop.impl.portal.Secret" = ["gnome-keyring"];
       };
     };
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal-gnome
-      pkgs.xdg-desktop-portal-wlr  # Needed for niri/Wayland compositors
     ];
   };
 

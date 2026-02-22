@@ -8,7 +8,7 @@ let
   desktop = base ++ [
     ./core/boot-desktop.nix
 
-    ./hardware/graphics.nix
+    ./hardware/nvidia.nix
     ./hardware/fwupd.nix
 
     ./network/default.nix
@@ -38,6 +38,7 @@ let
 
   # Media server profile (extends server)
   media-server = server ++ [
+    ./hardware/intel.nix
     ./services/zfs.nix
     ./services/nfs-server.nix
     ./services/nginx-proxy.nix

@@ -47,6 +47,12 @@ with lib;
       default = 3000;
       description = "Group ID for Jellyfin";
     };
+
+    cpuLimit = mkOption {
+      type = types.str;
+      default = "4";
+      description = "CPU core limit for the Jellyfin container (e.g. '4' for 4 cores)";
+    };
   };
 
   config = mkIf config.homelab.media.jellyfin.enable {
@@ -88,6 +94,7 @@ with lib;
       extraOptions = [
         "--network=host"
         "--dns=192.168.1.1"
+        "--cpus=${config.homelab.media.jellyfin.cpuLimit}"
       ] ++ optionals config.homelab.media.jellyfin.enableHardwareAccel [
         "--device=/dev/dri:/dev/dri"
         "--group-add=26"   # Video group

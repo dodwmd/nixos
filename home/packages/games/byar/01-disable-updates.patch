@@ -1,0 +1,214 @@
+--- a/src/launcher_args.js	2026-02-19 17:37:20.946586526 +1000
++++ b/src/launcher_args.js	2026-02-19 17:37:24.928603168 +1000
+@@ -5,6 +5,11 @@
+ 		type: 'string',
+ 		description: 'Path to config.json'
+ 	})
++	.option('engine-path', {
++		alias: 'e',
++		type: 'string',
++		description: 'Path to engine'
++	})
+ 	.option('write-path', {
+ 		alias: 'w',
+ 		type: 'string',
+@@ -25,5 +30,13 @@
+ 		process.exit(1);
+ 	}
+ }
++if (argv.enginePath != null) {
++	try {
++		fs.accessSync(argv.enginePath, fs.constants.R_OK | fs.constants.X_OK);
++	} catch (err) {
++		console.error(`Cannot execute engine: "${argv.enginePath}"`);
++		process.exit(1);
++	}
++}
+ 
+-module.exports = argv;
+\ No newline at end of file
++module.exports = argv;
+
+--- a/src/launcher_wizard.js	2026-02-19 17:38:50.484976084 +1000
++++ b/src/launcher_wizard.js	2026-02-19 17:39:12.010074203 +1000
+@@ -6,6 +6,7 @@
+ const log = require('electron-log');
+ 
+ const { config } = require('./launcher_config');
++const { enginePath: enginePathArg } = require('./launcher_args');
+ const { gui } = require('./launcher_gui');
+ const updater = require('./updater');
+ const springDownloader = require('./spring_downloader');
+@@ -88,17 +89,6 @@
+ 				});
+ 			});
+ 
+-			config.downloads.engines.forEach((engine) => {
+-				steps.push({
+-					name: 'engine',
+-					item: engine,
+-					action: () => {
+-						this.isActive = true;
+-						springDownloader.downloadEngine(engine);
+-					}
+-				});
+-			});
+-
+ 			if (config.route_prd_to_nextgen) {
+ 				config.downloads.games.forEach((game) => {
+ 					steps.push({
+@@ -147,84 +137,13 @@
+ 				steps.push(pushConfigFetchActionAtEnd);
+ 			}
+ 
+-			// Queue asynchronous check for launcher update.
+-			const isDev = !require('electron').app.isPackaged;
+-			if (!isDev) {
+-				const asyncLauncherUpdateCheck = {
+-					promise: null,
+-					action: () => {
+-						const promise = new Promise((resolve, reject) => {
+-							updater.on('update-available', () => {
+-								resolve(true);
+-							});
+-							updater.on('update-not-available', () => {
+-								resolve(false);
+-							});
+-							updater.on('error', error => {
+-								reject(error);
+-							});
+-						})
+-						updater.checkForUpdates();
+-						return promise;
+-					}
+-				}
+-				asyncSteps.push(asyncLauncherUpdateCheck);
+-
+-				const performUpdate = () => {
+-					gui.send('dl-started', 'autoupdate');
+-
+-					updater.on('download-progress', (d) => {
+-						console.info(`Self-download progress: ${d.percent}`);
+-						gui.send('dl-progress', 'autoUpdate', d.percent, 100);
+-					});
+-					updater.on('update-downloaded', () => {
+-						log.info('Self-update downloaded');
+-						gui.send('dl-finished', 'autoupdate');
+-						setImmediate(() => updater.quitAndInstall(config.silent, true));
+-					});
+-
+-					updater.on('error', error => {
+-						log.error(`Application failed to self-update. Error: ${error}`);
+-					});
+-
+-					updater.downloadUpdate();
+-				};
+-
+-				steps.push({
+-					name: 'launcher_update',
+-					action: () => {
+-						log.info('Checking for launcher update');
+-
+-						let timeoutId;
+-						const checkTimeout = new Promise(resolve => {
+-							timeoutId = setTimeout(() => {
+-								log.error('Launcher update check timed out, ignoring');
+-								resolve(false);
+-
+-							}, 5000);
+-						});
+-
+-						Promise.race([asyncLauncherUpdateCheck.promise, checkTimeout]).then(updateAvailable => {
+-							clearTimeout(timeoutId);
+-							if (!updateAvailable) {
+-								log.info('No update available.');
+-								wizard.nextStep();
+-							} else {
+-								performUpdate();
+-							}
+-						}).catch(error => {
+-							log.error(`Failed to check for launcher updates. Error: ${error}, ignoring`);
+-							wizard.nextStep();
+-						});
+-					}
+-				});
+-			} else {
+-				console.log('Development version: no self-update required');
+-			}
++			console.log('Immutable version: self-update not supported');
+ 		}
+ 
+ 		let enginePath;
+-		if (config.launch.engine_path != null) {
++		if (enginePathArg != null) {
++			enginePath = enginePathArg;
++		} else if (config.launch.engine_path != null) {
+ 			enginePath = config.launch.engine_path;
+ 		} else {
+ 			const engineName = config.launch.engine || config.downloads.engines[0];
+@@ -257,6 +176,9 @@
+ 					});
+ 				}
+ 			});
++		} else {
++			console.error('Engine path could not be resolved. Provide --engine-path or ensure config.launch.engine is set.');
++			process.exit(1);
+ 		}
+ 
+ 		this.started = false;
+
+--- a/src/renderer/renderer_misc.js	2026-02-19 20:12:49.139002368 +1000
++++ b/src/renderer/renderer_misc.js	2026-02-19 20:12:50.751462117 +1000
+@@ -1,7 +1,6 @@
+ 'use strict';
+ 
+ const { ipcRenderer } = require('electron');
+-const isDev = !require('@electron/remote').app.isPackaged;
+ 
+ const btnShowDir = document.getElementById('btn-show-dir');
+ const lblMainTitle = document.getElementById('title');
+@@ -12,9 +11,6 @@
+ 
+ module.exports = {
+ 	setMainTitle: (title) => {
+-		if (isDev) {
+-			title = `${title} (DEV)`;
+-		}
+ 		lblMainTitle.innerHTML = title;
+ 	}
+ };
+
+--- a/src/renderer/renderer_log.js	2026-02-19 20:16:27.606705047 +1000
++++ b/src/renderer/renderer_log.js	2026-02-19 20:16:29.758942206 +1000
+@@ -2,10 +2,6 @@
+ 
+ const { ipcRenderer } = require('electron');
+ 
+-const { getCurrentWindow } = require('@electron/remote');
+-
+-const mainWindow = getCurrentWindow();
+-
+ const { format } = require('util');
+ const util = require('util');
+ 
+@@ -17,20 +13,10 @@
+ 	event.preventDefault();
+ 
+ 	const cl = logContent.classList;
+-	const baseHeight = process.platform === 'win32' ? 418 : 380 + 8;
+-	const expandedHeight = baseHeight + 362;
+ 	if (cl.contains('open')) {
+ 		cl.remove('open');
+-		// We have to call setMinimumSize before .setSize due to Electron bug
+-		// https://github.com/electron/electron/issues/15560
+-		mainWindow.setMinimumSize(800, baseHeight);
+-		mainWindow.setSize(800, baseHeight);
+ 	} else {
+ 		cl.add('open');
+-		// We have to call setMinimumSize before .setSize due to Electron bug
+-		// https://github.com/electron/electron/issues/15560
+-		mainWindow.setMinimumSize(800, expandedHeight);
+-		mainWindow.setSize(800, expandedHeight);
+ 	}
+ });
+ 

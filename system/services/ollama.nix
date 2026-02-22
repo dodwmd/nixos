@@ -9,19 +9,15 @@
     package = pkgs.ollama-cuda; # Use CUDA package for RTX 4080
     environmentVariables = {
       # Optimize for RTX 4080 (16GB VRAM)
-      OLLAMA_GPU_OVERHEAD = "2GiB";
+      OLLAMA_GPU_OVERHEAD = "2147483648"; # 2 GiB in bytes
       OLLAMA_MAX_LOADED_MODELS = "2";
       OLLAMA_NUM_PARALLEL = "4";
       OLLAMA_MAX_QUEUE = "512";
+      # Ensure CUDA is used
+      OLLAMA_LLM_LIBRARY = "cuda_v12";
     };
     host = "127.0.0.1";
     port = 11434;
-  };
-
-  # Ensure CUDA support (updated for newer NixOS)
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
   };
 
   # Add Ollama client to system packages

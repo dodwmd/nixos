@@ -28,7 +28,18 @@ in {
     services.postgresql = {
       enable = true;
       package = cfg.package;
-      settings.port = cfg.port;
+      settings = {
+        port = cfg.port;
+        # Performance tuning (defaults are extremely conservative)
+        shared_buffers = "512MB";
+        effective_cache_size = "2GB";
+        work_mem = "16MB";
+        maintenance_work_mem = "128MB";
+        random_page_cost = 1.1; # ZFS on SSD/NVMe, not spinning disks
+        wal_buffers = "16MB";
+        checkpoint_completion_target = 0.9;
+        max_connections = 100;
+      };
 
       # Create all media databases (main + log for each app)
       ensureDatabases = [

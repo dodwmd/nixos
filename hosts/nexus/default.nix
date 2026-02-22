@@ -140,9 +140,19 @@
     virtualHosts = {
       "sonarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:8989";
+        extraConfig = ''
+          proxy_read_timeout 300s;
+          proxy_connect_timeout 300s;
+          proxy_send_timeout 300s;
+        '';
       };
       "radarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:7878";
+        extraConfig = ''
+          proxy_read_timeout 300s;
+          proxy_connect_timeout 300s;
+          proxy_send_timeout 300s;
+        '';
       };
       "prowlarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:9696";

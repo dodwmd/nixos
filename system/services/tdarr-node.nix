@@ -1,6 +1,17 @@
 { config, pkgs, ... }:
 
 {
+  # Create media user/group matching nexus media stack (UID/GID 3000)
+  users.users.media = {
+    uid = 3000;
+    group = "media";
+    isSystemUser = true;
+    description = "Media services user";
+  };
+
+  users.groups.media = {
+    gid = 3000;
+  };
   # Mount nexus NFS data share
   fileSystems."/mnt/nexus-data" = {
     device = "192.168.1.7:/tank/data";
@@ -23,8 +34,8 @@
     autoStart = true;
     
     environment = {
-      PUID = "1000";
-      PGID = "100";
+      PUID = "3000";
+      PGID = "3000";
       TZ = "Australia/Brisbane";
       serverIP = "nexus.home.dodwell.us";
       serverPort = "8266";
@@ -54,7 +65,7 @@
 
   # Create required directories
   systemd.tmpfiles.rules = [
-    "d /tmp/tdarr-transcode-exodus 0755 1000 100 -"
-    "d /home/dodwmd/.config/tdarr-node 0755 1000 100 -"
+    "d /tmp/tdarr-transcode-exodus 0755 3000 3000 -"
+    "d /home/dodwmd/.config/tdarr-node 0755 3000 3000 -"
   ];
 }
