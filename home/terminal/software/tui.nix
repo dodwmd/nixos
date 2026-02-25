@@ -39,7 +39,6 @@
       bmm
       dawn
       dfft
-      lightview
       nekot
       omm
       prs

@@ -142,6 +142,10 @@
       open-floating = true;
     }
     {
+      match._props = {app-id = "swayimg";};
+      open-floating = true;
+    }
+    {
       match._props = {app-id = "pinentry";};
       open-floating = true;
     }

@@ -31,7 +31,7 @@
         set -gx NIXPKGS_ALLOW_INSECURE 1
         set -gx EDITOR nvim
         set -gx VISUAL nvim
-        set -gx ZELLIJ_AUTO_ATTACH true
+        set -gx ZELLIJ_AUTO_ATTACH false
         set -gx ZELLIJ_AUTO_EXIT true
 
         set -g fish_greeting
@@ -87,7 +87,7 @@
         set -U fifc_keybinding \cv
         set -g __done_min_cmd_duration 10000
 
-        if status is-interactive
+        if status is-interactive; and test "$Z" != "0"
           eval (zellij setup --generate-auto-start fish | string collect)
         end
       '';

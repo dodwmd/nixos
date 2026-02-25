@@ -4,7 +4,7 @@
   ...
 }: let
   browser = ["helium.desktop"];
-  imageViewer = ["lightview.desktop"];
+  imageViewer = ["swayimg.desktop"];
   videoPlayer = ["mpv.desktop"];
   audioPlayer = ["io.bassi.Amberol.desktop"];
 
