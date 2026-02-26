@@ -93,36 +93,6 @@
       '';
     };
 
-    "fish/functions/za.fish" = {
-      text = ''
-        function za
-          set -l sessions (zellij list-sessions 2>/dev/null)
-          if test (count $sessions) -ge 2
-            set -l target (zellij list-sessions | sk | string collect | string trim | string split ' ' -f1)
-            if test -n "$target"
-              zellij attach "$target"
-            end
-          else
-            zellij attach -c
-          end
-        end
-      '';
-    };
-
-    "fish/functions/zl.fish" = {
-      text = ''
-        function zl
-          set -l zj_layout_dir (zellij setup --check | rg "LAYOUT DIR" | rg -o '".*"' | string trim -c '"')
-          if test -d "$zj_layout_dir"
-            set -l zj_layout (fd --type f . "$zj_layout_dir" | string replace -r '.*/' "" | sk)
-            if test -n "$zj_layout"
-              zellij --layout "$zj_layout"
-            end
-          end
-        end
-      '';
-    };
-
     "fish/functions/fcd.fish" = {
       text = ''
         function fcd
