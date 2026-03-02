@@ -44,7 +44,7 @@ in {
     "${configFile}".text = builtins.toJSON {
       "$schema" = "https://opencode.ai/config.json";
       plugin = ["opencode-antigravity-auth@1.2.6"];
-      small_model = "ollama/qwen2.5-coder:14b";
+      small_model = "ollama/qwen3.5:27b";
       autoupdate = false;
       share = "disabled";
 

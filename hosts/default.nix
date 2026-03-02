@@ -38,6 +38,7 @@
         ++ [
           ./k3s-master-01
           inputs.agenix.nixosModules.default
+          inputs.disko.nixosModules.disko
         ];
     };
 
@@ -48,6 +49,7 @@
         ++ [
           ./k3s-master-02
           inputs.agenix.nixosModules.default
+          inputs.disko.nixosModules.disko
         ];
     };
 
@@ -93,6 +95,7 @@
         ++ [
           ./nexus
           inputs.agenix.nixosModules.default
+          inputs.disko.nixosModules.disko
         ];
     };
   };

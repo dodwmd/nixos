@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./disko.nix
   ];
 
   # Use LTS kernel for ZFS compatibility
@@ -144,6 +145,10 @@
           proxy_read_timeout 300s;
           proxy_connect_timeout 300s;
           proxy_send_timeout 300s;
+          proxy_buffers 16 256k;
+          proxy_buffer_size 256k;
+          proxy_busy_buffers_size 512k;
+          client_max_body_size 0;
         '';
       };
       "radarr.home.dodwell.us" = {
@@ -152,6 +157,10 @@
           proxy_read_timeout 300s;
           proxy_connect_timeout 300s;
           proxy_send_timeout 300s;
+          proxy_buffers 16 256k;
+          proxy_buffer_size 256k;
+          proxy_busy_buffers_size 512k;
+          client_max_body_size 0;
         '';
       };
       "prowlarr.home.dodwell.us" = {

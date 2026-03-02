@@ -1,4 +1,4 @@
-_: {
+{pkgs, ...}: {
   imports = [
     ./fonts.nix
     ./xdg.nix
@@ -7,6 +7,8 @@ _: {
   programs = {
     dconf.enable = true;
     seahorse.enable = true;
-    adb.enable = true;
   };
+
+  # programs.adb removed in systemd 258; add android-tools to system packages instead
+  environment.systemPackages = [pkgs.android-tools];
 }

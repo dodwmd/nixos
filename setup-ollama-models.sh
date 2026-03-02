@@ -5,17 +5,9 @@ set -e
 
 echo "🚀 Setting up Ollama models for RTX 4080..."
 
-# Primary coding model - excellent for agentic tasks
-echo "📦 Pulling Qwen2.5-Coder 14B (Primary coding model)..."
-ollama pull qwen2.5-coder:14b
-
-# Alternative: Google's latest general model
-echo "📦 Pulling Gemma 3N 27B (Google's latest, general purpose)..."
-ollama pull gemma2:27b
-
-# Backup coding model - smaller, faster
-echo "📦 Pulling Qwen2.5-Coder 7B (Backup coding model)..."
-ollama pull qwen2.5-coder:7b
+# Primary model - Qwen 3.5 27B with vision support
+echo "📦 Pulling Qwen3.5 27B (Primary model, vision + coding)..."
+ollama pull qwen3.5:27b
 
 # General purpose model for reasoning
 echo "📦 Pulling Llama 3.1 8B (General reasoning)..."
@@ -32,12 +24,11 @@ ollama pull phi3:mini
 echo "✅ Model setup complete!"
 echo ""
 echo "💡 Recommended usage:"
-echo "  - qwen2.5-coder:14b  → Primary agentic coding (8-10GB VRAM)"
-echo "  - qwen2.5-coder:7b   → Fast coding tasks (4-6GB VRAM)"
-echo "  - llama3.1:8b        → General reasoning (4-6GB VRAM)"
+echo "  - qwen3.5:27b         → Primary model, coding + vision (14-16GB VRAM)"
+echo "  - llama3.1:8b         → General reasoning (4-6GB VRAM)"
 echo "  - deepseek-coder:6.7b → Code completion (3-4GB VRAM)"
-echo "  - phi3:mini          → Quick queries (1-2GB VRAM)"
+echo "  - phi3:mini           → Quick queries (1-2GB VRAM)"
 echo ""
-echo "🔧 Your RTX 4080 (16GB) can run the 14B model comfortably!"
-echo "🎯 OpenCode is configured to use qwen2.5-coder:14b as primary model"
-echo "☁️  Claude Sonnet 3.5 will be used as fallback for complex reasoning"
+echo "🔧 Your RTX 4080 (16GB) can run the 27B model!"
+echo "🎯 OpenCode is configured to use qwen3.5:27b as primary model"
+echo "☁️  Claude Sonnet will be used as fallback for complex reasoning"

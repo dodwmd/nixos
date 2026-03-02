@@ -1,41 +1,29 @@
 {
   "model_hierarchy": {
-    "primary_coding": {
-      "model": "ollama/qwen2.5-coder:14b",
-      "use_case": "Primary agentic coding, complex refactoring, architecture decisions",
-      "vram_usage": "8-10GB",
-      "strengths": ["Code generation", "Refactoring", "Architecture", "Complex reasoning"]
-    },
-    "primary_general": {
-      "model": "ollama/gemma2:27b",
-      "use_case": "General reasoning, mixed tasks, latest capabilities",
-      "vram_usage": "12-14GB",
-      "strengths": ["Latest tech", "General reasoning", "Mixed workloads", "Google's cutting edge"]
-    },
-    "fast": {
-      "model": "ollama/qwen2.5-coder:7b", 
-      "use_case": "Quick code completion, simple fixes, documentation",
-      "vram_usage": "4-6GB",
-      "strengths": ["Speed", "Code completion", "Simple tasks"]
+    "primary": {
+      "model": "ollama/qwen3.5:27b",
+      "use_case": "Primary model for coding, vision, and general tasks",
+      "vram_usage": "14-16GB",
+      "strengths": ["Code generation", "Vision", "Refactoring", "Architecture", "201 languages"]
     },
     "reasoning": {
       "model": "ollama/llama3.1:8b",
       "use_case": "General reasoning, planning, non-code tasks",
-      "vram_usage": "4-6GB", 
+      "vram_usage": "4-6GB",
       "strengths": ["General reasoning", "Planning", "Analysis"]
     },
     "fallback_cloud": {
-      "model": "anthropic/claude-3-5-sonnet-20241022",
+      "model": "anthropic/claude-sonnet-4-6",
       "use_case": "Complex problems, when local models get stuck",
       "cost": "Paid API",
       "strengths": ["Complex reasoning", "Advanced problem solving", "Latest knowledge"]
     }
   },
   "agentic_workflow": {
-    "step_1": "Try primary local model (qwen2.5-coder:14b)",
-    "step_2": "If stuck or needs reasoning, try llama3.1:8b", 
+    "step_1": "Try primary local model (qwen3.5:27b)",
+    "step_2": "If stuck or needs reasoning, try llama3.1:8b",
     "step_3": "If still stuck, escalate to Claude Sonnet",
-    "step_4": "Use fast model for simple follow-up tasks"
+    "step_4": "Use primary model for follow-up tasks"
   },
   "recommended_prompts": {
     "agentic_prefix": "You are an expert software engineer. Think step by step and be thorough in your analysis.",

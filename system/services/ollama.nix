@@ -13,10 +13,8 @@
       OLLAMA_MAX_LOADED_MODELS = "2";
       OLLAMA_NUM_PARALLEL = "4";
       OLLAMA_MAX_QUEUE = "512";
-      # Ensure CUDA is used
-      OLLAMA_LLM_LIBRARY = "cuda_v12";
     };
-    host = "127.0.0.1";
+    host = "0.0.0.0";
     port = 11434;
   };
 

@@ -6,6 +6,9 @@ HOST ?= exodus
 # SSH target for remote operations (defaults to HOST if not set)
 TARGET ?= $(HOST)
 
+# SSH user for remote operations (default: dodwmd, use nixos for rescue ISOs)
+REMOTE_USER ?= dodwmd
+
 # Default target
 help:
 	@echo "NixOS Homelab Configuration Management"
@@ -26,8 +29,8 @@ help:
 	@echo "  fmt                - Format nix files with alejandra"
 	@echo ""
 	@echo "Remote deployment:"
-	@echo "  remote HOST=name [TARGET=addr]         - Initial install via nixos-anywhere"
-	@echo "  remote-rebuild HOST=name [TARGET=addr] - Rebuild remote host via nixos-rebuild"
+	@echo "  remote HOST=name [TARGET=addr] [REMOTE_USER=user] - Initial install via nixos-anywhere"
+	@echo "  remote-rebuild HOST=name [TARGET=addr]            - Rebuild remote host via nixos-rebuild"
 	@echo ""
 	@echo "Secrets management:"
 	@echo "  rekey                                  - Re-encrypt all agenix secrets"
@@ -49,12 +52,24 @@ hosts:
 	@echo "Available hosts:"
 	@ls -1 hosts/ | grep -v default.nix | sort
 
+# Host validation: switch/test/boot must run on matching host (or nixos live ISO)
+define check_host
+	@CURRENT_HOST=$$(hostname); \
+	if [ "$$CURRENT_HOST" != "$(HOST)" ] && [ "$$CURRENT_HOST" != "nixos" ]; then \
+		echo "Error: Cannot run '$(1)' for HOST=$(HOST) on $$CURRENT_HOST"; \
+		echo "       You must run this on $(HOST) itself (or a NixOS live ISO)"; \
+		exit 1; \
+	fi
+endef
+
 # Main operations
 switch:
+	$(call check_host,switch)
 	@echo "Building and switching to $(HOST)..."
 	sudo nixos-rebuild switch --flake path:$(PWD)#$(HOST)
 
 test:
+	$(call check_host,test)
 	@echo "Testing $(HOST) configuration..."
 	sudo nixos-rebuild test --flake path:$(PWD)#$(HOST)
 
@@ -63,6 +78,7 @@ build:
 	nixos-rebuild build --flake path:$(PWD)#$(HOST)
 
 boot:
+	$(call check_host,boot)
 	@echo "Setting $(HOST) as boot default..."
 	sudo nixos-rebuild boot --flake path:$(PWD)#$(HOST)
 
@@ -82,7 +98,7 @@ endif
 		cp "$(PWD)/secrets/host-keys/$(HOST).pub" "$(EXTRA_FILES_DIR)/etc/ssh/ssh_host_ed25519_key.pub"; \
 		chmod 644 "$(EXTRA_FILES_DIR)/etc/ssh/ssh_host_ed25519_key.pub"; \
 	fi
-	nix run github:nix-community/nixos-anywhere -- --flake path:$(PWD)#$(HOST) --ssh-option "IdentityFile=~/.ssh/id_ed25519" --extra-files "$(EXTRA_FILES_DIR)" root@$(TARGET)
+	nix run github:nix-community/nixos-anywhere -- --flake path:$(PWD)#$(HOST) --ssh-option "IdentityFile=~/.ssh/id_ed25519" --extra-files "$(EXTRA_FILES_DIR)" $(REMOTE_USER)@$(TARGET)
 	@rm -rf "$(EXTRA_FILES_DIR)"
 
 remote-rebuild:

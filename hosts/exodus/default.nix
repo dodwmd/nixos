@@ -149,6 +149,12 @@
         preLVM = true;
         allowDiscards = true;
       };
+      root2 = {
+        name = "root2";
+        device = "/dev/disk/by-uuid/bc6c5956-7ccd-42ce-8f05-0857002bdd56";
+        preLVM = true;
+        allowDiscards = true;
+      };
     };
 
     # Boot loader configuration - override systemd-boot from core/boot.nix
@@ -278,6 +284,7 @@
         mesonFlags = (old.mesonFlags or []) ++ ["-Dglamor=false"];
       });
     })
+    (import ../../pkgs/ollama-overlay.nix)
     inputs.antigravity-nix.overlays.default
   ];
 
