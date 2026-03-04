@@ -144,11 +144,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1772067916,
-        "narHash": "sha256-Mfd3vhTsc99JkxMIs7YNsgOWUkQVBs9vAL+9eO6A0D0=",
+        "lastModified": 1772250875,
+        "narHash": "sha256-wkaladTP8rpcl0dpn7Od7Y823yP03OzLL/3CFoPw4ow=",
         "owner": "linuxmobile",
         "repo": "mynixpkgs",
-        "rev": "878c75dddaec576b8a444ec30d3e92313c3fe261",
+        "rev": "480184ef6a8986d4740d2568e64ceb2a90abbd0b",
         "type": "github"
       },
       "original": {

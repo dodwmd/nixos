@@ -49,8 +49,11 @@
   "Mod+Shift+S".screenshot = {};
   "Mod+Return".spawn._args = ["${pkgs.foot}/bin/foot"];
   "Mod+Q".close-window = {};
+  "Mod+X".spawn._args = ["fish" "-c" "niri msg pick-color | grep -oP '#[0-9a-fA-F]+' | wl-copy"];
+  "Mod+O".spawn._args = ["fish" "-c" "niri msg action toggle-window-rule-opacity --id (niri msg --json pick-window | jq '.id')"];
   "Mod+S".switch-preset-column-width = {};
   "Mod+F".maximize-column = {};
+  "Mod+Alt+F".spawn._args = ["fish" "-c" "niri msg action toggle-windowed-fullscreen --id $(niri msg --json pick-window | jq '.id')"];
   "Mod+1".set-column-width = "25%";
   "Mod+2".set-column-width = "50%";
   "Mod+3".set-column-width = "75%";

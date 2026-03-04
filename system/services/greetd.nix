@@ -1,9 +1,13 @@
-{pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   # greetd display manager
   services = {
     greetd = let
       session = {
-        command = "${pkgs.niri}/bin/niri-session";
+        command = "${inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}.niri}/bin/niri-session";
         user = "linuxmobile";
       };
     in {
