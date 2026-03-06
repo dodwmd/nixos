@@ -45,7 +45,68 @@ in
   
   config = mkIf cfg.enable {
     homelab.k3s-cluster.enable = true;
-    
+
+    # Declare CA keypair secrets - deployed to /etc/k3s/ca/ by agenix,
+    # then seeded into the k3s data dir before k3s starts so certs
+    # survive rebuilds and never go out of sync with the cluster token.
+    age.secrets = let
+      caSecret = path: mode: {
+        file = "${self}/secrets/k3s-ca/${path}";
+        owner = "root";
+        group = "root";
+        inherit mode;
+      };
+    in {
+      "k3s-server-ca-crt"         = caSecret "server-ca.crt.age"           "0644";
+      "k3s-server-ca-key"         = caSecret "server-ca.key.age"           "0600";
+      "k3s-client-ca-crt"         = caSecret "client-ca.crt.age"           "0644";
+      "k3s-client-ca-key"         = caSecret "client-ca.key.age"           "0600";
+      "k3s-request-header-ca-crt" = caSecret "request-header-ca.crt.age"   "0644";
+      "k3s-request-header-ca-key" = caSecret "request-header-ca.key.age"   "0600";
+      "k3s-etcd-peer-ca-crt"      = caSecret "etcd-peer-ca.crt.age"        "0644";
+      "k3s-etcd-peer-ca-key"      = caSecret "etcd-peer-ca.key.age"        "0600";
+      "k3s-etcd-server-ca-crt"    = caSecret "etcd-server-ca.crt.age"      "0644";
+      "k3s-etcd-server-ca-key"    = caSecret "etcd-server-ca.key.age"      "0600";
+    };
+
+    # Ensure the k3s TLS directory exists before agenix tries to write there
+    systemd.tmpfiles.rules = [
+      "d /var/lib/rancher/k3s/server/tls      0700 root root -"
+      "d /var/lib/rancher/k3s/server/tls/etcd 0700 root root -"
+    ];
+
+    # Seed CA keypairs from agenix-managed secrets into the k3s data directory
+    # before k3s starts. This ensures the cluster CA is stable across rebuilds.
+    systemd.services.k3s-seed-ca-certs = {
+      description = "Seed k3s CA certificates from agenix secrets";
+      before = [ "k3s.service" ];
+      wantedBy = [ "k3s.service" ];
+      after = [ "agenix.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script =
+        let
+          cfg' = config.age.secrets;
+          tls = "/var/lib/rancher/k3s/server/tls";
+          install = src: dest: mode:
+            "install -m ${mode} ${cfg'.${src}.path} ${tls}/${dest}";
+        in ''
+          mkdir -p ${tls}/etcd
+          ${install "k3s-server-ca-crt"         "server-ca.crt"              "0644"}
+          ${install "k3s-server-ca-key"         "server-ca.key"              "0600"}
+          ${install "k3s-client-ca-crt"         "client-ca.crt"              "0644"}
+          ${install "k3s-client-ca-key"         "client-ca.key"              "0600"}
+          ${install "k3s-request-header-ca-crt" "request-header-ca.crt"      "0644"}
+          ${install "k3s-request-header-ca-key" "request-header-ca.key"      "0600"}
+          ${install "k3s-etcd-peer-ca-crt"      "etcd/peer-ca.crt"           "0644"}
+          ${install "k3s-etcd-peer-ca-key"      "etcd/peer-ca.key"           "0600"}
+          ${install "k3s-etcd-server-ca-crt"    "etcd/server-ca.crt"         "0644"}
+          ${install "k3s-etcd-server-ca-key"    "etcd/server-ca.key"         "0600"}
+        '';
+    };
+
     # K3s master service configuration
     services.k3s =
       ({

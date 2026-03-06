@@ -12,11 +12,27 @@ let
 
   systems = [ k3s-master-01 k3s-master-02 k3s-worker-01 k3s-worker-02 k3s-worker-03 ];
 
+  masters = [ k3s-master-01 k3s-master-02 ];
+
   allKeys = users ++ systems;
 in
 {
   # K3s cluster token - all k3s nodes + user can decrypt
   "secrets/k3s-token.age".publicKeys = allKeys;
+
+  # K3s CA keypairs - masters + user only (workers don't need these)
+  # Seeded into /var/lib/rancher/k3s/server/tls/ before k3s starts
+  # so certs survive NixOS rebuilds and never go out of sync with the token
+  "secrets/k3s-ca/server-ca.crt.age".publicKeys = users ++ masters;
+  "secrets/k3s-ca/server-ca.key.age".publicKeys = users ++ masters;
+  "secrets/k3s-ca/client-ca.crt.age".publicKeys = users ++ masters;
+  "secrets/k3s-ca/client-ca.key.age".publicKeys = users ++ masters;
+  "secrets/k3s-ca/request-header-ca.crt.age".publicKeys = users ++ masters;
+  "secrets/k3s-ca/request-header-ca.key.age".publicKeys = users ++ masters;
+  "secrets/k3s-ca/etcd-peer-ca.crt.age".publicKeys = users ++ masters;
+  "secrets/k3s-ca/etcd-peer-ca.key.age".publicKeys = users ++ masters;
+  "secrets/k3s-ca/etcd-server-ca.crt.age".publicKeys = users ++ masters;
+  "secrets/k3s-ca/etcd-server-ca.key.age".publicKeys = users ++ masters;
 
   # Host private keys - only user (exodus) can decrypt, for bootstrapping via nixos-anywhere
   "secrets/host-keys/k3s-master-01.age".publicKeys = users ++ [ k3s-master-01 ];

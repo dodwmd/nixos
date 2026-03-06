@@ -33,7 +33,7 @@
   };
 
   homelab.k3s-cluster = {
-    # nodeIP will be auto-detected from DHCP
+    nodeIP = "192.168.1.20"; # Pin to IPv4 to avoid etcd peer URL mismatch with IPv6
     enableTraefik = false;
     enableServiceLB = false;
   };
