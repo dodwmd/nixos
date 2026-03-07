@@ -32,7 +32,11 @@
   virtualisation.oci-containers.containers.tdarr-node = {
     image = "ghcr.io/haveagitgat/tdarr_node:latest";
     autoStart = true;
-    
+
+    labels = {
+      "io.containers.autoupdate" = "registry";
+    };
+
     environment = {
       PUID = "3000";
       PGID = "3000";
@@ -61,6 +65,15 @@
       "--group-add=26"   # Video group
       "--group-add=303"  # Render group
     ];
+  };
+
+  # Auto-update tdarr-node image daily (synced with nexus tdarr server)
+  systemd.timers.podman-auto-update = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* 03:00:00";
+      Persistent = true;
+    };
   };
 
   # Create required directories

@@ -59,7 +59,11 @@ with lib;
     virtualisation.oci-containers.containers.tdarr = {
       image = "ghcr.io/haveagitgat/tdarr:latest";
       autoStart = true;
-      
+
+      labels = {
+        "io.containers.autoupdate" = "registry";
+      };
+
       environment = {
         PUID = toString config.homelab.media.tdarr.uid;
         PGID = toString config.homelab.media.tdarr.gid;
@@ -92,6 +96,15 @@ with lib;
         "--group-add=26"   # Video group
         "--group-add=303"  # Render group
       ];
+    };
+
+    # Auto-update tdarr server image daily (synced with exodus tdarr-node)
+    systemd.timers.podman-auto-update = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "*-*-* 03:00:00";
+        Persistent = true;
+      };
     };
 
     # Create transcode temp directory
