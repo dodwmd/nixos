@@ -7,7 +7,7 @@
   ];
 
   # Use LTS kernel for ZFS compatibility
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages;  # Use latest stable kernel compatible with ZFS
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
 
   # System identification
   networking.hostName = "nexus";
@@ -21,9 +21,6 @@
   };
 
   # Bootloader configuration (matching original boot.nix)
-  # Disable systemd initrd - ZFS + systemd initrd has known device enumeration
-  # issues causing NVMe root partition to not be found by label at boot.
-  boot.initrd.systemd.enable = lib.mkForce false;
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.grub = {
     enable = true;
