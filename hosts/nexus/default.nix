@@ -297,6 +297,7 @@
     acl
     podman-compose
     sysstat
+    age
   ];
 
   # System state version (matching original)
