@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -44,8 +45,13 @@ in {
       font-monospace-warn = "no";
       sixel = "yes";
     };
-    colors = {
-      alpha = 1.0;
+    colors-dark = {
+      alpha = 0.9;
+      blur = "yes";
+    };
+    colors-light = {
+      alpha = 0.9;
+      blur = "yes";
     };
   };
 }

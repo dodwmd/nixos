@@ -7,6 +7,7 @@
   plugins = with pkgs.obs-studio-plugins; [
     obs-gstreamer
     obs-pipewire-audio-capture
+    obs-aitum-multistream
     obs-vaapi
   ];
 
@@ -30,5 +31,6 @@
 in {
   users.users.linuxmobile.packages = [
     obsWrapped
+    pkgs.obs-cmd
   ];
 }

@@ -14,6 +14,8 @@ in {
     WLR_NO_HARDWARE_CURSORS = "1";
     QT_QPA_PLATFORMTHEME = "qt6ct";
     GTK_IM_MODULE = "simple";
+    XDG_CURRENT_DESKTOP = "niri:GNOME";
+    XDG_SESSION_DESKTOP = "niri";
   };
 
   spawn-at-startup = [
@@ -26,7 +28,7 @@ in {
     passes = 2; # default is 3
     offset = 3.0;
     noise = 0.1;
-    saturation = 0.1; # default is  1.5
+    saturation = 1.5; # default is  1.5
   };
 
   input = {
