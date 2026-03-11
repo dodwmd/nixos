@@ -26,7 +26,7 @@
 
   inputs = {
     # global, so they can be `.follow`ed
-    systems.url = "github:nix-systems/default-linux";
+    systems.url = "github:nix-systems/default";
 
     flake-compat.url = "github:edolstra/flake-compat";
 

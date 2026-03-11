@@ -23,7 +23,6 @@
       killall
       jq
       ps_mem
-      inshellisense
 
       fum
       gtt
@@ -37,8 +36,6 @@
     ]
     ++ (with inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}; [
       bmm
-      dawn
-      dfft
       nekot
       omm
       prs

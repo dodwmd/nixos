@@ -50,7 +50,7 @@
   "Print".screenshot-screen = {};
   "Mod+Shift+Alt+S".screenshot-window = {};
   "Mod+Shift+S".screenshot = {};
-  "Mod+Return".spawn._args = ["${inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}.foot}/bin/foot"];
+  "Mod+Return".spawn._args = ["${pkgs.foot}/bin/foot"];
   "Mod+Q".close-window = {};
   "Mod+X".spawn._args = ["fish" "-c" "niri msg pick-color | grep -oP '#[0-9a-fA-F]+' | wl-copy"];
   "Mod+O".spawn._args = ["fish" "-c" "niri msg action toggle-window-rule-opacity --id (niri msg --json pick-window | jq '.id')"];
