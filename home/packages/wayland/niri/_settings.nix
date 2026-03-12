@@ -14,7 +14,7 @@ in {
     WLR_NO_HARDWARE_CURSORS = "1";
     QT_QPA_PLATFORMTHEME = "qt6ct";
     GTK_IM_MODULE = "simple";
-    XDG_CURRENT_DESKTOP = "niri:GNOME";
+    XDG_CURRENT_DESKTOP = "niri";
     XDG_SESSION_DESKTOP = "niri";
   };
 
@@ -22,14 +22,8 @@ in {
     ["wl-paste" "--watch" "cliphist" "store"]
     ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]
     ["qs" "-c" "noctalia"]
+    ["dbus-update-activation-environment" "--systemd" "--all"]
   ];
-
-  blur = {
-    passes = 2; # default is 3
-    offset = 3.0;
-    noise = 0.1;
-    saturation = 1.5; # default is  1.5
-  };
 
   input = {
     keyboard.xkb.layout = "latam";
@@ -88,6 +82,12 @@ in {
     focus-ring.off = {};
     border = {
       width = 1;
+      active-gradient._props = {
+        to = "#1C1C1C";
+        from = "#6d89a7";
+        angle = 45;
+        relative-to = "workspace-view";
+      };
     };
     shadow.off = {};
     preset-column-widths.proportion = [0.25 0.5 0.75 1.0];

@@ -119,8 +119,6 @@ in {
     .direnv
     node_modules
     .opencode/
-    .gemini/
-    GEMINI.md
     AGENTS.md
   '';
 }

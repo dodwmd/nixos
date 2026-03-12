@@ -33,6 +33,7 @@
       wiremix
       zfxtop
       opencode
+      obs-cmd
     ]
     ++ (with inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}; [
       bmm

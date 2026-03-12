@@ -18,15 +18,15 @@ in {
     linuxmobile
     system
   ];
-  "gemini.age".publicKeys = [
-    linuxmobile
-    system
-  ];
   "context7.age".publicKeys = [
     linuxmobile
     system
   ];
   "exa.age".publicKeys = [
+    linuxmobile
+    system
+  ];
+  "obs.age".publicKeys = [
     linuxmobile
     system
   ];

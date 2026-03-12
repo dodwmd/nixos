@@ -11,7 +11,7 @@
   xdg.configFile = {
     "fish/config.fish" = {
       text = ''
-        for secret in discordo openrouter github twt gemini context7 exa
+        for secret in discordo openrouter github twt context7 exa obs
           if test -f /run/agenix/$secret
             set -l val (cat /run/agenix/$secret)
             set -l up (string upper $secret)
@@ -19,8 +19,10 @@
               case discordo
                 set -gx DISCORDO_TOKEN $val
                 set -gx OXICORD_TOKEN $val
-              case openrouter gemini context7 exa
+              case openrouter context7 exa
                 set -gx "$up"_API_KEY $val
+              case obs
+                set -gx OBS_WEBSOCKET_URL $val
               case '*'
                 set -gx "$up"_TOKEN $val
             end

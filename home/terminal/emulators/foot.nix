@@ -46,12 +46,10 @@ in {
       sixel = "yes";
     };
     colors-dark = {
-      alpha = 0.9;
-      blur = "yes";
+      alpha = 1.0;
     };
     colors-light = {
-      alpha = 0.9;
-      blur = "yes";
+      alpha = 1.0;
     };
   };
 }

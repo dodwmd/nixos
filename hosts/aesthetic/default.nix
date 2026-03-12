@@ -38,12 +38,6 @@
         group = "users";
         mode = "0400";
       };
-      gemini = {
-        file = "${self}/secrets/gemini.age";
-        owner = "linuxmobile";
-        group = "users";
-        mode = "0400";
-      };
       context7 = {
         file = "${self}/secrets/context7.age";
         owner = "linuxmobile";
@@ -52,6 +46,12 @@
       };
       exa = {
         file = "${self}/secrets/exa.age";
+        owner = "linuxmobile";
+        group = "users";
+        mode = "0400";
+      };
+      obs = {
+        file = "${self}/secrets/obs.age";
         owner = "linuxmobile";
         group = "users";
         mode = "0400";

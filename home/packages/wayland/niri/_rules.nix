@@ -4,10 +4,6 @@
       # geometry-corner-radius._args = [12.0 12.0 12.0 12.0];
       clip-to-geometry = true;
       draw-border-with-background = false;
-      background-effect = {
-        blur = true;
-        xray = true;
-      };
     }
     {
       match._props = {is-floating = true;};
@@ -73,21 +69,6 @@
         y = 32;
         relative-to = "bottom-right";
       };
-    }
-    {
-      match._props = {
-        app-id = "Multiviewer";
-        title = "^Track Map$";
-      };
-      open-floating = true;
-      open-on-output = "HDMI-A-1";
-      default-floating-position._props = {
-        x = 1426;
-        y = 747;
-        relative-to = "top-right";
-      };
-      default-column-width.fixed = 490;
-      default-window-height.fixed = 330;
     }
     {
       match._props = {app-id = "pavucontrol";};
@@ -175,12 +156,6 @@
     {
       match._props = {namespace = "^noctalia-wallpaper*";};
       place-within-backdrop = true;
-    }
-    {
-      match._props = {namespace = "^noctalia-background-.*$";};
-      background-effect = {
-        xray = false;
-      };
     }
   ];
 }

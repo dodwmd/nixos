@@ -41,6 +41,5 @@
 
     swww
     openvpn
-    antigravity-fhs
   ];
 }

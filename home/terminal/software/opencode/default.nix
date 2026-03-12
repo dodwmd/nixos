@@ -1,6 +1,5 @@
 {pkgs, ...}: let
   languages = import ./_languages.nix {inherit pkgs;};
-  providers = import ./_providers.nix;
   skills = import ./_skills.nix {inherit pkgs;};
 
   inherit (pkgs) opencode;
@@ -99,7 +98,6 @@ in {
         };
       };
       inherit (languages) formatter lsp;
-      provider = providers.config;
     };
     "opencode/skill".source = skills.skillsSource + "/skill";
   };
