@@ -34,6 +34,7 @@
       zfxtop
       opencode
       obs-cmd
+      rmpc
     ]
     ++ (with inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}; [
       bmm
