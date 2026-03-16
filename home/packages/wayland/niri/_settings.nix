@@ -1,5 +1,5 @@
 _: let
-  pointer = "Bibata-Original-Ice";
+  pointer = "MacTahoe-dark-cursors";
 in {
   include = "noctalia.kdl";
   environment = {
@@ -24,6 +24,13 @@ in {
     ["qs" "-c" "noctalia"]
     ["dbus-update-activation-environment" "--systemd" "--all"]
   ];
+
+  blur = {
+    passes = 2; # default is 3
+    offset = 3.0;
+    noise = 0.1;
+    saturation = 1.5; # default is  1.5
+  };
 
   input = {
     keyboard.xkb.layout = "latam";
@@ -73,7 +80,7 @@ in {
   gestures.hot-corners = {};
 
   cursor = {
-    xcursor-size = 20;
+    xcursor-size = 24;
     xcursor-theme = pointer;
   };
 
@@ -81,7 +88,7 @@ in {
     background-color = "transparent";
     focus-ring.off = {};
     border = {
-      width = 1;
+      width = 0;
       active-gradient._props = {
         to = "#1C1C1C";
         from = "#6d89a7";

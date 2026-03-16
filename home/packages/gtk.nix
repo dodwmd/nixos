@@ -6,6 +6,7 @@
       alternativeIcons = true;
     })
     gsettings-desktop-schemas
+    xdg-user-dirs
   ];
 
   environment.sessionVariables = {
@@ -13,6 +14,17 @@
     GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}/glib-2.0/schemas";
     XCURSOR_THEME = "Bibata-Original-Ice";
     XCURSOR_SIZE = "20";
-    QS_ICON_THEME = "WhiteSur";
+    QS_ICON_THEME = "MacTahoe-dark";
+  };
+
+  xdg.configFile."gtk-3.0/bookmarks" = {
+    mutable = true;
+    text = ''
+      file:///home/linuxmobile/Downloads Downloads
+      file:///home/linuxmobile/Documents Documents
+      file:///home/linuxmobile/Music Music
+      file:///home/linuxmobile/Pictures Pictures
+      file:///home/linuxmobile/Videos Videos
+    '';
   };
 }

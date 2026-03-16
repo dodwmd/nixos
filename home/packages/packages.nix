@@ -41,5 +41,10 @@
 
     swww
     openvpn
+    fprintd
+    kdePackages.qt6ct
+    libsForQt5.qt5ct
+    kdePackages.breeze
+    kdePackages.breeze.qt5
   ];
 }

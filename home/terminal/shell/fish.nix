@@ -2,7 +2,6 @@
   users.users.linuxmobile.packages = with pkgs; [
     fish
     grc
-    zellij
     (writeShellScriptBin "hx" ''
       ${pkgs.helix}/bin/hx "$@"
     '')
@@ -33,8 +32,6 @@
         set -gx NIXPKGS_ALLOW_INSECURE 1
         set -gx EDITOR nvim
         set -gx VISUAL nvim
-        set -gx ZELLIJ_AUTO_ATTACH false
-        set -gx ZELLIJ_AUTO_EXIT true
 
         set -g fish_greeting
 
@@ -59,14 +56,6 @@
           bind -M insert down history-prefix-search-forward
           bind -M default up history-prefix-search-backward
           bind -M default down history-prefix-search-forward
-
-          # UNBIND alt-s and alt-v completely (for Zellij)
-          bind -M insert alt-s ""
-          bind -M default alt-s ""
-          bind -M insert alt-v ""
-          bind -M default alt-v ""
-          bind -M insert alt-z ""
-          bind -M default alt-z ""
         end
 
         # Cursor shapes per mode
@@ -88,10 +77,6 @@
         set -Ux fifc_editor nvim
         set -U fifc_keybinding \cv
         set -g __done_min_cmd_duration 10000
-
-        if status is-interactive; and test "$Z" != "0"
-          eval (zellij setup --generate-auto-start fish | string collect)
-        end
       '';
     };
 

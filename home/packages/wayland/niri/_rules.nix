@@ -1,13 +1,21 @@
 {
   window-rule = [
     {
-      # geometry-corner-radius._args = [12.0 12.0 12.0 12.0];
+      geometry-corner-radius._args = [20.0 20.0 20.0 20.0];
       clip-to-geometry = true;
       draw-border-with-background = false;
+      background-effect = {
+        blur = true;
+        xray = true;
+      };
     }
     {
       match._props = {is-floating = true;};
       shadow = {};
+    }
+    {
+      match._props = {is-active = false;};
+      opacity = 0.95;
     }
     {
       match._props = {is-window-cast-target = true;};
@@ -156,6 +164,12 @@
     {
       match._props = {namespace = "^noctalia-wallpaper*";};
       place-within-backdrop = true;
+    }
+    {
+      match._props = {namespace = "^noctalia-background-.*$";};
+      background-effect = {
+        xray = false;
+      };
     }
   ];
 }
