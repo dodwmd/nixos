@@ -40,12 +40,12 @@ in {
           api-key = "";
           api-key-env = "OPENROUTER_API_KEY";
           models = {
-            "kwaipilot/kat-coder-pro:free" = {
-              aliases = ["kat-coder"];
+            "stepfun/step-3.5-flash:free" = {
+              aliases = ["stepfun"];
               max-input-chars = 256000;
             };
-            "openrouter/polaris-alpha" = {
-              aliases = ["polaris"];
+            "nvidia/nemotron-3-super-120b-a12b:free" = {
+              aliases = ["nemotron"];
               max-input-chars = 256000;
             };
             "deepseek/deepseek-chat-v3.1:free" = {
@@ -71,6 +71,10 @@ in {
             "moonshotai/kimi-k2:free" = {
               aliases = ["kimi"];
               max-input-chars = 33000;
+            };
+            "z-ai/glm-4.5-air:free" = {
+              aliases = ["glm"];
+              max-input-chars = 131000;
             };
           };
         };

@@ -41,5 +41,6 @@
       nekot
       omm
       prs
+      pi-coding-agent
     ]);
 }

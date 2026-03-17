@@ -50,7 +50,7 @@
   "Print".screenshot-screen = {};
   "Mod+Shift+Alt+S".screenshot-window = {};
   "Mod+Shift+S".screenshot = {};
-  "Mod+Return".spawn._args = ["${pkgs.ghostty}/bin/ghostty"];
+  "Mod+Return".spawn._args = ["${pkgs.foot}/bin/foot"];
   "Mod+Q".close-window = {};
   "Mod+X".spawn._args = ["fish" "-c" "niri msg pick-color | grep -oP '#[0-9a-fA-F]+' | wl-copy"];
   "Mod+S".switch-preset-column-width = {};

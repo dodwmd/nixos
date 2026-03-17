@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -11,7 +10,7 @@ in {
   users.users.linuxmobile.packages = with pkgs; [foot libsixel];
   xdg.configFile."${configFile}".source = toINI "foot.ini" {
     main = {
-      font = "GT Pressura Mono Trial:size=8.5:fontfeatures=calt:fontfeatures=dlig:fontfeatures=fbarc:fontfeatures=liga,PragmataProMonoLiga Nerd Font:size=8.5";
+      font = "GT Pressura Mono Trial:size=9.5:fontfeatures=calt:fontfeatures=dlig:fontfeatures=fbarc:fontfeatures=liga,PragmataProMonoLiga Nerd Font:size=8.5";
       horizontal-letter-offset = 0;
       vertical-letter-offset = 0;
       pad = "15x6center";
