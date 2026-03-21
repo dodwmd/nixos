@@ -25,13 +25,6 @@ in {
     ["dbus-update-activation-environment" "--systemd" "--all"]
   ];
 
-  blur = {
-    passes = 2; # default is 3
-    offset = 3.0;
-    noise = 0.1;
-    saturation = 1.5; # default is  1.5
-  };
-
   input = {
     keyboard.xkb.layout = "latam";
     touchpad = {
