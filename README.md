@@ -38,14 +38,11 @@
 - **Window Manager** • [Niri](https://github.com/YaLTeR/niri/)🎨 Scrolleable WM!
 - **Shell** • [Fish](https://fishshell.com/) 🐟 with
   [starship](https://github.com/starship/starship) Cross Shell Platform!
-- **Terminal** • [Ghostty](https://ghostty.org/) 💻 Powerful Hyped term
+- **Terminal** • [Foot](https://codeberg.org/dnkl/foot/) 💻 Is there something more minimal than this?
 - **Panel** • [Noctalia!](https://noctalia.dev/) 🍧 Beautiful and minimalist desktop shell
-- **File Manager** • [Yazi](https://github.com/sxyazi/yazi) 🔖 Rustacean File
-  Manager!
-- **GUI Basic-IDE** • [Helix](https://docs.helix-editor.com/) ✴️ Rustacean vim
-  version!
-- **GTK Theme** • [GTK](https://github.com/linuxmobile/Colloid-gtk-theme) 🐾 My
-  Fork of colloid
+- **File Manager** • [Yazi](https://github.com/sxyazi/yazi) 🔖 Rustacean File Manager!
+- **GUI Basic-IDE** • [Helix](https://docs.helix-editor.com/) ✴️ Rust editor version!
+- **GTK Theme** • [GTK](https://github.com/linuxmobile/Colloid-gtk-theme) 🐾 My Fork of colloid
 
 ## 🌼 <samp>INSTALLATION (NixOS)</samp>
 
@@ -55,7 +52,7 @@
 - Download ISO.
 
 ```bash
-wget -O https://channels.nixos.org/nixos-24.05/latest-nixos-minimal-x86_64-linux.iso
+wget -O https://channels.nixos.org/nixos-25.05/latest-nixos-minimal-x86_64-linux.iso
 ```
 
 - Boot Into the Installer.
@@ -96,13 +93,13 @@ mount /dev/disk/by-label/EFI /mnt/boot
 - Enable nixFlakes
 
 ```bash
-nix-shell -p nixVersions.stable git
+nix-shell -p git
 ```
 
 - Clone my Dotfiles
 
 ```bash
-git clone --depth 1 https://github.com/linuxmobile/shin /mnt/etc/nixos
+git clone --depth 1 https://github.com/linuxmobile/shin /tmp/shin
 ```
 
 - Generate your Own Nix Hardware Settings:
@@ -110,17 +107,17 @@ git clone --depth 1 https://github.com/linuxmobile/shin /mnt/etc/nixos
 ### ⚠ <sup><sub><samp>DON'T FORGET IT</samp></sub></sup>
 
 ```bash
-sudo nixos-generate-config --dir /mnt/etc/nixos/hosts/aesthetic
+sudo nixos-generate-config --dir /tmp/shin
 
 # Remove configuration.nix
-rm -rf /mnt/etc/nixos/hosts/aesthetic/configuration.nix
+rm -rf /tmp/shin/configuration.nix
 ```
 
 - Install Dotfiles Using Flake
 
 ```bash
 # Move to folder
-cd mnt/etc/nixos
+cd /tmp/shin
 
 # Install
 nixos-install --flake .#aesthetic
@@ -153,7 +150,7 @@ If you're using this NixOS configuration flake locally, you can simplify the pro
 To switch your system configuration with `nh`, use:
 
 ```bash
-NH_FLAKE=/home/linuxmobile/Dev/kaku/ nh os switch
+NH_FLAKE=/tmp/shin/ nh os switch -- --extra-experimental-features 'nix-command flakes'
 ```
 
 This avoids needing to type out the full `nixos-rebuild` command manually and provides a cleaner workflow when iterating on your setup.
