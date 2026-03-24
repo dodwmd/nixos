@@ -38,7 +38,7 @@
         {_props = {app-id = "chromium-browser";};}
         {_props = {app-id = "xdg-desktop-portal-gtk";};}
       ];
-      scroll-factor = 0.6;
+      scroll-factor = 0.9;
     }
     {
       match = [

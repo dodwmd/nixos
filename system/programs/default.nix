@@ -1,4 +1,4 @@
-_: {
+{
   imports = [
     ./fonts.nix
     ./xdg.nix
@@ -6,6 +6,7 @@ _: {
 
   programs = {
     dconf.enable = true;
+    nix-ld.enable = true;
     seahorse.enable = true;
   };
 }
