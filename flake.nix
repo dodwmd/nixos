@@ -1,48 +1,11 @@
 {
   description = "linuxmobile flake configuration based on hjem";
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux"];
-
-      imports = [./hosts ./pkgs];
-
-      perSystem = {
-        config,
-        pkgs,
-        ...
-      }: {
-        devShells = {
-          default = pkgs.mkShell {
-            packages = [pkgs.alejandra pkgs.git config.packages.repl];
-            name = "nixland";
-            DIRENV_LOG_FORMAT = "";
-          };
-        };
-        # Nix Formatter
-        formatter = pkgs.alejandra;
-      };
-    };
-
   inputs = {
-    # global, so they can be `.follow`ed
     systems.url = "github:nix-systems/default";
-
-    flake-compat.url = "github:edolstra/flake-compat";
-
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.systems.follows = "systems";
-    };
-
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    # rest of inputs, alphabetical order
     agenix = {
       url = "github:ryantm/agenix";
       inputs = {
@@ -59,12 +22,38 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+  };
 
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
+  outputs = {
+    self,
+    nixpkgs,
+    systems,
+    ...
+  } @ inputs: let
+    inherit (nixpkgs) lib;
+    forAllSystems = lib.genAttrs (import systems);
+    pkgsFor = system:
+      import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
       };
-    };
+  in {
+    nixosConfigurations = import ./hosts {inherit self inputs;};
+
+    packages =
+      forAllSystems (system:
+        import ./pkgs {pkgs = pkgsFor system;});
+
+    devShells = forAllSystems (system: let
+      pkgs = pkgsFor system;
+    in {
+      default = pkgs.mkShell {
+        packages = [pkgs.alejandra pkgs.git self.packages.${system}.repl];
+        name = "nixland";
+        DIRENV_LOG_FORMAT = "";
+      };
+    });
+
+    formatter = forAllSystems (system: (pkgsFor system).alejandra);
   };
 }

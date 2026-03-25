@@ -15,7 +15,7 @@ in {
     NIRI_CONFIG = "$HOME/.config/niri/config.kdl";
   };
 
-  users.users.linuxmobile.packages = with pkgs; [inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}.niri];
+  users.users.linuxmobile.packages = with pkgs; [niri];
 
   xdg.configFile."niri/config.kdl".text = builtins.readFile finalConfig;
 }

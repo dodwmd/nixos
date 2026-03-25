@@ -1,12 +1,6 @@
-{
-  systems = ["x86_64-linux"];
+{pkgs, ...}: {
+  # instant repl with automatic flake loading
+  repl = pkgs.callPackage ./repl {};
 
-  perSystem = {pkgs, ...}: {
-    packages = {
-      # instant repl with automatic flake loading
-      repl = pkgs.callPackage ./repl {};
-
-      apple-fonts = pkgs.callPackage ./Apple-Fonts {};
-    };
-  };
+  apple-fonts = pkgs.callPackage ./Apple-Fonts {};
 }

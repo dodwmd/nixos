@@ -81,6 +81,7 @@
 in {
   users.users.linuxmobile.packages = with pkgs; [
     twitch-hls-client
+    twitch-tui
     mpv
   ];
 

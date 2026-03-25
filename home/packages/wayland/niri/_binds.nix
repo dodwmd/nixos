@@ -1,7 +1,4 @@
-{
-  inputs,
-  pkgs,
-}: {
+{pkgs, ...}: {
   "XF86AudioPlay" = {
     _props.allow-when-locked = true;
     spawn._args = ["qs" "-c" "noctalia" "ipc" "call" "media" "playPause"];
