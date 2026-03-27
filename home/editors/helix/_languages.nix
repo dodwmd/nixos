@@ -13,6 +13,7 @@
     nil = "${pkgs.nil}/bin/nil";
     tailwindcss = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
     volar = "${pkgs.vue-language-server}/bin/vue-language-server";
+    zls = "${pkgs.zls}/bin/zls";
   };
 in
   (pkgs.formats.toml {}).generate "languages.toml" {
@@ -132,6 +133,11 @@ in
         };
         language-servers = ["nil"];
       }
+      {
+        name = "zig";
+        auto-format = true;
+        language-servers = ["zls"];
+      }
     ];
 
     language-server = {
@@ -157,6 +163,9 @@ in
       volar = {
         command = languageServers.volar;
         args = ["--stdio"];
+      };
+      zls = {
+        command = languageServers.zls;
       };
     };
   }

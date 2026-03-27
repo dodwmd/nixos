@@ -58,15 +58,16 @@
     };
   };
 
+  nixpkgs.overlays = [self.inputs.nix-cachyos-kernel.overlays.pinned];
+
   boot = {
     # load modules on boot
-    kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
+    kernelPackages = lib.mkForce pkgs.cachyosKernels.linuxPackages-cachyos-latest;
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
-    kernelModules = ["i2c-dev"];
+    kernelModules = ["i2c-dev" "v4l2loopback"];
     kernelParams = [
       "amd_pstate=active" # Enable AMD P-state CPU scaling driver
       "amd_iommu=force" # Force AMD IOMMU for better DMA protection
-      "mitigations=off" # Disable CPU security mitigations (improves performance, reduces security)
       "ideapad_laptop" # Allow Lenovo IdeaPad v4 Dynamic Thermal Control
       # "nvme_core.default_ps_max_latency_us=0" # Set NVMe power state latency to minimum (max performance)
       "preempt=voluntary"

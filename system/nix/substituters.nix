@@ -4,6 +4,7 @@
       # high priority since it's almost always used
       "https://cache.nixos.org?priority=10"
 
+      "https://attic.xuyh0120.win/lantian"
       "https://chaotic-nyx.cachix.org/"
       "https://fufexan.cachix.org"
       "https://linuxmobile.cachix.org"
@@ -15,6 +16,7 @@
 
       "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
       "fufexan.cachix.org-1:LwCDjCJNJQf5XD2BV+yamQIMZfcKWR9ISIFy5curUsY="
+      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "linuxmobile.cachix.org-1:2K7KEjzbd3U+qMQRte/DGqttosw8EGgGVvu8vKu8D6A="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];

@@ -11,6 +11,7 @@
     nil
     tailwindcss-language-server
     vue-language-server
+    zls
 
     # Formatters
     alejandra
