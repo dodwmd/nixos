@@ -6,7 +6,6 @@
   users.users.linuxmobile.packages = with pkgs; [
     # messaging
     telegram-desktop
-    vesktop
 
     # misc
     pciutils
@@ -15,13 +14,9 @@
     imagemagick
     bun
 
-    fastfetch
-
     # gnome
-    dconf-editor
     file-roller
     gnome-control-center
-    gnome-text-editor
     nautilus
     (papers.override {supportNautilus = true;})
 
