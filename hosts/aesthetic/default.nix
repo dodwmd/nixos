@@ -74,21 +74,8 @@
       "nowatchdog"
       "psi=1"
 
-      "randomize_kstack_offset=on" # Randomize kernel stack offset on each syscall (mitigates some exploits)
-      "vsyscall=none" # Disable vsyscall (removes legacy syscall interface, improves security)
-      "slab_nomerge" # Disable merging of similar SLAB caches (hardens against some heap attacks)
-      "module.sig_enforce=1" # Only allow loading kernel modules with valid signatures (prevents unsigned modules)
-      "lockdown=confidentiality" # Enable kernel lockdown in confidentiality mode (restricts kernel access even for root)
-      "page_poison=1" # Fill freed memory pages with poison value (helps detect use-after-free bugs)
-      "page_alloc.shuffle=1" # Randomize page allocator order (mitigates some memory corruption attacks)
-      "sysrq_always_enabled=0" # Disable magic SysRq key entirely (prevents low-level system commands)
       "rootflags=noatime" # Mount root filesystem with noatime (improves performance, disables file access time updates)
-      "lsm=landlock,lockdown,yama,integrity,apparmor,bpf,tomoyo,selinux" # Enable and order Linux Security Modules (stacked LSMs for security)
       "fbcon=nodefer" # Do not defer kernel messages to framebuffer console (shows messages immediately)
-
-      # Additional security hardening for HSI compliance (validated)
-      "init_on_alloc=1" # Initialize allocated memory
-      "init_on_free=1" # Initialize freed memory
     ];
     kernel.sysctl = {
       "vm.swappiness" = 10; # Lower tendency to swap (default is 60)
@@ -103,23 +90,6 @@
       "net.core.netdev_max_backlog" = 16384;
       "net.ipv4.tcp_no_metrics_save" = 1;
       "net.ipv4.tcp_moderate_rcvbuf" = 1;
-
-      "kernel.sysrq" = 0; # Disable magic SysRq key (prevents low-level system commands)
-      "kernel.kptr_restrict" = 2; # Hide kernel pointers from unprivileged users (security)
-      "kernel.ftrace_enabled" = false; # Disable kernel function tracing (security, disables debugging)
-      "kernel.dmesg_restrict" = 1; # Restrict access to dmesg for non-root users (security)
-      "fs.protected_fifos" = 2; # Fully restrict writing to FIFOs not owned by the writer (security)
-      "fs.protected_regular" = 2; # Fully restrict writing to regular files not owned by the writer (security)
-      "fs.suid_dumpable" = 0; # Disable core dumps for setuid programs (security)
-      "net.core.bpf_jit_harden" = 2; # Harden BPF JIT compiler for all users
-
-      # Additional security hardening
-      "kernel.core_uses_pid" = 1; # Append PID to core filenames
-      "kernel.randomize_va_space" = 2; # Full ASLR
-      "vm.mmap_rnd_bits" = 32; # Increase ASLR entropy for mmap
-      "vm.mmap_rnd_compat_bits" = 16; # Increase ASLR entropy for compat mmap
-      "dev.tty.ldisc_autoload" = 0; # Disable TTY line discipline autoloading
-      "vm.unprivileged_userfaultfd" = 0; # Disable unprivileged userfaultfd
     };
 
     blacklistedKernelModules = [
@@ -187,8 +157,6 @@
 
   # Additional security hardening for HSI compliance
   security = {
-    forcePageTableIsolation = true;
-    protectKernelImage = true;
     apparmor = {
       enable = true;
       killUnconfinedConfinables = true;
