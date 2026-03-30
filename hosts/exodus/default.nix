@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     ../../system/services/tdarr-node.nix
     ../../system/services/ollama.nix
+    ../../system/hardware/bluetooth.nix
     ../../home/profiles/desktop/packages.nix
     ../../home/packages/wayland/niri
   ];
@@ -18,6 +19,9 @@
 
   # Enable desktop user
   homelab.users.desktopUser.enable = true;
+
+  homelab.tdarrNode.enable = false;
+  homelab.ollama.enable = true;
 
   boot = {
     # load modules on boot
@@ -231,6 +235,18 @@
 
     # NFS client support
     rpcbind.enable = true;
+
+    # Printing - Brother MFC-9335CDW @ 192.168.1.120
+    printing = {
+      enable = true;
+      drivers = [pkgs.brlaser];
+    };
+
+    # Network printer discovery
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+    };
   };
 
   # NFS filesystem support
@@ -327,6 +343,7 @@
     cryptsetup
     lvm2
     nfs-utils
+    system-config-printer
     wine
     winetricks
     steam-run

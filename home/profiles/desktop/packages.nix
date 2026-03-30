@@ -6,6 +6,7 @@
 
     # Applications from old dodwmd config
     bitwarden-desktop
+    discord
     google-antigravity
     signal-desktop
     slack

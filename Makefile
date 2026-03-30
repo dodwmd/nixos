@@ -113,7 +113,7 @@ check:
 	nix flake check path:$(PWD)
 
 update:
-	nix flake update path:$(PWD)
+	nix flake update --flake path:$(PWD)
 
 clean:
 	rm -f result

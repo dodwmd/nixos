@@ -1,23 +1,27 @@
-_: {
-  programs.niri.enable = true;
+{ config, lib, ... }: {
+  options.homelab.dmsGreeter.enable = lib.mkEnableOption "DMS greeter for niri";
 
-  services = {
-    displayManager.autoLogin.enable = false;
+  config = lib.mkIf config.homelab.dmsGreeter.enable {
+    programs.niri.enable = true;
 
-    displayManager.dms-greeter = {
-      enable = true;
-      compositor.name = "niri";
-      configHome = "/home/dodwmd";
-      logs = {
-        save = true;
-        path = "/tmp/dms-greeter.log";
+    services = {
+      displayManager.autoLogin.enable = false;
+
+      displayManager.dms-greeter = {
+        enable = true;
+        compositor.name = "niri";
+        configHome = "/home/dodwmd";
+        logs = {
+          save = true;
+          path = "/tmp/dms-greeter.log";
+        };
       };
-    };
 
-    greetd.settings = {
-      initial_session = {
-        user = "dodwmd";
-        command = "niri-session";
+      greetd.settings = {
+        initial_session = {
+          user = "dodwmd";
+          command = "niri-session";
+        };
       };
     };
   };

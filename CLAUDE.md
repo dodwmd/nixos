@@ -10,14 +10,23 @@ This is a NixOS configuration repository forked from [linuxmobile/kaku](https://
 
 ### Using the Makefile (Recommended)
 
-```bash
-# Build and switch configuration
-make switch                    # Default: exodus
-make switch HOST=k3s-master-01 # Specific host
-make switch HOST=nexus
+**Important**: `make switch`, `make test`, and `make boot` enforce that you run them ON the target host.
+For remote hosts, use `make remote-rebuild` (run from exodus).
 
-# Other operations
-make build HOST=exodus         # Build without switching
+```bash
+# Deploy to local host (must run ON that host)
+make switch                    # Default: exodus (run on exodus)
+
+# Deploy to remote hosts (run from exodus)
+make remote-rebuild HOST=nexus
+make remote-rebuild HOST=k3s-master-01
+make remote-rebuild HOST=k3s-worker-01 TARGET=192.168.1.x  # explicit IP if needed
+
+# Build only (no activation, can run anywhere)
+make build HOST=exodus
+make build HOST=nexus
+
+# Other local operations (must run ON the target host)
 make test HOST=exodus          # Test without bootloader update
 make boot HOST=exodus          # Set as boot default
 make diff HOST=exodus          # Show what would change
@@ -252,6 +261,7 @@ All services configured in `system/services/media/`:
    ```
 6. Add host to `hosts/default.nix` in `nixosConfigurations`
 7. Build: `make build HOST=new-host`
+8. Deploy: `make remote-rebuild HOST=new-host` (from exodus)
 
 ### Modifying System Configuration
 
@@ -281,8 +291,36 @@ All services configured in `system/services/media/`:
 ### Working with Secrets
 
 - Uses agenix for secret management
-- Config in `.agenix.nix`
-- Secrets stored in `secrets/`
+- Config in `.agenix.nix` — maps secret files to recipient public keys
+- Secrets stored in `secrets/` as age-encrypted files (`.age` extension)
+- `pkgs.age` is installed on nexus (and should be on any host where secrets are managed)
+
+#### Encrypting a new secret
+
+```bash
+# Encrypt a file for the recipients defined in .agenix.nix
+age -R /path/to/recipient-pubkey.pub -o secrets/mysecret.age plaintext.txt
+
+# Or encrypt inline (pipe input, Ctrl+D to finish)
+age -R ~/.ssh/id_ed25519.pub -o secrets/mysecret.age
+```
+
+#### Decrypting a secret
+
+```bash
+# Decrypt using your SSH private key (age supports SSH keys)
+age -d -i ~/.ssh/id_ed25519 -o plaintext.txt secrets/mysecret.age
+
+# Or decrypt to stdout
+age -d -i ~/.ssh/id_ed25519 secrets/mysecret.age
+```
+
+#### Adding a new secret to agenix
+
+1. Encrypt the secret: `age -R <pubkey> -o secrets/newsecret.age`
+2. Add entry to `.agenix.nix` mapping the file to its recipient keys
+3. Reference in NixOS config: `age.secrets.newsecret.file = ./secrets/newsecret.age;`
+4. Access in modules via `config.age.secrets.newsecret.path`
 
 ## Important Files to Check Before Changes
 

@@ -1,6 +1,9 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
+  options.homelab.tdarrNode.enable = lib.mkEnableOption "tdarr node on this host";
+
+  config = lib.mkIf config.homelab.tdarrNode.enable {
   # Create media user/group matching nexus media stack (UID/GID 3000)
   users.users.media = {
     uid = 3000;
@@ -81,4 +84,5 @@
     "d /tmp/tdarr-transcode-exodus 0755 3000 3000 -"
     "d /home/dodwmd/.config/tdarr-node 0755 3000 3000 -"
   ];
+  };
 }

@@ -78,4 +78,20 @@
   "Mod+Shift+Ctrl+Left".move-column-to-monitor-left = {};
   "Mod+Shift+Ctrl+Right".move-column-to-monitor-right = {};
   "Ctrl+Alt+BackSpace".spawn._args = ["${pkgs.systemd}/bin/systemctl" "--user" "restart" "niri"];
+  # Extra keys above numpad - Spotify controls
+  "XF86Tools" = {
+    spawn._args = ["sh" "-c" "${pkgs.niri}/bin/niri msg -j windows | ${pkgs.jq}/bin/jq -re '[.[] | select(.app_id == \"brave-browser\")][0].id' | xargs -I{} ${pkgs.niri}/bin/niri msg action focus-window --id {}"];
+  };
+  "XF86Launch5" = {
+    _props.allow-when-locked = true;
+    spawn._args = ["${pkgs.playerctl}/bin/playerctl" "--player=spotify" "previous"];
+  };
+  "XF86Launch6" = {
+    _props.allow-when-locked = true;
+    spawn._args = ["${pkgs.playerctl}/bin/playerctl" "--player=spotify" "next"];
+  };
+  "XF86Launch7" = {
+    _props.allow-when-locked = true;
+    spawn._args = ["${pkgs.playerctl}/bin/playerctl" "--player=spotify" "play-pause"];
+  };
 }
