@@ -10,7 +10,7 @@
   xdg.configFile = {
     "fish/config.fish" = {
       text = ''
-        for secret in discordo openrouter github twt context7 exa obs
+        for secret in discordo openrouter github twt
           if test -f /run/agenix/$secret
             set -l val (cat /run/agenix/$secret)
             set -l up (string upper $secret)
@@ -18,10 +18,6 @@
               case discordo
                 set -gx DISCORDO_TOKEN $val
                 set -gx OXICORD_TOKEN $val
-              case openrouter context7 exa
-                set -gx "$up"_API_KEY $val
-              case obs
-                set -gx OBS_WEBSOCKET_URL $val
               case '*'
                 set -gx "$up"_TOKEN $val
             end
@@ -30,8 +26,8 @@
 
         set -gx NIXPKGS_ALLOW_UNFREE 1
         set -gx NIXPKGS_ALLOW_INSECURE 1
-        set -gx EDITOR nvim
-        set -gx VISUAL nvim
+        set -gx EDITOR hx
+        set -gx VISUAL hx
 
         set -g fish_greeting
 
@@ -74,7 +70,7 @@
         set -g fish_color_search_match --background=normal
 
         # Plugin settings
-        set -Ux fifc_editor nvim
+        set -Ux fifc_editor hx
         set -U fifc_keybinding \cv
         set -g __done_min_cmd_duration 10000
       '';
@@ -131,36 +127,6 @@
 
     "fish/conf.d/aliases.fish" = {
       text = ''
-        alias cleanup="sudo nix-collect-garbage --delete-older-than 1d"
-        alias listgen="sudo nix-env -p /nix/var/nix/profiles/system --list-generations"
-        alias nixremove="nix-store --gc"
-        alias bloat="nix path-info -Sh /run/current-system"
-        alias cleanram="sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'"
-        alias trimall="sudo fstrim -va"
-        alias c="clear"
-        alias q="exit"
-        alias temp="cd /tmp/"
-        alias test-build="sudo nixos-rebuild test --flake .#aesthetic"
-        alias switch-build="sudo nixos-rebuild switch --flake .#aesthetic"
-        alias add="git add ."
-        alias commit="git commit"
-        alias push="git push"
-        alias pull="git pull"
-        alias diff="git diff --staged"
-        alias gcld="git clone --depth 1"
-        alias koji="meteor"
-        alias gitui="lazygit"
-        alias ls="eza --icons"
-        alias l="eza -lF --time-style=long-iso --icons"
-        alias ll="eza -h --git --icons --color=auto --group-directories-first -s extension"
-        alias tree="eza --tree --icons --tree"
-        alias cat="${pkgs.bat}/bin/bat --paging=never"
-        alias moon="${pkgs.curlMinimal}/bin/curl -s wttr.in/Moon"
-        alias weather="${pkgs.curlMinimal}/bin/curl -s wttr.in"
-        alias store-path="${pkgs.coreutils-full}/bin/readlink (${pkgs.which}/bin/which $argv)"
-        alias us="systemctl --user"
-        alias rs="sudo systemctl"
-        alias zed="zeditor"
       '';
     };
   };

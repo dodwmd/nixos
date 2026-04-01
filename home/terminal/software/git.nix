@@ -35,7 +35,7 @@ in {
       gpgSign = "true";
     };
     core = {
-      editor = "nvim";
+      editor = "hx";
       pager = "${pkgs.delta}/bin/delta";
       whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
       excludesFile = "${config.xdg.configHome}/${ignoreFile}";
@@ -108,7 +108,7 @@ in {
     user = {
       email = "bdiez19@gmail.com";
       name = "Braian A. Diez";
-      signingKey = "12A7433447C14B34";
+      signingKey = "3AD426ADCFBC06DE";
     };
   };
 

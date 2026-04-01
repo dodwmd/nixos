@@ -1,6 +1,6 @@
 let
-  linuxmobile = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMRwa1U0NMk4/mV5iFv7HjuuFQ6C5L1vD8r6klLXvpN0 bdiez19@gmail.com";
-  system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAaxvU13gr2OS84ldB5ubEg9iaXmlYquKE7hdM2lrZsE root@aesthetic";
+  linuxmobile = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII4yBZ4lp16p5JjKYdXovi3zrR4T+3IuRnh3prIUs1oZ bdiez19@gmail.com";
+  system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKCFIvfZjqyRQ1Jqb0wPcw8z/asqfhc93d81SxRHIhy root@aesthetic";
 in {
   "discordo.age".publicKeys = [
     linuxmobile
@@ -15,18 +15,6 @@ in {
     system
   ];
   "twt.age".publicKeys = [
-    linuxmobile
-    system
-  ];
-  "context7.age".publicKeys = [
-    linuxmobile
-    system
-  ];
-  "exa.age".publicKeys = [
-    linuxmobile
-    system
-  ];
-  "obs.age".publicKeys = [
     linuxmobile
     system
   ];

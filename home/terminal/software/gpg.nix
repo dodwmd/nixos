@@ -15,7 +15,7 @@ in {
     "${gpgConfigFile}".text = ''
       cert-digest-algo SHA512
       charset utf-8
-      default-key 12A7433447C14B34
+      default-key 3AD426ADCFBC06DE
       default-preference-list SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed
       fixed-list-mode
       keyid-format 0xlong

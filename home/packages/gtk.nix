@@ -7,6 +7,7 @@
     })
     gsettings-desktop-schemas
     xdg-user-dirs
+    adw-gtk3
   ];
 
   environment.sessionVariables = {

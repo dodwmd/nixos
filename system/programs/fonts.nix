@@ -15,6 +15,7 @@
 
       # nerdfonts
       nerd-fonts.symbols-only
+      cozette
 
       inputs.self.packages.${stdenv.hostPlatform.system}.apple-fonts
     ];

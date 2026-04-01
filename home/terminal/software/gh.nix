@@ -10,7 +10,7 @@ in {
   xdg.configFile."${configFile}".source = toYAML "config.yml" {
     version = 1;
     git_protocol = "https";
-    editor = "nvim";
+    editor = "hx";
     prompt = "enabled";
     prefer_editor_prompt = "disabled";
     pager = "less -FR";

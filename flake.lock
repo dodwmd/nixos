@@ -155,11 +155,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1774376761,
-        "narHash": "sha256-SOqSh7WOtCj6M7a+08AKLyk/Q5uyXXUxed7PyMhWqss=",
+        "lastModified": 1775048824,
+        "narHash": "sha256-3bkPK9V/O+8ThAlRBbsLvwnM7weq9zzX1Q3vfic6hv4=",
         "owner": "linuxmobile",
         "repo": "mynixpkgs",
-        "rev": "de2c7d657b4246cc81f566efde9721a36500db0b",
+        "rev": "20473cab7798c0f887acb677383372a12b0fe9d1",
         "type": "github"
       },
       "original": {
@@ -213,11 +213,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1773821835,
-        "narHash": "sha256-TJ3lSQtW0E2JrznGVm8hOQGVpXjJyXY2guAxku2O9A4=",
+        "lastModified": 1774709303,
+        "narHash": "sha256-D3Q07BbIA2KnTcSXIqqu9P586uWxN74zNoCH3h2ESHg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b40629efe5d6ec48dd1efba650c797ddbd39ace0",
+        "rev": "8110df5ad7abf5d4c0f6fb0f8f978390e77f9685",
         "type": "github"
       },
       "original": {

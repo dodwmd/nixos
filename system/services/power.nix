@@ -1,4 +1,8 @@
 {
+  inputs,
+  pkgs,
+  ...
+}: {
   services = {
     logind.settings.Login = {
       powerKey = "suspend";
@@ -6,7 +10,10 @@
       lidSwitchExternalPower = "lock";
     };
 
-    power-profiles-daemon.enable = true;
+    power-profiles-daemon = {
+      enable = true;
+      package = inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}.power-profiles-daemon;
+    };
 
     # battery info
     upower = {

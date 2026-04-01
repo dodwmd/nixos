@@ -33,11 +33,9 @@
       wiremix
       zfxtop
       opencode
-      obs-cmd
       gemini-cli
     ]
     ++ (with inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}; [
-      bmm
       nekot
       omm
       prs
