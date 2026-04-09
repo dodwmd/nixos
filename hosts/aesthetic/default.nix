@@ -44,7 +44,7 @@
 
   boot = {
     # load modules on boot
-    kernelPackages = lib.mkForce pkgs.cachyosKernels.linuxPackages-cachyos-latest;
+    kernelPackages = lib.mkForce pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v3;
     extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
     kernelModules = ["i2c-dev" "v4l2loopback"];
     kernelParams = [

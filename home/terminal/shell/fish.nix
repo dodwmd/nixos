@@ -18,6 +18,8 @@
               case discordo
                 set -gx DISCORDO_TOKEN $val
                 set -gx OXICORD_TOKEN $val
+              case openrouter context7 exa
+                set -gx "$up"_API_KEY $val
               case '*'
                 set -gx "$up"_TOKEN $val
             end

@@ -22,6 +22,14 @@
             ["bluez5.headset-profile"] = "a2dp-only"
           }
         '')
+        (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/90-mic-protect.conf" ''
+          access.rules = [
+            {
+              matches = [ { application.process.binary = "*" } ]
+              actions = { update-props = { default_permissions = "rx" } }
+            }
+          ]
+        '')
       ];
     };
 

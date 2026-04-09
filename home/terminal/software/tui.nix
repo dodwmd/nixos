@@ -14,6 +14,7 @@
       # misc
       libnotify
       fontconfig
+      fastfetch
 
       # utils
       dust
