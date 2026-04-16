@@ -4,8 +4,8 @@
   ...
 }: let
   browser = ["helium.desktop"];
-  imageViewer = ["swayimg.desktop"];
-  videoPlayer = ["mpv.desktop"];
+  imageViewer = ["org.gnome.Loupe.desktop"];
+  videoPlayer = ["io.github.celluloid_player.Celluloid.desktop"];
   audioPlayer = ["io.bassi.Amberol.desktop"];
 
   xdgAssociations = type: program: list:

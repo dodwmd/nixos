@@ -19,6 +19,14 @@
     gnome-control-center
     nautilus
     (papers.override {supportNautilus = true;})
+    pwvucontrol
+    (celluloid.override {youtubeSupport = true;})
+    loupe
+    packet
+    fractal
+    gnome-text-editor
+    amberol
+    inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}.camoverlay
 
     inkscape
     scrcpy

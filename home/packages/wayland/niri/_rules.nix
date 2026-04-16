@@ -1,7 +1,7 @@
 {
   window-rule = [
     {
-      # geometry-corner-radius._args = [20.0 20.0 20.0 20.0];
+      geometry-corner-radius._args = [20.0 20.0 20.0 20.0];
       clip-to-geometry = true;
       draw-border-with-background = false;
     }
@@ -149,6 +149,18 @@
     {
       match._props = {title = "Error";};
       open-floating = true;
+    }
+    {
+      match._props = {app-id = "io.github.didley.CamOverla";};
+      open-floating = true;
+      open-on-output = "HDMI-A-1";
+      default-window-height.fixed = 370;
+      default-column-width.fixed = 280;
+      default-floating-position._props = {
+        x = 15;
+        y = 402;
+        relative-to = "bottom-left";
+      };
     }
   ];
 

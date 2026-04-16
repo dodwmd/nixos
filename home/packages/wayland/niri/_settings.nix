@@ -81,13 +81,7 @@ in {
     background-color = "transparent";
     focus-ring.off = {};
     border = {
-      width = 0;
-      active-gradient._props = {
-        to = "#1C1C1C";
-        from = "#6d89a7";
-        angle = 45;
-        relative-to = "workspace-view";
-      };
+      width = 2;
     };
     shadow.off = {};
     preset-column-widths.proportion = [0.25 0.5 0.75 1.0];

@@ -25,14 +25,9 @@
       jq
       ps_mem
 
-      fum
       gtt
       meteor-git
       nix-search-tv
-      scope-tui
-      tuicam
-      wiremix
-      zfxtop
       opencode
       gemini-cli
     ]
