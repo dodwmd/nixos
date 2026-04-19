@@ -139,6 +139,21 @@ in
         tokenFile = "/etc/k3s/token";
       });
     
+    # Ensure CoreDNS runs 2 replicas for HA — one per worker node.
+    # k3s's addon watcher picks up files in the manifests directory and applies them.
+    system.activationScripts.k3s-coredns-ha = lib.stringAfter [ "var" ] ''
+      mkdir -p /var/lib/rancher/k3s/server/manifests
+      cat > /var/lib/rancher/k3s/server/manifests/coredns-ha.yaml << 'EOF'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coredns
+  namespace: kube-system
+spec:
+  replicas: 2
+EOF
+    '';
+
     # Create kubeconfig symlink for easier access
     system.activationScripts.k3s-kubeconfig = ''
       mkdir -p /root/.kube
