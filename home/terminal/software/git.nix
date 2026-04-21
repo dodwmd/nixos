@@ -108,7 +108,7 @@ in {
     user = {
       email = "bdiez19@gmail.com";
       name = "Braian A. Diez";
-      signingKey = "3AD426ADCFBC06DE";
+      signingKey = "9ABD37AFF5595070";
     };
   };
 

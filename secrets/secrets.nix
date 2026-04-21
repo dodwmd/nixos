@@ -1,6 +1,6 @@
 let
-  linuxmobile = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII4yBZ4lp16p5JjKYdXovi3zrR4T+3IuRnh3prIUs1oZ bdiez19@gmail.com";
-  system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKCFIvfZjqyRQ1Jqb0wPcw8z/asqfhc93d81SxRHIhy root@aesthetic";
+  linuxmobile = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFfUqEkUdemZZ7gbtiIkAFtB438pyzLT9nuv4RhjsniU bdiez19@gmail.com";
+  system = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFJSmKCQFaO8bvUqnVZgXKoRqcNBw+Q7sNuopYt9MSnp root@aesthetic";
 in {
   "discordo.age".publicKeys = [
     linuxmobile

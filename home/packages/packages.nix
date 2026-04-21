@@ -6,6 +6,7 @@
   users.users.linuxmobile.packages = with pkgs; [
     # messaging
     telegram-desktop
+    equibop
 
     # misc
     pciutils
