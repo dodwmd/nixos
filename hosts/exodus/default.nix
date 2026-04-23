@@ -180,14 +180,30 @@
   networking.hostName = "exodus";
 
   networking.networkmanager.ensureProfiles.profiles = {
-    TheInternet = {
+    "Ethernet" = {
       connection = {
-        id = "TheInternet";
+        id = "Ethernet";
+        type = "ethernet";
+        autoconnect-priority = 100;
+        interface-name = "eno1";
+      };
+      ipv4 = {
+        method = "auto";
+        route-metric = 100;
+      };
+      ipv6 = {
+        method = "auto";
+        route-metric = 100;
+      };
+    };
+    "The Internet" = {
+      connection = {
+        id = "The Internet";
         type = "wifi";
       };
       wifi = {
         mode = "infrastructure";
-        ssid = "TheInternet";
+        ssid = "The Internet";
       };
       wifi-security = {
         auth-alg = "open";

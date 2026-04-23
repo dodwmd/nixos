@@ -8,7 +8,7 @@
     networkmanager = {
       enable = true;
       dns = "default";  # Let NetworkManager handle DNS from DHCP
-      wifi.powersave = true;
+      wifi.powersave = false;
       plugins = with pkgs; [
         networkmanager-openvpn
       ];
