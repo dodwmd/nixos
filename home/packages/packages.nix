@@ -38,7 +38,7 @@
       '';
     }))
 
-    swww
+    awww
     openvpn
   ];
 }

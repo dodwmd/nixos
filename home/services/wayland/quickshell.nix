@@ -15,7 +15,7 @@
       gpu-screen-recorder
       gsettings-desktop-schemas
       material-symbols
-      swww
+      awww
       wl-clipboard
       wget
     ]
