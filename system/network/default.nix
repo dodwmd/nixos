@@ -12,15 +12,6 @@
       plugins = with pkgs; [
         networkmanager-openvpn
       ];
-      # Connectivity checking: marks a connection as "limited" if internet is
-      # unreachable even when link is up (e.g. switch uplink down), allowing
-      # NM to prefer connections that actually have internet.
-      extraConfig = ''
-        [connectivity]
-        uri=http://detectportal.firefox.com/success.txt
-        response=success
-        interval=20
-      '';
     };
 
     useDHCP = false;
