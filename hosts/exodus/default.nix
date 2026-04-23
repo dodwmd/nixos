@@ -179,6 +179,32 @@
 
   networking.hostName = "exodus";
 
+  networking.networkmanager.ensureProfiles.profiles = {
+    TheInternet = {
+      connection = {
+        id = "TheInternet";
+        type = "wifi";
+      };
+      wifi = {
+        mode = "infrastructure";
+        ssid = "TheInternet";
+      };
+      wifi-security = {
+        auth-alg = "open";
+        key-mgmt = "wpa-psk";
+        psk = "idontknow";
+      };
+      ipv4 = {
+        method = "auto";
+        route-metric = 700;
+      };
+      ipv6 = {
+        method = "auto";
+        route-metric = 700;
+      };
+    };
+  };
+
   # Override keyboard and locale for Australia
   console.keyMap = lib.mkForce "us";
   
@@ -318,6 +344,7 @@
     __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
     __GL_THREADED_OPTIMIZATIONS = "1";
     PROTON_ENABLE_NVAPI = "1";
+    PROTON_HIDE_NVIDIA_GPU = "0"; # Required for NVAPI/DLSS to work
   };
 
   # Additional systemd hardening
@@ -348,6 +375,9 @@
     winetricks
     steam-run
   ];
+
+  # Gamemode for CPU/GPU performance boost during gaming
+  programs.gamemode.enable = true;
 
   # nix-index-database configuration
   programs = {

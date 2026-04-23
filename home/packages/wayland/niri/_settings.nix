@@ -48,7 +48,7 @@ in {
 
   output = [
     {
-      _args = ["DP-1"];
+      _args = ["HDMI-A-1"];
       mode = "1920x1080@60.000";
       scale = 1.0;
       position._props = {
@@ -57,7 +57,7 @@ in {
       };
     }
     {
-      _args = ["HDMI-A-1"];
+      _args = ["DP-1"];
       mode = "1920x1080@60.000";
       scale = 1.0;
       position._props = {
