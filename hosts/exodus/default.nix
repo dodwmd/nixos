@@ -305,7 +305,7 @@
       powerManagement.finegrained = false;
       open = false; # Use proprietary driver for RTX 4080
       nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
     };
 
     graphics = {
