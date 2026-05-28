@@ -1,0 +1,81 @@
+{
+  description = "linuxmobile flake configuration based on hjem";
+
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux"];
+
+      imports = [./hosts ./pkgs];
+
+      perSystem = {
+        config,
+        pkgs,
+        ...
+      }: {
+        devShells = {
+          default = pkgs.mkShell {
+            packages = [pkgs.alejandra pkgs.git config.packages.repl];
+            name = "nixland";
+            DIRENV_LOG_FORMAT = "";
+          };
+        };
+        # Nix Formatter
+        formatter = pkgs.alejandra;
+      };
+    };
+
+  inputs = {
+    # global, so they can be `.follow`ed
+    systems.url = "github:nix-systems/default-linux";
+
+    flake-compat.url = "github:edolstra/flake-compat";
+
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # rest of inputs, alphabetical order
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
+    };
+
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    import-tree.url = "github:vic/import-tree";
+
+    mynixpkgs.url = "github:dodwmd/mynixpkgs";
+
+    nix-index-db = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    noctalia-shell = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+  };
+}

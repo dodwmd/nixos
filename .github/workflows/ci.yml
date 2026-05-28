@@ -1,0 +1,148 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  flake-check:
+    name: Flake Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v24
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v12
+        with:
+          name: nix-community
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+
+      - name: Check flake
+        run: nix flake check --all-systems
+
+  build-systems:
+    name: Build Systems
+    runs-on: ubuntu-latest
+    needs: flake-check
+    strategy:
+      fail-fast: false
+      matrix:
+        system:
+          - exodus
+          - k3s-master-01
+          - k3s-master-02
+          - k3s-worker-01
+          - k3s-worker-02
+          - k3s-worker-03
+          - nexus
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v24
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v12
+        with:
+          name: nix-community
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+
+      - name: Build ${{ matrix.system }}
+        run: |
+          echo "Building system: ${{ matrix.system }}"
+          nix build .#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel \
+            --print-build-logs \
+            --show-trace
+
+      - name: Check system closure size
+        run: |
+          CLOSURE_SIZE=$(nix path-info -S .#nixosConfigurations.${{ matrix.system }}.config.system.build.toplevel | awk '{print $2}')
+          echo "System closure size for ${{ matrix.system }}: $CLOSURE_SIZE bytes"
+          
+          # Convert to human readable
+          if command -v numfmt >/dev/null 2>&1; then
+            HUMAN_SIZE=$(echo $CLOSURE_SIZE | numfmt --to=iec-i --suffix=B)
+            echo "Human readable size: $HUMAN_SIZE"
+          fi
+
+  build-home-manager:
+    name: Build Home Manager Configurations
+    runs-on: ubuntu-latest
+    needs: flake-check
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - exodus@exodus
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v24
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v12
+        with:
+          name: nix-community
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          skipPush: true
+
+      - name: Build Home Manager ${{ matrix.config }}
+        run: |
+          echo "Building home-manager config: ${{ matrix.config }}"
+          nix build .#homeConfigurations."${{ matrix.config }}".activationPackage \
+            --print-build-logs \
+            --show-trace
+
+  summary:
+    name: Build Summary
+    runs-on: ubuntu-latest
+    needs: [flake-check, build-systems, build-home-manager]
+    if: always()
+    steps:
+      - name: Check results
+        run: |
+          echo "Flake check: ${{ needs.flake-check.result }}"
+          echo "Build systems: ${{ needs.build-systems.result }}"
+          echo "Build home-manager: ${{ needs.build-home-manager.result }}"
+          
+          if [[ "${{ needs.flake-check.result }}" != "success" ]]; then
+            echo "❌ Flake check failed"
+            exit 1
+          fi
+          
+          if [[ "${{ needs.build-systems.result }}" != "success" ]]; then
+            echo "❌ System builds failed"
+            exit 1
+          fi
+          
+          if [[ "${{ needs.build-home-manager.result }}" != "success" ]]; then
+            echo "❌ Home Manager builds failed"
+            exit 1
+          fi
+          
+          echo "✅ All checks passed!"
