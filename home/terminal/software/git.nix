@@ -8,6 +8,7 @@ in {
     delta
     gnupg
     git-lfs
+    gh
     peco
   ];
 
@@ -104,6 +105,9 @@ in {
       email = "1372930+dodwmd@users.noreply.github.com";
       name = "Michael Dodwell";
       signingKey = "0073269A0E6DEF0C";
+    };
+    "credential \"https://github.com\"" = {
+      helper = "!${pkgs.gh}/bin/gh auth git-credential";
     };
   };
 
