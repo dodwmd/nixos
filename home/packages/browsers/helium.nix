@@ -16,6 +16,5 @@
     '';
   };
 in {
-  users.users.linuxmobile.packages = [heliumWrapped];
-  environment.sessionVariables = chromiumFlags.sessionVariables;
+  users.users.dodwmd.packages = [heliumWrapped];
 }

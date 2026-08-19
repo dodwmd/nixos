@@ -1,13 +1,14 @@
 {pkgs, ...}: {
   networking = {
-    nameservers = ["1.1.1.1" "1.0.0.1"];
+    # Use DNS from DHCP instead of hardcoded Cloudflare
+    # nameservers = ["1.1.1.1" "1.0.0.1"];
 
     nftables.enable = true;
 
     networkmanager = {
       enable = true;
-      dns = "none";
-      wifi.powersave = true;
+      dns = "default";  # Let NetworkManager handle DNS from DHCP
+      wifi.powersave = false;
       plugins = with pkgs; [
         networkmanager-openvpn
       ];

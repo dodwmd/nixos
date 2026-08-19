@@ -79,9 +79,8 @@
     };
   };
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     twitch-hls-client
-    twitch-tui
     mpv
   ];
 

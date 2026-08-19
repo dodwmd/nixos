@@ -5,7 +5,7 @@
 }: let
   sshConfigFile = "ssh/config";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     openssh
   ];
 
@@ -29,17 +29,11 @@ in {
     Include ~/.ssh/config.d/*
   '';
 
-  environment.sessionVariables = {
-    SSH_AUTH_SOCK = "${config.xdg.runtimeDir}/gnupg/S.gpg-agent.ssh";
+  # Enable SSH agent system-wide
+  programs.ssh = {
+    startAgent = true;
+    agentTimeout = "1h";
   };
 
-  systemd.user.services.ssh-agent = {
-    description = "SSH agent service";
-    wantedBy = ["default.target"];
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = "${pkgs.openssh}/bin/ssh-agent -D -a ${config.xdg.runtimeDir}/ssh-agent.socket";
-      Restart = "on-failure";
-    };
-  };
+  # SSH_AUTH_SOCK is managed by programs.ssh.startAgent above
 }

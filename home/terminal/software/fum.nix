@@ -1,7 +1,7 @@
 {pkgs, ...}: let
   configFile = "fum/config.jsonc";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     fum
     playerctl
   ];
@@ -11,7 +11,6 @@ in {
       "zen"
       "zen-browser"
       "mozilla zen"
-      "helium"
     ];
     debug = false;
     keybinds = {

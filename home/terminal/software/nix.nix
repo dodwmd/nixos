@@ -6,13 +6,14 @@
   direnvConfigFile = "direnv/direnv.toml";
   direnvRcFile = "direnv/direnvrc";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     alejandra
     deadnix
     statix
     self.packages.${stdenv.hostPlatform.system}.repl
     direnv
     nix-direnv
+    gnumake  # For Makefile support
   ];
 
   # Direnv configuration

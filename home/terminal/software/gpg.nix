@@ -6,7 +6,7 @@
   gpgConfigFile = "gnupg/gpg.conf";
   agentConfigFile = "gnupg/gpg-agent.conf";
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     gnupg
     pinentry-gnome3
   ];
@@ -15,7 +15,7 @@ in {
     "${gpgConfigFile}".text = ''
       cert-digest-algo SHA512
       charset utf-8
-      default-key 9ABD37AFF5595070
+      default-key 0073269A0E6DEF0C
       default-preference-list SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed
       fixed-list-mode
       keyid-format 0xlong
@@ -34,7 +34,6 @@ in {
       with-fingerprint
     '';
     "${agentConfigFile}".text = ''
-      enable-ssh-support
       enable-nushell-integration
       grab
       pinentry-program ${pkgs.pinentry-gnome3}/bin/pinentry
@@ -47,6 +46,5 @@ in {
 
   environment.sessionVariables = {
     GPG_TTY = "$(tty)";
-    SSH_AUTH_SOCK = "${config.xdg.runtimeDir}/gnupg/S.gpg-agent.ssh";
   };
 }

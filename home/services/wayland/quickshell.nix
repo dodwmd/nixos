@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   lib,
   ...
@@ -9,18 +8,15 @@
       accountsservice
       brightnessctl
       cava
-      cliphist
+      # cliphist  # Disabled - interferes with simple vim paste
       ddcutil
-      elogind
       glib
       gpu-screen-recorder
       gsettings-desktop-schemas
       material-symbols
-      swww
+      awww
       wl-clipboard
       wget
-      python3
-      imagemagick
     ]
     ++ (with pkgs.kdePackages; [
       qtbase
@@ -45,7 +41,7 @@
       qmlPaths="${lib.makeSearchPath "lib/qt-6/qml" quickshellDeps}:${lib.makeSearchPath "lib/qt-5/qml" quickshellDeps}"
 
 
-      for bin in ${pkgs.noctalia-qs}/bin/*; do
+      for bin in ${pkgs.quickshell}/bin/*; do
         name=$(basename "$bin")
         makeWrapper "$bin" "$out/bin/$name" \
           --prefix QML2_IMPORT_PATH : "$qmlPaths" \
@@ -53,7 +49,7 @@
       done
     '';
 in {
-  users.users.linuxmobile.packages =
+  users.users.dodwmd.packages =
     [
       quickshellWrapped
     ]

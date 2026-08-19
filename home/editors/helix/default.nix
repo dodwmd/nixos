@@ -11,7 +11,6 @@
     nil
     tailwindcss-language-server
     vue-language-server
-    zls
 
     # Formatters
     alejandra
@@ -41,7 +40,7 @@
       done
     '';
 in {
-  users.users.linuxmobile.packages = [
+  users.users.dodwmd.packages = [
     helixWithLSP
   ];
 

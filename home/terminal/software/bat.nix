@@ -14,7 +14,7 @@ in {
     MANROFFOPT = "-c";
   };
 
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     bat
     manPager
   ];

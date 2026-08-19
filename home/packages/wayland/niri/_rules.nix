@@ -1,7 +1,7 @@
 {
   window-rule = [
     {
-      geometry-corner-radius._args = [20.0 20.0 20.0 20.0];
+      geometry-corner-radius._args = [12.0 12.0 12.0 12.0];
       clip-to-geometry = true;
       draw-border-with-background = false;
     }
@@ -33,17 +33,15 @@
     {
       match = [
         {_props = {app-id = "zen";};}
-        {_props = {app-id = "helium";};}
         {_props = {app-id = "firefox";};}
         {_props = {app-id = "chromium-browser";};}
         {_props = {app-id = "xdg-desktop-portal-gtk";};}
       ];
-      scroll-factor = 0.9;
+      scroll-factor = 0.6;
     }
     {
       match = [
         {_props = {app-id = "zen";};}
-        {_props = {app-id = "helium";};}
         {_props = {app-id = "firefox";};}
         {_props = {app-id = "chromium-browser";};}
         {_props = {app-id = "edge";};}
@@ -69,6 +67,37 @@
         y = 32;
         relative-to = "bottom-right";
       };
+    }
+    {
+      # Battle.net systray icon renders as a floating XWayland window under Wayland.
+      # Pin it small to the bottom-right so it stays accessible but out of the way.
+      match._props = {
+        app-id = "steam_app_default";
+        title = "^Battle.net$";
+      };
+      open-floating = true;
+      default-floating-position._props = {
+        x = 8;
+        y = 8;
+        relative-to = "bottom-right";
+      };
+      default-column-width.fixed = 32;
+      default-window-height.fixed = 32;
+    }
+    {
+      match._props = {
+        app-id = "Multiviewer";
+        title = "^Track Map$";
+      };
+      open-floating = true;
+      open-on-output = "HDMI-A-1";
+      default-floating-position._props = {
+        x = 1426;
+        y = 747;
+        relative-to = "top-right";
+      };
+      default-column-width.fixed = 490;
+      default-window-height.fixed = 330;
     }
     {
       match._props = {app-id = "pavucontrol";};
@@ -127,10 +156,6 @@
       open-floating = true;
     }
     {
-      match._props = {app-id = "swayimg";};
-      open-floating = true;
-    }
-    {
       match._props = {app-id = "pinentry";};
       open-floating = true;
     }
@@ -149,18 +174,6 @@
     {
       match._props = {title = "Error";};
       open-floating = true;
-    }
-    {
-      match._props = {app-id = "io.github.didley.CamOverla";};
-      open-floating = true;
-      open-on-output = "HDMI-A-1";
-      default-window-height.fixed = 370;
-      default-column-width.fixed = 280;
-      default-floating-position._props = {
-        x = 15;
-        y = 402;
-        relative-to = "bottom-left";
-      };
     }
   ];
 

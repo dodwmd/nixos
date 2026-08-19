@@ -7,10 +7,10 @@
   configFile = "foot/foot.ini";
   toINI = (pkgs.formats.ini {}).generate;
 in {
-  users.users.linuxmobile.packages = with pkgs; [foot libsixel];
+  users.users.dodwmd.packages = with pkgs; [foot libsixel];
   xdg.configFile."${configFile}".source = toINI "foot.ini" {
     main = {
-      font = "GT Pressura Mono Trial:size=9.5:fontfeatures=calt:fontfeatures=dlig:fontfeatures=fbarc:fontfeatures=liga,PragmataProMonoLiga Nerd Font:size=8.5";
+      font = "JetBrainsMono Nerd Font:size=14,Cozette:size=14";
       horizontal-letter-offset = 0;
       vertical-letter-offset = 0;
       pad = "15x6center";
@@ -26,7 +26,7 @@ in {
     };
     desktop-notifications.command = "${lib.getExe pkgs.libnotify} -a \${app-id} -i \${app-id} \${title} \${body}";
     scrollback = {
-      lines = 1000;
+      lines = 100000;
       multiplier = 3;
       indicator-position = "relative";
       indicator-format = "line";
@@ -47,8 +47,10 @@ in {
     colors-dark = {
       alpha = 1.0;
     };
-    colors-light = {
-      alpha = 1.0;
-    };
   };
+
+  # Noctalia default dark theme for foot
+  # Normally generated at runtime by noctalia-shell, but since it's disabled
+  # we provide a static version using the Noctalia-default color scheme.
+  xdg.configFile."foot/themes/noctalia".source = ./foot-noctalia-theme;
 }

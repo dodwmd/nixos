@@ -1,7 +1,7 @@
 {lib, ...}: {
   imports = [
     ./security.nix
-    ./users.nix
+    ./user-roles.nix
     ../nix
     ../programs/fish.nix
   ];
@@ -21,12 +21,12 @@
     };
   };
 
-  console.keyMap = "la-latin1";
+  console.keyMap = "us";
 
   # don't touch this
   system = {
     switch.enable = true;
-    stateVersion = lib.mkDefault "25.05";
+    stateVersion = lib.mkDefault "25.11";
   };
 
   time = {
@@ -40,4 +40,7 @@
     algorithm = "zstd";
     memoryPercent = 25;
   };
+
+  # Enable SSH globally to ensure user SSH key setup works
+  services.openssh.enable = lib.mkDefault true;
 }

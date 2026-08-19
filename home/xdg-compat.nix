@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.xdg;
-  username = "linuxmobile";
+  username = "dodwmd";
   fileType = lib.types.submodule {
     options = {
       text = lib.mkOption {
@@ -16,10 +16,10 @@
         type = lib.types.nullOr lib.types.path;
         default = null;
       };
-      mutable = lib.mkOption {
+      force = lib.mkOption {
         type = lib.types.bool;
-        default = false;
-        description = "If true, copy the file instead of symlinking, allowing the application to modify it";
+        default = true;
+        description = "Whether to force overwrite existing files (default: true since these are declaratively managed)";
       };
     };
   };
@@ -41,10 +41,6 @@
         type = lib.types.attrsOf fileType;
         default = {};
       };
-      homeFiles = lib.mkOption {
-        type = lib.types.attrsOf fileType;
-        default = {};
-      };
     };
   };
 
@@ -55,50 +51,27 @@
       else file.source;
     fullPath = "${baseDir}/${name}";
     parentDir = builtins.dirOf fullPath;
-  in
-    if file.mutable
-    then ''
-      mkdir -p "${parentDir}"
-      if [ -L "${fullPath}" ]; then
-        # Replace symlink with a copy
-        rm -f "${fullPath}"
-        cp "${target}" "${fullPath}"
-        chmod +w "${fullPath}"
-      elif [ -e "${fullPath}" ]; then
-        :
-      else
-        cp "${target}" "${fullPath}"
-        chmod +w "${fullPath}"
-      fi
-    ''
-    else ''
-      mkdir -p "${parentDir}"
-      if [ -L "${fullPath}" ]; then
-        current_target=$(readlink "${fullPath}")
-        if [ "$current_target" != "${target}" ]; then
-          rm -f "${fullPath}"
-          ln -s "${target}" "${fullPath}"
-        fi
-      elif [ -e "${fullPath}" ]; then
+  in ''
+    mkdir -p "${parentDir}"
+    if [ -e "${fullPath}" ] || [ -L "${fullPath}" ]; then
+      currentTarget=$(readlink -f "${fullPath}" 2>/dev/null || echo "")
+      newTarget=$(readlink -f "${target}" 2>/dev/null || echo "${target}")
+      if [ "$currentTarget" = "$newTarget" ]; then
+        : # already correct, skip
+      elif [ "${lib.boolToString file.force}" = "true" ]; then
+        echo "xdg-compat: replacing ${fullPath} -> ${target}"
         rm -f "${fullPath}"
         ln -s "${target}" "${fullPath}"
       else
-        ln -s "${target}" "${fullPath}"
+        echo "xdg-compat: WARNING: ${fullPath} exists and differs from managed source, set force=true to overwrite" >&2
       fi
-    '';
+    else
+      ln -s "${target}" "${fullPath}"
+    fi
+  '';
 in {
   options = {
     users.users = lib.mkOption {type = lib.types.attrsOf (lib.types.submodule userOpts);};
-    home = {
-      homeDirectory = lib.mkOption {
-        type = lib.types.path;
-        default = "/home/${username}";
-      };
-      file = lib.mkOption {
-        type = lib.types.attrsOf fileType;
-        default = {};
-      };
-    };
     xdg = {
       configHome = lib.mkOption {
         type = lib.types.path;
@@ -145,8 +118,10 @@ in {
       cacheFiles = cfg.cacheFile;
       dataFiles = cfg.dataFile;
       stateFiles = cfg.stateFile;
-      homeFiles = config.home.file;
     };
+
+    # Add user packages to system packages so they're actually installed
+    environment.systemPackages = config.users.users.${username}.packages or [];
 
     environment.sessionVariables = {
       XDG_CONFIG_HOME = cfg.configHome;
@@ -164,7 +139,6 @@ in {
               ++ (lib.mapAttrsToList (mkLinkScript cfg.cacheHome) userCfg.cacheFiles)
               ++ (lib.mapAttrsToList (mkLinkScript cfg.dataHome) userCfg.dataFiles)
               ++ (lib.mapAttrsToList (mkLinkScript cfg.stateHome) userCfg.stateFiles)
-              ++ (lib.mapAttrsToList (mkLinkScript config.home.homeDirectory) userCfg.homeFiles)
           )
           config.users.users
         )

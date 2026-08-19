@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     carapace
     carapace-bridge
     zsh

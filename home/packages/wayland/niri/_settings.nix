@@ -1,10 +1,12 @@
-_: let
-  pointer = "MacTahoe-dark-cursors";
+{pkgs, ...}: let
+  pointer = "Bibata-Original-Ice";
 in {
-  include = "noctalia.kdl";
+  # Don't include noctalia.kdl - use direct configuration instead
   environment = {
-    CLUTTER_BACKEND = "wayland";
-    DISPLAY = null;
+    # DISPLAY will be set automatically by niri's xwayland-satellite integration
+    # EGL_PLATFORM is explicitly unset to prevent Xwayland from trying to use EGL
+    # which causes crashes when EGL providers are not available
+    EGL_PLATFORM = null;
     MOZ_ENABLE_WAYLAND = "1";
     NIXOS_OZONE_WL = "1";
     QT_QPA_PLATFORM = "wayland;xcb";
@@ -14,19 +16,19 @@ in {
     WLR_NO_HARDWARE_CURSORS = "1";
     QT_QPA_PLATFORMTHEME = "qt6ct";
     GTK_IM_MODULE = "simple";
-    XDG_CURRENT_DESKTOP = "niri";
-    XDG_SESSION_DESKTOP = "niri";
   };
 
   spawn-at-startup = [
-    ["wl-paste" "--watch" "cliphist" "store"]
-    ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]
-    ["qs" "-c" "noctalia"]
-    ["dbus-update-activation-environment" "--systemd" "--all"]
+    # ["wl-paste" "--watch" "cliphist" "store"]  # Disabled - interferes with simple vim paste
+    # ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]  # Disabled - interferes with simple vim paste
+    ["${pkgs.wl-clip-persist}/bin/wl-clip-persist" "--clipboard" "primary"]
+    ["${pkgs.waybar}/bin/waybar"]
+    ["swayidle" "-w" "timeout" "600" "${pkgs.swaylock}/bin/swaylock -f -c 000000" "timeout" "1200" "niri msg action power-off-monitors" "before-sleep" "${pkgs.swaylock}/bin/swaylock -f -c 000000" "after-resume" "sleep 2; ${pkgs.swaylock}/bin/swaylock -f -c 000000"]
+    # xwayland-satellite is managed by systemd user service
   ];
 
   input = {
-    keyboard.xkb.layout = "latam";
+    keyboard.xkb.layout = "us";
     touchpad = {
       click-method = "button-areas";
       dwt = {};
@@ -47,7 +49,8 @@ in {
 
   output = [
     {
-      _args = ["eDP-1"];
+      _args = ["HDMI-A-1"];
+      mode = "1920x1080@60.000";
       scale = 1.0;
       position._props = {
         x = 0;
@@ -55,12 +58,12 @@ in {
       };
     }
     {
-      _args = ["HDMI-A-1"];
-      mode = "1920x1080";
+      _args = ["DP-1"];
+      mode = "1920x1080@60.000";
       scale = 1.0;
       position._props = {
-        x = 0;
-        y = -1080;
+        x = 1920;
+        y = 0;
       };
     }
   ];
@@ -73,7 +76,7 @@ in {
   gestures.hot-corners = {};
 
   cursor = {
-    xcursor-size = 24;
+    xcursor-size = 20;
     xcursor-theme = pointer;
   };
 

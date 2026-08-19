@@ -13,7 +13,12 @@
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
 
+      # Microsoft-compatible fonts (needed for PDFs and web content using Windows fonts)
+      liberation_ttf  # Free replacements for Arial, Times New Roman, Courier New
+      corefonts       # Actual Microsoft core fonts (Arial, Times New Roman, etc.)
+
       # nerdfonts
+      nerd-fonts.jetbrains-mono
       nerd-fonts.symbols-only
       cozette
 

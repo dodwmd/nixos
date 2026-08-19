@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(nix flake:*)",
+      "Bash(ssh nexus:*)",
+      "Bash(scp:*)"
+    ]
+  }
+}

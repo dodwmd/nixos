@@ -1,17 +1,14 @@
-{
-  config,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   configFile = "git/config";
   ignoreFile = "git/ignore";
   toINI = (pkgs.formats.ini {}).generate;
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     git
     delta
     gnupg
     git-lfs
+    gh
     peco
   ];
 
@@ -38,7 +35,6 @@ in {
       editor = "hx";
       pager = "${pkgs.delta}/bin/delta";
       whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
-      excludesFile = "${config.xdg.configHome}/${ignoreFile}";
     };
     delta = {
       features = "unobtrusive-line-numbers decorations";
@@ -106,9 +102,12 @@ in {
       gpgSign = "true";
     };
     user = {
-      email = "bdiez19@gmail.com";
-      name = "Braian A. Diez";
-      signingKey = "9ABD37AFF5595070";
+      email = "1372930+dodwmd@users.noreply.github.com";
+      name = "Michael Dodwell";
+      signingKey = "0073269A0E6DEF0C";
+    };
+    "credential \"https://github.com\"" = {
+      helper = "!${pkgs.gh}/bin/gh auth git-credential";
     };
   };
 
@@ -118,7 +117,5 @@ in {
     *result*
     .direnv
     node_modules
-    .opencode/
-    AGENTS.md
   '';
 }

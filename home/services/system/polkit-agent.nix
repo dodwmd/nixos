@@ -1,16 +1,15 @@
 {pkgs, ...}: {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     polkit_gnome
   ];
 
-  systemd.user.services.polkit-gnome = {
-    description = "GNOME PolicyKit Agent";
-    wantedBy = ["graphical-session.target"];
-    after = ["graphical-session.target"];
-    partOf = ["graphical-session.target"];
-
-    serviceConfig = {
-      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-    };
-  };
+  # Enable polkit system-wide
+  security.polkit.enable = true;
+  
+  # Create a script to start polkit agent manually
+  environment.systemPackages = with pkgs; [
+    (writeShellScriptBin "start-polkit-agent" ''
+      ${polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 &
+    '')
+  ];
 }

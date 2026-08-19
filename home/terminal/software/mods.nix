@@ -2,7 +2,7 @@
   configFile = "mods/mods.yml";
   toYAML = (pkgs.formats.yaml {}).generate;
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     mods
   ];
 
@@ -40,12 +40,12 @@ in {
           api-key = "";
           api-key-env = "OPENROUTER_API_KEY";
           models = {
-            "stepfun/step-3.5-flash:free" = {
-              aliases = ["stepfun"];
+            "kwaipilot/kat-coder-pro:free" = {
+              aliases = ["kat-coder"];
               max-input-chars = 256000;
             };
-            "nvidia/nemotron-3-super-120b-a12b:free" = {
-              aliases = ["nemotron"];
+            "openrouter/polaris-alpha" = {
+              aliases = ["polaris"];
               max-input-chars = 256000;
             };
             "deepseek/deepseek-chat-v3.1:free" = {
@@ -71,10 +71,6 @@ in {
             "moonshotai/kimi-k2:free" = {
               aliases = ["kimi"];
               max-input-chars = 33000;
-            };
-            "z-ai/glm-4.5-air:free" = {
-              aliases = ["glm"];
-              max-input-chars = 131000;
             };
           };
         };

@@ -3,15 +3,15 @@
   lib,
   ...
 }: let
-  browser = ["helium.desktop"];
-  imageViewer = ["org.gnome.Loupe.desktop"];
-  videoPlayer = ["io.github.celluloid_player.Celluloid.desktop"];
+  browser = ["brave-browser.desktop"];
+  imageViewer = ["lightview.desktop"];
+  videoPlayer = ["mpv.desktop"];
   audioPlayer = ["io.bassi.Amberol.desktop"];
 
   xdgAssociations = type: program: list:
     builtins.listToAttrs (map (e: {
         name = "${type}/${e}";
-        value = program;
+        value = builtins.head program;  # home-manager expects string, not list
       })
       list);
 
@@ -25,16 +25,16 @@
 
   associations =
     {
-      "application/pdf" = ["org.gnome.Papers.desktop"];
-      "application/zip" = ["org.gnome.FileRoller.desktop"];
-      "application/x-7z-compressed" = ["org.gnome.FileRoller.desktop"];
-      "application/x-rar-compressed" = ["org.gnome.FileRoller.desktop"];
-      "application/x-tar" = ["org.gnome.FileRoller.desktop"];
-      "application/gzip" = ["org.gnome.FileRoller.desktop"];
-      "text/html" = browser;
-      "text/plain" = ["org.gnome.TextEditor.desktop"];
-      "text/markdown" = ["org.gnome.TextEditor.desktop"];
-      "x-scheme-handler/chrome" = ["helium.desktop"];
+      "application/pdf" = "org.gnome.Papers.desktop";
+      "application/zip" = "org.gnome.FileRoller.desktop";
+      "application/x-7z-compressed" = "org.gnome.FileRoller.desktop";
+      "application/x-rar-compressed" = "org.gnome.FileRoller.desktop";
+      "application/x-tar" = "org.gnome.FileRoller.desktop";
+      "application/gzip" = "org.gnome.FileRoller.desktop";
+      "text/html" = builtins.head browser;
+      "text/plain" = "org.gnome.TextEditor.desktop";
+      "text/markdown" = "org.gnome.TextEditor.desktop";
+      "x-scheme-handler/chrome" = "brave-browser.desktop";
     }
     // image // video // audio // browserTypes;
 
@@ -49,22 +49,22 @@
     XDG_VIDEOS_DIR="$HOME/Videos"
   '';
 in {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     xdg-utils
     (writeShellScriptBin "xdg-terminal-exec" ''foot start "$@"'')
   ];
 
-  xdg = {
-    mime = {
-      enable = true;
-      defaultApplications = associations;
-    };
-    configFile."user-dirs.dirs".source = userDirsConfig;
-    configFile."mimeapps.list".text = ''
-      [Default Applications]
-      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${lib.concatStringsSep ";" v}") associations)}
-      [Added Associations]
-      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${lib.concatStringsSep ";" v}") associations)}
-    '';
-  };
+  # XDG MIME associations moved to system/programs/xdg.nix
+  # xdg = {
+  #   configFile."user-dirs.dirs".source = userDirsConfig;
+  #   configFile."mimeapps.list".text = ''
+  #     [Default Applications]
+  #     ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${v}") associations)}
+  #     
+  #     [Added Associations]
+  #     ${lib.concatStringsSep "\n" (lib.mapAttrsToList (k: v: "${k}=${v}") associations)}
+  #   '';
+  # };
+
+  environment.etc."xdg/user-dirs.dirs".source = userDirsConfig;
 }

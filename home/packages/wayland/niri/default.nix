@@ -1,21 +1,20 @@
 {
-  inputs,
   lib,
   pkgs,
   ...
 }: let
   toKDL = import ./_to-KDL.nix {inherit lib pkgs;};
-  settings = import ./_settings.nix {inherit lib pkgs;};
-  binds = import ./_binds.nix {inherit inputs pkgs;};
+  settings = import ./_settings.nix {inherit pkgs;};
+  binds = import ./_binds.nix {inherit pkgs;};
   rules = import ./_rules.nix;
 
   finalConfig = toKDL.generate "niri-config.kdl" (settings // {binds = binds;} // rules);
 in {
   environment.sessionVariables = {
-    NIRI_CONFIG = "$HOME/.config/niri/config.kdl";
+    NIRI_CONFIG = "/etc/niri/config.kdl";
   };
 
-  users.users.linuxmobile.packages = with pkgs; [niri];
+  users.users.dodwmd.packages = with pkgs; [niri swaylock swayidle slurp];
 
-  xdg.configFile."niri/config.kdl".text = builtins.readFile finalConfig;
+  environment.etc."niri/config.kdl".source = finalConfig;
 }

@@ -3,10 +3,10 @@
   pkgs,
   ...
 }: {
-  users.users.linuxmobile.packages = with pkgs; [
+  users.users.dodwmd.packages = with pkgs; [
     # messaging
     telegram-desktop
-    equibop
+    vesktop
 
     # misc
     pciutils
@@ -15,24 +15,19 @@
     imagemagick
     bun
 
+    fastfetch
+
     # gnome
+    dconf-editor
     file-roller
     gnome-control-center
+    gnome-text-editor
     nautilus
     (papers.override {supportNautilus = true;})
-    pwvucontrol
-    (celluloid.override {youtubeSupport = true;})
-    loupe
-    packet
-    fractal
-    gnome-text-editor
-    amberol
-    inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}.camoverlay
 
     inkscape
     scrcpy
-    android-tools
-    (inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}.multiviewer.overrideAttrs (old: {
+    (inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}.multiviewer.overrideAttrs (old: {
       buildInputs = (old.buildInputs or []) ++ [pkgs.makeWrapper];
       postInstall = ''
         wrapProgram $out/bin/multiviewer \
@@ -43,12 +38,7 @@
       '';
     }))
 
-    swww
+    awww
     openvpn
-    fprintd
-    kdePackages.qt6ct
-    libsForQt5.qt5ct
-    kdePackages.breeze
-    kdePackages.breeze.qt5
   ];
 }

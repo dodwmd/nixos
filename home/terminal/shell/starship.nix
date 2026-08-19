@@ -10,7 +10,7 @@ in {
     STARSHIP_CONFIG = "${config.xdg.configHome}/${configFile}";
     STARSHIP_LOG = "error";
   };
-  users.users.linuxmobile.packages = [pkgs.starship];
+  users.users.dodwmd.packages = [pkgs.starship];
   xdg.configFile = {
     "${configFile}".source = toTOML "starship.toml" {
       add_newline = true;
@@ -18,84 +18,36 @@ in {
       command_timeout = 500;
 
       format = ''
-        $status$username$hostname$directory$git_branch$git_status$cmd_duration$nix_shell
-        $character'';
+        $directory$git_branch$git_status$character
+      '';
 
-      status = {
-        disabled = false;
-        format = "[$symbol](bold $style) ";
-        symbol = "│";
-        success_symbol = "[│](bold white)";
-        style = "red";
-        map_symbol = false;
-        recognize_signal_code = false;
-        pipestatus = false;
+      os.disabled = true;
+      hostname.disabled = true;
+      
+      directory = {
+        truncation_length = 0;  # Don't truncate
+        truncate_to_repo = false;
+        format = "[$path]($style)";
+        style = "bold cyan";
+      };
+      
+      git_branch = {
+        format = " [$branch]($style)";
+        style = "bold purple";
       };
 
       character = {
-        format = "$symbol";
-        success_symbol = "[│](bold white) ";
-        error_symbol = "[│](bold red) ";
-        vicmd_symbol = "[│](bold green) ";
-      };
-
-      jobs.disabled = true;
-
-      username = {
-        format = "[$user]($style)@";
-        style_user = "bold yellow";
-        style_root = "bold red";
-        show_always = false;
-      };
-
-      hostname = {
-        format = "[$hostname]($style) ";
-        style = "bold yellow";
-        ssh_only = true;
-      };
-
-      directory = {
-        format = "[$path]($style)";
-        style = "cyan";
-        truncation_length = 1;
-        truncation_symbol = "";
-        home_symbol = "~";
-        repo_root_format = "[$repo_root]($repo_root_style)";
-        repo_root_style = "bold white";
-      };
-
-      git_branch = {
-        format = " [$branch]($style)";
-        style = "green";
-        symbol = "";
-      };
-
-      git_status = {
-        format = " [$all_status$ahead_behind]($style)";
-        style = "yellow";
-        untracked = "[?]";
-        modified = "[!]";
-        staged = "[+]";
-        deleted = "[x]";
-        renamed = "[»]";
-        stashed = "";
-        ahead = "[↑]";
-        behind = "[↓]";
-        diverged = "[↕]";
-      };
-
-      cmd_duration = {
-        format = " [$duration]($style)";
-        style = "yellow";
-        min_time = 2000;
-        show_milliseconds = true;
+        format = " $symbol";
+        success_symbol = "[❯](bold bright-green) ";
+        error_symbol = "[✗](bold bright-red) ";
+        vicmd_symbol = "[](bold yellow) ";
+        disabled = false;
       };
 
       nix_shell = {
         disabled = false;
         heuristic = false;
-        format = " [nix]($style)";
-        style = "bold blue";
+        format = "[   ](fg:bright-blue bold)";
         impure_msg = "";
         pure_msg = "";
         unknown_msg = "";
@@ -123,6 +75,7 @@ in {
       helm.disabled = true;
       battery.disabled = true;
       time.disabled = true;
+      cmd_duration.disabled = true;
     };
     "fish/conf.d/starship.fish".text = ''
       starship init fish | source

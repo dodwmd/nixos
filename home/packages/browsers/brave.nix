@@ -1,26 +1,17 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}: let
-  chromiumFlags = import ./_chromium-flags.nix;
-
-  bravePkg = inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system}.brave.override {
-    enableVideoAcceleration = true;
-    vulkanSupport = true;
-  };
-
+{pkgs, ...}: let
   braveWrapped = pkgs.symlinkJoin {
-    name = "brave-origin-wrapped";
-    paths = [bravePkg];
+    name = "brave-wrapped";
+    paths = [pkgs.brave];
     buildInputs = [pkgs.makeWrapper];
     postBuild = ''
       wrapProgram $out/bin/brave \
-        ${lib.concatMapStringsSep " \\\n        " (flag: "--add-flags \"${flag}\"") chromiumFlags.flags}
+        --add-flags "--ignore-gpu-blocklist" \
+        --add-flags "--enable-zero-copy" \
+        --add-flags "--ozone-platform-hint=auto" \
+        --add-flags "--enable-wayland-ime" \
+        --add-flags "--enable-features=VaapiVideoDecodeLinuxGL,VaapiVideoDecoder,WebRTCPipeWireCapturer,WaylandWindowDecorations"
     '';
   };
 in {
-  users.users.linuxmobile.packages = [braveWrapped];
-  environment.sessionVariables = chromiumFlags.sessionVariables;
+  users.users.dodwmd.packages = [braveWrapped];
 }

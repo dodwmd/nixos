@@ -17,11 +17,11 @@
 
 <p align="center"><img src="/assets/1.png" width=600px></p>
 
-<h1 align="center">芯 (Shin)</h1>
+<h2 align="center">革 | kaku - Homelab Edition</h2>
+
+> **🍴 Fork Notice**: This is a fork of [linuxmobile/kaku](https://github.com/linuxmobile/kaku) - an excellent NixOS configuration with Niri window manager. Massive kudos to [@linuxmobile](https://github.com/linuxmobile) for the amazing foundation! This fork extends the original desktop-focused setup with comprehensive homelab infrastructure management.
 
 ### ⚠ <sup><sub><samp>PLEASE RESPECT THE CREDITS IF YOU USE SOMETHING FROM MY DESKTOP/SETUP.</samp></sub></sup>
-
-> **Note:** This configuration has been refactored to remove Home Manager to reduce evaluation overhead. While projects like `hjem` and `hjem-rum` were considered, a pure NixOS approach was chosen for simplicity and performance.
 
 ---
 
@@ -36,15 +36,48 @@
 </a>
 
 - **Window Manager** • [Niri](https://github.com/YaLTeR/niri/)🎨 Scrolleable WM!
-- **Shell** • [Fish](https://fishshell.com/) 🐟 with
+- **Shell** • [Nu](https://www.nushell.sh/) 🐚 with
   [starship](https://github.com/starship/starship) Cross Shell Platform!
-- **Terminal** • [Foot](https://codeberg.org/dnkl/foot/) 💻 Is there something more minimal than this?
-- **Panel** • [Noctalia!](https://noctalia.dev/) 🍧 Beautiful and minimalist desktop shell
-- **File Manager** • [Yazi](https://github.com/sxyazi/yazi) 🔖 Rustacean File Manager!
-- **GUI Basic-IDE** • [Helix](https://docs.helix-editor.com/) ✴️ Rust editor version!
-- **GTK Theme** • [GTK](https://github.com/linuxmobile/Colloid-gtk-theme) 🐾 My Fork of colloid
+- **Terminal** • [Ghostty](https://ghostty.org/) 💻 A powerful Hyped term
+- **Panel** • [DMS Quickshell](https://github.com/AvengeMedia/DankMaterialShell) 🍧 The Best GOAT DMS-Quickshell :3!
+- **File Manager** • [Yazi](https://github.com/sxyazi/yazi) 🔖 Rustacean File
+  Manager!
+- **GUI Basic-IDE** • [Helix](https://docs.helix-editor.com/) ✴️ Rustacean vim
+  version!
+- **GTK Theme** • [GTK](https://github.com/linuxmobile/Colloid-gtk-theme) 🐾 My
+  Fork of colloid
 
-## 🌼 <samp>INSTALLATION (NixOS)</samp>
+## � <samp>HOMELAB ADDITIONS</samp>
+
+This fork extends the original kaku configuration with comprehensive homelab infrastructure:
+
+### 🚀 **Kubernetes Cluster (K3s)**
+- **5-node cluster**: 2 masters + 3 workers with HA configuration
+- **Custom modules**: `homelab.k3s-master` and `homelab.k3s-worker` for easy deployment
+- **Network configuration**: Static IPs, proper DNS, and TLS SAN certificates
+
+### 🎬 **Media & Entertainment Stack**
+- **Jellyfin**: Media server with hardware acceleration support
+- ***arr Suite**: Sonarr, Radarr, Lidarr, Readarr, Bazarr for media management
+- **Jellyseerr**: Media request management
+- **Prowlarr**: Indexer management
+- **Tdarr**: Media transcoding and optimization
+
+### 🛠️ **Infrastructure Services**
+- **AdGuard Home**: Network-wide ad blocking and DNS management
+- **Netdata**: Real-time system monitoring and alerting
+- **NFS Server**: Centralized storage sharing
+- **Nginx Proxy**: Reverse proxy and load balancing
+- **Homepage**: Unified dashboard for all services
+- **ZFS**: Advanced storage management with snapshots
+
+### 🔧 **Development & Management**
+- **Makefile**: Streamlined NixOS operations for all hosts (`make switch HOST=k3s-master-01`, etc.)
+- **Enhanced profiles**: `exodus` profile with homelab-specific packages
+- **Monitoring scripts**: System health and performance tracking
+- **Multi-host support**: Easy management of all 7 system configurations
+
+## � <samp>INSTALLATION (NixOS)</samp>
 
 > Request:
 > [NixOs](https://channels.nixos.org/nixos-25.05/latest-nixos-minimal-x86_64-linux.iso)
@@ -52,7 +85,7 @@
 - Download ISO.
 
 ```bash
-wget -O https://channels.nixos.org/nixos-25.05/latest-nixos-minimal-x86_64-linux.iso
+wget -O https://channels.nixos.org/nixos-24.05/latest-nixos-minimal-x86_64-linux.iso
 ```
 
 - Boot Into the Installer.
@@ -93,13 +126,13 @@ mount /dev/disk/by-label/EFI /mnt/boot
 - Enable nixFlakes
 
 ```bash
-nix-shell -p git
+nix-shell -p nixVersions.stable git
 ```
 
-- Clone my Dotfiles
+- Clone this Fork
 
 ```bash
-git clone --depth 1 https://github.com/linuxmobile/shin /tmp/shin
+git clone --depth 1 https://github.com/dodwmd/nixos /mnt/etc/nixos
 ```
 
 - Generate your Own Nix Hardware Settings:
@@ -107,17 +140,17 @@ git clone --depth 1 https://github.com/linuxmobile/shin /tmp/shin
 ### ⚠ <sup><sub><samp>DON'T FORGET IT</samp></sub></sup>
 
 ```bash
-sudo nixos-generate-config --dir /tmp/shin
+sudo nixos-generate-config --dir /mnt/etc/nixos/hosts/aesthetic
 
 # Remove configuration.nix
-rm -rf /tmp/shin/configuration.nix
+rm -rf /mnt/etc/nixos/hosts/aesthetic/configuration.nix
 ```
 
 - Install Dotfiles Using Flake
 
 ```bash
 # Move to folder
-cd /tmp/shin
+cd mnt/etc/nixos
 
 # Install
 nixos-install --flake .#aesthetic
@@ -131,6 +164,16 @@ nixos-install --flake .#aesthetic
 
 ```bash
 passwd YourUser
+```
+
+- Install w/ Home-Manager the config
+
+```bash
+# For desktop/workstation use:
+home-manager switch --flake 'github:dodwmd/nixos#exodus@exodus'
+
+# For the original aesthetic profile:
+home-manager switch --flake 'github:dodwmd/nixos#linudev@aesthetic'
 ```
 
 ### 🌸 <samp>SCREENSHOTS</samp>
@@ -147,13 +190,30 @@ passwd YourUser
 
 If you're using this NixOS configuration flake locally, you can simplify the process of switching and managing your system using [`nh`](https://github.com/viperML/nh), a CLI helper for Nix Flakes.
 
-To switch your system configuration with `nh`, use:
+To switch your system configuration, you can use the Makefile or `nh`:
 
 ```bash
-NH_FLAKE=/tmp/shin/ nh os switch -- --extra-experimental-features 'nix-command flakes'
+# Using the Makefile (recommended):
+make switch                    # Build and switch exodus (default)
+make switch HOST=k3s-master-01 # Build and switch k3s-master-01
+make build HOST=nexus          # Build nexus without switching
+make hosts                     # List all available hosts
+
+# Using nh directly:
+nh os switch .#exodus          # Desktop/workstation
+nh os switch .#k3s-master-01   # K3s master node
+nh os switch .#k3s-worker-01   # K3s worker node
+nh os switch .#nexus           # Nexus host
 ```
 
-This avoids needing to type out the full `nixos-rebuild` command manually and provides a cleaner workflow when iterating on your setup.
+For home-manager configurations:
+
+```bash
+# For homelab desktop setup:
+nh home switch .#exodus@exodus
+```
+
+This avoids needing to type out the full `nixos-rebuild` or `home-manager` commands manually and provides a cleaner workflow when iterating on your setup.
 
 > 💡 Make sure `nh` is installed in your system environment or user profile.
 
@@ -163,6 +223,7 @@ This avoids needing to type out the full `nixos-rebuild` command manually and pr
 
 |     |     | Inspiration and Resources                   |     |     |
 | :-: | :-: | :------------------------------------------ | :-- | :-: |
+|     |  🍴 | **[linuxmobile](https://github.com/linuxmobile)** - **Original kaku author** |     |     |
 |     |  1  | [owl4ce](https://github.com/owl4ce)         |     |     |
 |     |  2  | [Ilham25](https://github.com/ilham25)       |     |     |
 |     |  3  | [Siduck](https://github.com/siduck)         |     |     |

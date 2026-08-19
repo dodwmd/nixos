@@ -2,7 +2,7 @@
   configFile = "atuin/config.toml";
   toTOML = (pkgs.formats.toml {}).generate;
 in {
-  users.users.linuxmobile.packages = [
+  users.users.dodwmd.packages = [
     pkgs.atuin
   ];
 

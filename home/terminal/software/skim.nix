@@ -18,11 +18,10 @@
       "$@"
   '';
 in {
-  users.users.linuxmobile.packages = with pkgs; [
-    skim
+  users.users.dodwmd.packages = with pkgs; [
     ripgrep
     eza
-    skimDefault
+    skimDefault  # This already includes skim with custom flags
     skimCd
   ];
 

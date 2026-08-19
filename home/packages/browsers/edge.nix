@@ -15,5 +15,5 @@
     '';
   };
 in {
-  users.users.linuxmobile.packages = [edgeWrapped];
+  users.users.dodwmd.packages = [edgeWrapped];
 }

@@ -39,19 +39,6 @@
       '';
     };
 
-  localSkill = {
-    name,
-    path,
-  }:
-    pkgs.stdenv.mkDerivation {
-      name = "opencode-skill-${name}";
-      src = path;
-      installPhase = ''
-        mkdir -p $out
-        cp SKILL.md $out/SKILL.md
-      '';
-    };
-
   skills = {
     technical-writing = fetchSkill {
       name = "technical-writing";
@@ -59,6 +46,15 @@
       repo = "agentic-qe";
       rev = "990aee4a6a747f2db0ef77a2f67d58462f61e608";
       path = ".claude/skills/technical-writing/SKILL.md";
+      hash = "sha256-PdIVhLp5/quigz325ZeG4NaWUgPsD3PgykSD61FFjLo=";
+    };
+
+    refactoring-patterns = fetchSkill {
+      name = "refactoring-patterns";
+      owner = "proffesor-for-testing";
+      repo = "agentic-qe";
+      rev = "990aee4a6a747f2db0ef77a2f67d58462f61e608";
+      path = ".claude/skills/refactoring-patterns/SKILL.md";
       hash = "sha256-PdIVhLp5/quigz325ZeG4NaWUgPsD3PgykSD61FFjLo=";
     };
 
@@ -80,6 +76,15 @@
       hash = "sha256-SleLxTUjM7HNHc78YklikuFwix2DPaTDIACUnsSQCrA=";
     };
 
+    architecture-patterns = fetchSkill {
+      name = "architecture-patterns";
+      owner = "wshobson";
+      repo = "agents";
+      rev = "e4dade12847a99d277d81192c2966e9b61c0d3f1";
+      path = "plugins/backend-development/skills/architecture-patterns/SKILL.md";
+      hash = "sha256-UiiJzLo8fJLMoCjh389v1P0Q4Nc36S8Po+fvm/j0gxo=";
+    };
+
     flutter-development = fetchSkill {
       name = "flutter-development";
       owner = "aj-geddes";
@@ -96,29 +101,6 @@
       rev = "451b604718d39fcc2c008d22e550bdf60c7115da";
       basePath = "essentials/skills/writing-documentation";
       hash = "sha256-7V1xG2FmzqWdnWmVV6WWKBAvY6QHWo+UKzh0Uu/Xg/w=";
-    };
-
-    changelog-generator = fetchSkill {
-      name = "changelog-generator";
-      owner = "composioHQ";
-      repo = "awesome-claude-skills";
-      rev = "362d35428562ad05d1faa1767abaf39d6e3a8e7a";
-      path = "changelog-generator/SKILL.md";
-      hash = "sha256-tSEO0h9J3lPVePFoy7A7c1K6umNNE/21/2RbaJD4Abc=";
-    };
-
-    readme-generator = fetchSkill {
-      name = "readme-generator";
-      owner = "Shpigford";
-      repo = "skills";
-      rev = "bdd6f84e38e460246079dd44755c587522ddf60e";
-      path = "readme/SKILL.md";
-      hash = "sha256-M6ZSxwrq9tGkxJi6BVoSRh6+fPlQPUmZVg595wldsNI=";
-    };
-
-    memory-aware-architect = localSkill {
-      name = "memory-aware-architect";
-      path = ./skills/memory-aware-architect;
     };
   };
 

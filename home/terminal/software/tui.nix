@@ -1,9 +1,10 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }: {
-  users.users.linuxmobile.packages = with pkgs;
+  users.users.dodwmd.packages = with pkgs;
     [
       # archives
       zip
@@ -14,7 +15,6 @@
       # misc
       libnotify
       fontconfig
-      fastfetch
 
       # utils
       dust
@@ -24,17 +24,29 @@
       killall
       jq
       ps_mem
+      inshellisense
 
+      fum
       gtt
       meteor-git
       nix-search-tv
-      opencode
-      gemini-cli
+      reddit-tui
+      scope-tui
+      tuicam
+      wiremix
+      zfxtop
     ]
-    ++ (with inputs.mynixpkgs.packages.${stdenv.hostPlatform.system}; [
-      nekot
-      omm
-      prs
-      pi-coding-agent
-    ]);
+    ++ (let
+      mynixpkgs = inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system};
+    in
+      lib.filter (pkg: pkg != null) [
+        (mynixpkgs.bmm or null)
+        (mynixpkgs.dawn or null)
+        (mynixpkgs.dfft or null)
+        (mynixpkgs.lightview or null)
+        (mynixpkgs.nekot or null)
+        (mynixpkgs.omm or null)
+        (mynixpkgs.orchat or null)
+        (mynixpkgs.prs or null)
+      ]);
 }
