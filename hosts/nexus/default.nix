@@ -1,5 +1,51 @@
 { config, lib, pkgs, modulesPath, ... }:
 
+let
+  # Authelia forward-auth for nexus's standalone nginx (services.nginx, not
+  # k8s ingress-nginx). nexus isn't part of the k3s cluster, so Authelia is
+  # reached over its public hostname rather than an in-cluster service name.
+  # See ~/code/homelab/k3s/apps/authelia for the Authelia deployment itself.
+  autheliaAuthRequestConfig = ''
+    auth_request /internal/authelia/authz;
+
+    auth_request_set $user $upstream_http_remote_user;
+    auth_request_set $groups $upstream_http_remote_groups;
+    auth_request_set $name $upstream_http_remote_name;
+    auth_request_set $email $upstream_http_remote_email;
+
+    proxy_set_header Remote-User $user;
+    proxy_set_header Remote-Groups $groups;
+    proxy_set_header Remote-Name $name;
+    proxy_set_header Remote-Email $email;
+
+    auth_request_set $redirection_url $upstream_http_location;
+    error_page 401 =302 $redirection_url;
+  '';
+
+  autheliaInternalLocation = {
+    extraConfig = ''
+      internal;
+      resolver 192.168.1.1 valid=30s;
+      set $upstream_authelia https://auth.home.dodwell.us/api/authz/auth-request;
+      proxy_pass $upstream_authelia;
+
+      # Required so the (SNI-routed) k3s ingress-nginx sends us Authelia's
+      # vhost instead of whatever the default backend happens to be.
+      proxy_ssl_server_name on;
+
+      proxy_set_header X-Original-Method $request_method;
+      proxy_set_header X-Original-URL $scheme://$host$request_uri;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Content-Length "";
+      proxy_set_header Connection "";
+
+      proxy_pass_request_body off;
+      proxy_next_upstream error timeout invalid_header http_500 http_502 http_503;
+      proxy_redirect http:// $scheme://;
+      proxy_http_version 1.1;
+    '';
+  };
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -136,7 +182,7 @@
     enable = true;
     email = "michael@dodwell.us";
     dnsProvider = "cloudflare";
-    credentialsFile = "/var/lib/acme/cloudflare-credentials";
+    credentialFiles."CF_DNS_API_TOKEN_FILE" = "/var/lib/acme/cloudflare-dns-api-token";
     
     virtualHosts = {
       "sonarr.home.dodwell.us" = {
@@ -149,7 +195,8 @@
           proxy_buffer_size 256k;
           proxy_busy_buffers_size 512k;
           client_max_body_size 0;
-        '';
+        '' + autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "radarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:7878";
@@ -161,26 +208,50 @@
           proxy_buffer_size 256k;
           proxy_busy_buffers_size 512k;
           client_max_body_size 0;
-        '';
+        '' + autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "prowlarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:9696";
+        extraConfig = autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "lidarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:8686";
+        extraConfig = autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "readarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:8787";
+        extraConfig = autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "bazarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:6767";
+        extraConfig = autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "tdarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:8265";
+        extraConfig = autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "download.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:6880";
+        # Pre-seed AriaNg's localStorage (on a browser's first visit only) with all
+        # 4 aria2 RPC backends, routed same-origin through the /jsonrpc/* locations
+        # below, so a fresh browser never needs the RPC settings entered by hand.
+        extraConfig = ''
+          proxy_set_header Accept-Encoding "";
+          sub_filter_types text/html;
+          sub_filter_once on;
+          sub_filter '<head>' '<head><script>(function(){try{if(localStorage.getItem("AriaNg.Options")){return;}var mk=function(id,alias,secret){return {rpcId:id,rpcAlias:alias,rpcHost:"download.home.dodwell.us",rpcPort:"443",rpcInterface:"jsonrpc/"+id,protocol:"https",httpMethod:"POST",rpcRequestHeaders:"",secret:btoa(secret)};};var servers=[mk("radarr","Radarr","aria2-radarr-secret"),mk("sonarr","Sonarr","aria2-sonarr-secret"),mk("lidarr","Lidarr","aria2-lidarr-secret"),mk("readarr","Readarr","aria2-readarr-secret")];var primary=servers[0];var options={rpcAlias:primary.rpcAlias,rpcHost:primary.rpcHost,rpcPort:primary.rpcPort,rpcInterface:primary.rpcInterface,protocol:primary.protocol,httpMethod:primary.httpMethod,rpcRequestHeaders:primary.rpcRequestHeaders,secret:primary.secret,extendRpcServers:servers.slice(1)};localStorage.setItem("AriaNg.Options",JSON.stringify(options));}catch(e){}})();</script>';
+        '' + autheliaAuthRequestConfig;
+        # Only the AriaNg UI itself ("/") is gated. /jsonrpc/* stays open so
+        # Radarr/Sonarr/etc's own programmatic RPC calls, and AriaNg's
+        # in-page RPC calls after login, don't get blocked by auth_request.
         extraLocations = {
+          "/internal/authelia/authz" = autheliaInternalLocation;
           "/jsonrpc/radarr" = {
             proxyPass = "http://127.0.0.1:6800/jsonrpc";
             proxyWebsockets = true;

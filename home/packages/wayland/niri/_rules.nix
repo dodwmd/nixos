@@ -100,6 +100,12 @@
       default-window-height.fixed = 330;
     }
     {
+      # gamescope launches with -f expecting exclusive fullscreen; without this,
+      # niri leaves it tiled and the fullscreen-acquire negotiation flickers.
+      match._props = {title = "^HELLDIVERS.*";};
+      open-fullscreen = true;
+    }
+    {
       match._props = {app-id = "pavucontrol";};
       open-floating = true;
     }

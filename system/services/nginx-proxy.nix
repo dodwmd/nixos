@@ -21,10 +21,15 @@ in
       description = "DNS provider for ACME DNS-01 challenge";
     };
     
-    credentialsFile = mkOption {
-      type = types.str;
-      default = "/var/lib/acme/cloudflare-credentials";
-      description = "Path to DNS provider credentials file";
+    credentialFiles = mkOption {
+      type = types.attrsOf types.path;
+      default = {};
+      example = { "CF_DNS_API_TOKEN_FILE" = "/var/lib/acme/cloudflare-dns-api-token"; };
+      description = ''
+        DNS provider credential files, keyed by the lego env var name
+        (must end in "_FILE" or "_PATH"). Each file must contain only the
+        raw credential value, not a KEY=VALUE line.
+      '';
     };
     
     virtualHosts = mkOption {
@@ -60,7 +65,7 @@ in
       defaults = {
         email = cfg.email;
         dnsProvider = cfg.dnsProvider;
-        credentialsFile = cfg.credentialsFile;
+        credentialFiles = cfg.credentialFiles;
         dnsResolver = "1.1.1.1:53";
       };
     };
