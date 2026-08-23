@@ -11,12 +11,38 @@
     ../../system/services/tdarr-node.nix
     ../../system/services/ollama.nix
     ../../system/hardware/bluetooth.nix
-    ../../home/profiles/desktop/packages.nix
-    ../../home/packages/wayland/niri
+    ../../home/profiles/desktop
+    # niri itself comes from the blanket "${home}" module in hosts/default.nix
+    # (home/packages/wayland/niri, swept in via home/default.nix's import-tree)
   ];
 
   # Allow unfree packages (needed for NVIDIA drivers)
   nixpkgs.config.allowUnfree = true;
+
+  # Two 1080p monitors side by side (HDMI left, DP right)
+  homelab.niri.outputs = [
+    {
+      _args = ["HDMI-A-1"];
+      mode = "1920x1080@60.000";
+      scale = 1.0;
+      position._props = {
+        x = 0;
+        y = 0;
+      };
+    }
+    {
+      _args = ["DP-1"];
+      mode = "1920x1080@60.000";
+      scale = 1.0;
+      position._props = {
+        x = 1920;
+        y = 0;
+      };
+    }
+  ];
+
+  # Monitor the Multiviewer track-map window rule pins to (see _rules.nix)
+  homelab.niri.primaryOutput = "HDMI-A-1";
 
   # Enable desktop user
   homelab.users.desktopUser.enable = true;
@@ -338,9 +364,12 @@
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
     
-    # Unset EGL_PLATFORM to prevent Xwayland from trying to use EGL
-    # which causes crashes when EGL providers are not available
-    EGL_PLATFORM = lib.mkForce null;
+    # Force the Wayland EGL platform for native clients. XWayland itself never
+    # touches EGL regardless of this var since it's built with -Dglamor=false
+    # (see overlay below); leaving this unset let libEGL fall back to the X11
+    # platform (because xwayland-satellite sets $DISPLAY globally), which has
+    # no EGL provider and crashed native GTK4/EGL apps like Ghostty.
+    EGL_PLATFORM = lib.mkForce "wayland";
     
     # Gaming performance optimizations
     __GL_SHADER_DISK_CACHE = "1";

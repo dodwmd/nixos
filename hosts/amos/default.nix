@@ -8,13 +8,20 @@
     ./hardware-configuration.nix
     ./disko.nix
     ../../system/hardware/bluetooth.nix
-    ../../home/profiles/laptop/packages.nix
-    ../../home/packages/wayland/niri
+    ../../home/profiles/laptop
+    # niri itself comes from the blanket "${home}" module in hosts/default.nix
+    # (home/packages/wayland/niri, swept in via home/default.nix's import-tree)
   ];
 
   nixpkgs.config.allowUnfree = true;
 
   homelab.users.desktopUser.enable = true;
+
+  # Internal panel output left unconfigured (empty list default) so niri
+  # auto-detects it at its preferred mode/scale rather than risking a wrong
+  # hardcoded resolution/scale. Run `niri msg outputs` after first login and
+  # fill in homelab.niri.outputs here (see hosts/exodus/default.nix for the
+  # attrset shape) if you want it pinned explicitly, e.g. for HiDPI scaling.
 
   # ── Kernel ─────────────────────────────────────────────────────────────
   boot = {

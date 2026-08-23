@@ -21,6 +21,7 @@
     evince        # PDF/document viewer
     xournalpp     # PDF annotation and signing
     gsimplecal    # Calendar popup for waybar
+    playerctl     # Media key bindings (niri) + CLI
     
     # XWayland support for niri is managed via systemd service
     

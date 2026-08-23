@@ -24,8 +24,13 @@ in {
       max_height = 900;
       cache_dir = "${config.xdg.cacheHome}";
     };
-    flavor = {
-      dark = "noctalia";
-    };
+    # flavor.dark previously pointed at "noctalia", a flavor that was meant to
+    # be generated at runtime by noctalia-shell (disabled — see
+    # home/services/wayland/noctalia.nix). No matching
+    # ~/.config/yazi/flavors/noctalia.yazi/ was ever checked in, so this
+    # resolved to nothing; left unset to use yazi's built-in default instead
+    # of a dangling reference. Reintroduce once a real noctalia.yazi flavor
+    # is authored (yazi's flavor.toml schema needs verifying against a live
+    # yazi, unlike helix's theme format).
   };
 }

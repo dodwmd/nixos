@@ -1,4 +1,4 @@
-{
+{primaryOutput ? null}: {
   window-rule = [
     {
       geometry-corner-radius._args = [12.0 12.0 12.0 12.0];
@@ -90,7 +90,6 @@
         title = "^Track Map$";
       };
       open-floating = true;
-      open-on-output = "HDMI-A-1";
       default-floating-position._props = {
         x = 1426;
         y = 747;
@@ -99,6 +98,25 @@
       default-column-width.fixed = 490;
       default-window-height.fixed = 330;
     }
+  ]
+  ++ (
+    # Pin the track map to a specific monitor only on hosts that declare one
+    # (homelab.niri.primaryOutput) — hardcoding "HDMI-A-1" broke this rule on
+    # hosts without that output (e.g. amos), since niri has no fallback for
+    # an open-on-output name that doesn't exist.
+    if primaryOutput != null
+    then [
+      {
+        match._props = {
+          app-id = "Multiviewer";
+          title = "^Track Map$";
+        };
+        open-on-output = primaryOutput;
+      }
+    ]
+    else []
+  )
+  ++ [
     {
       # gamescope launches with -f expecting exclusive fullscreen; without this,
       # niri leaves it tiled and the fullscreen-acquire negotiation flickers.
@@ -159,6 +177,13 @@
     }
     {
       match._props = {app-id = "org.kde.polkit-kde-authentication-agent-1";};
+      open-floating = true;
+    }
+    {
+      # polkit-gnome-authentication-agent-1 (the agent actually spawned, see
+      # spawn-at-startup) shows a dialog titled "Authenticate" rather than a
+      # distinct app-id.
+      match._props = {title = "Authenticate";};
       open-floating = true;
     }
     {

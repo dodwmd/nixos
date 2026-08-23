@@ -44,6 +44,12 @@ in {
     helixWithLSP
   ];
 
+  # Static "noctalia" theme (noctalia-shell is disabled — see
+  # home/services/wayland/noctalia.nix — so nothing generates this at
+  # runtime; without this file helix silently falls back to its default
+  # theme since "noctalia" isn't one of its bundled themes).
+  xdg.configFile."helix/themes/noctalia.toml".source = ./themes/noctalia.toml;
+
   xdg.configFile."${configFile}".source = toTOML "config.toml" {
     theme = "noctalia";
     editor = {

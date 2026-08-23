@@ -4,9 +4,10 @@ in {
   # Don't include noctalia.kdl - use direct configuration instead
   environment = {
     # DISPLAY will be set automatically by niri's xwayland-satellite integration
-    # EGL_PLATFORM is explicitly unset to prevent Xwayland from trying to use EGL
-    # which causes crashes when EGL providers are not available
-    EGL_PLATFORM = null;
+    # Force the Wayland EGL platform for native clients so they don't fall back
+    # to the X11 platform (which has no EGL provider, since XWayland is built
+    # with -Dglamor=false — see hosts/exodus/default.nix).
+    EGL_PLATFORM = "wayland";
     MOZ_ENABLE_WAYLAND = "1";
     NIXOS_OZONE_WL = "1";
     QT_QPA_PLATFORM = "wayland;xcb";
@@ -23,6 +24,10 @@ in {
     # ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]  # Disabled - interferes with simple vim paste
     ["${pkgs.wl-clip-persist}/bin/wl-clip-persist" "--clipboard" "primary"]
     ["${pkgs.waybar}/bin/waybar"]
+    # Polkit auth agent: installed (polkit-agent.nix) but never previously
+    # started, so graphical auth prompts (mount, NetworkManager, etc.) had
+    # nowhere to appear.
+    ["${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"]
     ["swayidle" "-w" "timeout" "600" "${pkgs.swaylock}/bin/swaylock -f -c 000000" "timeout" "1200" "niri msg action power-off-monitors" "before-sleep" "${pkgs.swaylock}/bin/swaylock -f -c 000000" "after-resume" "sleep 2; ${pkgs.swaylock}/bin/swaylock -f -c 000000"]
     # xwayland-satellite is managed by systemd user service
   ];
@@ -47,26 +52,7 @@ in {
 
   screenshot-path = "~/Pictures/Screenshots/Screenshot-from-%Y-%m-%d-%H-%M-%S.png";
 
-  output = [
-    {
-      _args = ["HDMI-A-1"];
-      mode = "1920x1080@60.000";
-      scale = 1.0;
-      position._props = {
-        x = 0;
-        y = 0;
-      };
-    }
-    {
-      _args = ["DP-1"];
-      mode = "1920x1080@60.000";
-      scale = 1.0;
-      position._props = {
-        x = 1920;
-        y = 0;
-      };
-    }
-  ];
+  # output is supplied per-host via homelab.niri.outputs (see hosts/*/default.nix)
 
   overview = {
     workspace-shadow.off = {};

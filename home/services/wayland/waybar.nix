@@ -1,4 +1,11 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
+  hasNvidia = lib.elem "nvidia" (config.services.xserver.videoDrivers or []);
+
   waybarConfig = {
     layer = "top";
     position = "top";
@@ -7,7 +14,10 @@
 
     modules-left = [];
     modules-center = ["clock"];
-    modules-right = ["cpu" "memory" "temperature" "custom/gpu" "tray"];
+    modules-right =
+      ["cpu" "memory" "temperature"]
+      ++ lib.optional hasNvidia "custom/gpu"
+      ++ ["tray"];
 
     clock = {
       format = "{:%a %b %d  %H:%M:%S}";
@@ -39,7 +49,11 @@
     };
 
     temperature = {
-      hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
+      # coretemp.0 is the Intel coretemp platform device path, which is stable
+      # across boots/driver updates (unlike the /sys/class/hwmon/hwmonN symlink
+      # index, which can shift and silently break a hardcoded hwmon-path).
+      hwmon-path-abs = "/sys/devices/platform/coretemp.0/hwmon";
+      input-filename = "temp1_input";
       critical-threshold = 80;
       format = "SYS {temperatureC}°C";
       format-critical = "SYS {temperatureC}°C ";
@@ -51,7 +65,7 @@
       icon-size = 16;
       spacing = 8;
     };
-
+  } // lib.optionalAttrs hasNvidia {
     "custom/gpu" = {
       exec = "${pkgs.bash}/bin/bash -c \"nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader,nounits | awk -F, '{printf \\\"GPU %s%% %d%%%s°C\\\", \\$1, (\\$2/\\$3)*100, \\$4}'\"";
       interval = 2;

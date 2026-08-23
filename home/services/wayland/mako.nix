@@ -1,8 +1,10 @@
 {pkgs, ...}: let
   makoConfig = ''
     # Position and size
+    # output intentionally unset: mako defaults to the currently focused
+    # output, which works across both the desktop (multi-monitor) and
+    # laptop (single-panel) hosts instead of a hardcoded monitor name.
     anchor=top-right
-    output=HDMI-A-1
     width=350
     height=150
     margin=10
