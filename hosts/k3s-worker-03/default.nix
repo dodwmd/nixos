@@ -46,6 +46,7 @@
     # instead of its real lease - corrupting Endpoints for anything
     # hostNetwork here (found via the CP-9971/chan_sip investigation).
     nodeIP = "192.168.1.32";
+    flannelIface = "enp4s0"; # flannel auto-detects independently of nodeIP
   };
 
 

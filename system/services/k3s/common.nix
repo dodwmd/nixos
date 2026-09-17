@@ -52,6 +52,18 @@ in
       default = null;
       description = "IP address for this node (auto-detected if null)";
     };
+
+    flannelIface = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = ''
+        Interface for flannel to bind. Flannel does its own address
+        auto-detection independent of nodeIP/--node-ip, which can pick up
+        a foreign VIP (e.g. kube-vip/metallb) if one lands on the same
+        interface - set this alongside nodeIP on any node where that
+        happens.
+      '';
+    };
     
     enableMetrics = mkOption {
       type = types.bool;

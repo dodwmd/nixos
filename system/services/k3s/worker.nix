@@ -81,6 +81,7 @@ in
             "--with-node-id"
           ]
           ++ (optional (config.homelab.k3s-cluster.nodeIP != null) "--node-ip=${config.homelab.k3s-cluster.nodeIP}")
+          ++ (optional (config.homelab.k3s-cluster.flannelIface != null) "--flannel-iface=${config.homelab.k3s-cluster.flannelIface}")
           ++ (map (label: "--node-label=${label}") cfg.nodeLabels)
           ++ (map (taint: "--node-taint=${taint}") cfg.nodeTaints)
           ++ (mapAttrsToList (k: v: "--kubelet-arg=${k}=${v}") (cfg.kubeletArgs // { "max-pods" = toString cfg.maxPods; }))
