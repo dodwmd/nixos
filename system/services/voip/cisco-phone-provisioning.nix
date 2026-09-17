@@ -36,7 +36,7 @@
     <callManager>
     <ports>
     <ethernetPhonePort>2000</ethernetPhonePort>
-    <sipPort>5060</sipPort>
+    <sipPort>${toString cfg.sipPort}</sipPort>
     <securedSipPort>5061</securedSipPort>
     </ports>
     <processNodeName>${cfg.asteriskAddr}</processNodeName>
@@ -205,7 +205,7 @@
     <callManager>
     <ports>
     <ethernetPhonePort>2000</ethernetPhonePort>
-    <sipPort>5060</sipPort>
+    <sipPort>${toString cfg.sipPort}</sipPort>
     </ports>
     <processNodeName>${cfg.asteriskAddr}</processNodeName>
     </callManager>
@@ -337,6 +337,18 @@ in {
       example = "192.168.1.202";
     };
 
+    sipPort = mkOption {
+      type = types.port;
+      default = 5060;
+      description = ''
+        Port the phone should register to on the Asterisk server.
+        Older third-party-SIP loads (e.g. the 9971's sip9971.9-2-2SR1-9)
+        don't support PJSIP's mandatory qop=auth digest challenges and
+        never authenticate against chan_pjsip on 5060; pointing them at
+        chan_sip on an alternate port (e.g. 5062) works around this.
+      '';
+    };
+
     domain = mkOption {
       type = types.str;
       default = "home.dodwell.us";
@@ -357,8 +369,8 @@ in {
 
     firmwareVersion = mkOption {
       type = types.str;
-      default = "SIP9971.9-2-2SR1-9";
-      description = "Firmware load identifier (matches .loads filename without extension)";
+      default = "sip9971.9-2-2SR1-9";
+      description = "Firmware load identifier (matches .loads filename without extension). Must match the case of the actual .loads file on disk in tftpRoot - Cisco's own manifests use lowercase 'sip', and the phone's TFTP GET is case-sensitive.";
     };
 
     phones = mkOption {

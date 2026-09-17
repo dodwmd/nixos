@@ -44,6 +44,7 @@
   homelab.voip.cisco-provisioning = {
     enable = true;
     asteriskAddr = "192.168.1.202";
+    sipPort = 5062; # chan_sip - see cisco-phone-provisioning.nix sipPort option
     phones = {
       "office" = {
         mac = "F47F35A342D1";

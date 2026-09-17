@@ -129,7 +129,7 @@ in
         7946
       ];
       allowedUDPPorts = [
-        8472 51820 51821 53 5060 7946
+        8472 51820 51821 53 5060 5062 7946
       ];
       trustedInterfaces = [ "cni0" "flannel.1" ];
     };
