@@ -40,7 +40,12 @@
   };
 
   homelab.k3s-cluster = {
-    # nodeIP will be auto-detected from DHCP
+    # Pinned: kube-vip's home-assistant VIP (192.168.1.206) lands on this
+    # node's same interface when elected leader, and k3s's DHCP-based
+    # auto-detection was picking that foreign VIP as this node's identity
+    # instead of its real lease - corrupting Endpoints for anything
+    # hostNetwork here (found via the CP-9971/chan_sip investigation).
+    nodeIP = "192.168.1.32";
   };
 
 
