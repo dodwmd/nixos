@@ -55,6 +55,10 @@
     <outboundProxyPort>5060</outboundProxyPort>
     <registerWithProxy>true</registerWithProxy>
     </sipProxies>
+    <sipRegistrarServer>${cfg.asteriskAddr}</sipRegistrarServer>
+    <authenticationRealm>${cfg.asteriskAddr}</authenticationRealm>
+    <authenticationName>${phone.extension}</authenticationName>
+    <authenticationPassword>@AUTH_PASSWORD_${mac}@</authenticationPassword>
     <sipCallFeatures>
     <cnfJoinEnabled>true</cnfJoinEnabled>
     <callForwardURI>x-serviceuri-cfwdall</callForwardURI>
@@ -140,6 +144,7 @@
     <dscpForAudio>184</dscpForAudio>
     <ringSettingBusyStationPolicy>0</ringSettingBusyStationPolicy>
     <ringSettingIdleStationPolicy>0</ringSettingIdleStationPolicy>
+    <dialTemplate>dialplan.xml</dialTemplate>
     </sipProfile>
     <commonProfile>
     <phonePassword></phonePassword>
@@ -216,20 +221,14 @@
     </Default>
   '';
 
-  # Basic dial plan template
+  # Dial plan template - modeled on a confirmed-working CP-9971/Asterisk
+  # example (simpler syntax than our earlier guess: no User= attribute,
+  # "." as a single-digit wildcard), adapted for our 4-digit extensions.
   dialplanConfig = ''
     <DIALTEMPLATE>
-    <TEMPLATE MATCH="0" Timeout="3" User="Phone" Rewrite="0"/>
-    <TEMPLATE MATCH="1000" Timeout="3" User="Phone" Rewrite="1000"/>
-    <TEMPLATE MATCH="1001" Timeout="3" User="Phone" Rewrite="1001"/>
-    <TEMPLATE MATCH="1002" Timeout="3" User="Phone" Rewrite="1002"/>
-    <TEMPLATE MATCH="1..." Timeout="3" User="Phone" Rewrite="1..."/>
-    <TEMPLATE MATCH="*" Timeout="15" User="Phone"/>
-    <TEMPLATE MATCH="0.........." Timeout="0" User="Phone"/>
-    <TEMPLATE MATCH=".........." Timeout="3" User="Phone"/>
-    <TEMPLATE MATCH="011!*" Timeout="15" User="Phone"/>
-    <TEMPLATE MATCH="**2" Timeout="0" User="Phone"/>
-    <TEMPLATE MATCH="*97" Timeout="0" User="Phone"/>
+    <TEMPLATE MATCH="1..." Timeout="1"/>
+    <TEMPLATE MATCH="\*.." Timeout="0"/>
+    <TEMPLATE MATCH="*" Timeout="5"/>
     </DIALTEMPLATE>
   '';
 
