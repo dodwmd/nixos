@@ -44,7 +44,14 @@
   homelab.voip.cisco-provisioning = {
     enable = true;
     asteriskAddr = "192.168.1.202";
-    sipPort = 5062; # chan_sip - see cisco-phone-provisioning.nix sipPort option
+    # sipPort dropped (was 5062, chan_sip's dedicated port) - Asterisk
+    # upgraded to 22.x, which doesn't have chan_sip at all (removed
+    # upstream as of Asterisk 21). The phone now points at the default
+    # 5060/PJSIP, registering unauthenticated (no auth= on the [1000]
+    # endpoint) rather than needing chan_sip's simpler digest handling -
+    # the actual limitation was always that this firmware never sends an
+    # Authorization header on REGISTER at all, not a specific digest
+    # flavor, so dropping auth entirely on the PJSIP side works too.
     # Old 9-2-2SR1-9 firmware always demanded a CTL/ITL trust list and a
     # persistent CUCM TCP session regardless of deviceSecurityMode - phone's
     # own status screen showed "No Trust List installed" / "CUCM closed TCP
