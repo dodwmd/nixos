@@ -4,8 +4,19 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption mkEnableOption mkIf types concatStringsSep mapAttrsToList;
+  inherit (lib) mkOption mkEnableOption mkIf types concatStringsSep mapAttrsToList imap1;
   cfg = config.homelab.voip.cisco-provisioning;
+
+  # Hard-key speed dial buttons, starting at button 2 (button 1 is the main line)
+  mkSpeedDials = phone:
+    concatStringsSep "\n" (imap1 (i: sd: ''
+        <line button="${toString (i + 1)}">
+        <featureID>21</featureID>
+        <featureLabel>${sd.label}</featureLabel>
+        <speedDialNumber>${sd.number}</speedDialNumber>
+        </line>
+      '')
+      phone.speedDials);
 
   # Generate SEP<MAC>.cnf.xml for a phone
   mkPhoneConfig = name: phone: let
@@ -139,6 +150,7 @@
     <dialedNumber>true</dialedNumber>
     </forwardCallInfoDisplay>
     </line>
+    ${mkSpeedDials phone}
     </sipLines>
     <voipControlPort>5060</voipControlPort>
     <dscpForAudio>184</dscpForAudio>
@@ -170,16 +182,16 @@
     </vendorConfig>
     <versionStamp>{location}</versionStamp>
     <userLocale>
-    <name>English_United_States</name>
-    <uid>1</uid>
-    <langCode>en</langCode>
+    <name></name>
+    <uid></uid>
+    <langCode>en_US</langCode>
     <version>1.0.0.0-1</version>
-    <winCharSet>utf-8</winCharSet>
+    <winCharSet>iso-8859-1</winCharSet>
     </userLocale>
-    <networkLocale>United_States</networkLocale>
+    <networkLocale></networkLocale>
     <networkLocaleInfo>
-    <name>United_States</name>
-    <uid>64</uid>
+    <name></name>
+    <uid></uid>
     <version>1.0.0.0-1</version>
     </networkLocaleInfo>
     <deviceSecurityMode>1</deviceSecurityMode>
@@ -401,6 +413,23 @@ in {
             type = types.str;
             default = "";
             description = "Caller ID name (defaults to displayName if empty)";
+          };
+
+          speedDials = mkOption {
+            type = types.listOf (types.submodule {
+              options = {
+                label = mkOption {
+                  type = types.str;
+                  description = "Label shown on the phone next to the hard button";
+                };
+                number = mkOption {
+                  type = types.str;
+                  description = "Number to dial (goes through the same dialplan as manual dialing)";
+                };
+              };
+            });
+            default = [];
+            description = "Hard-key speed dials, assigned to line buttons starting at button 2";
           };
         };
       });

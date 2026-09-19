@@ -45,12 +45,34 @@
     enable = true;
     asteriskAddr = "192.168.1.202";
     sipPort = 5062; # chan_sip - see cisco-phone-provisioning.nix sipPort option
+    # Old 9-2-2SR1-9 firmware always demanded a CTL/ITL trust list and a
+    # persistent CUCM TCP session regardless of deviceSecurityMode - phone's
+    # own status screen showed "No Trust List installed" / "CUCM closed TCP
+    # connection" on every boot, causing an endless reboot loop. Upgrading
+    # to 9-4-1-9 to test whether newer firmware actually honors
+    # deviceSecurityMode=1 and skips CUCM enrollment, per third-party-SIP
+    # guides that worked on 9.4.x loads.
+    firmwareVersion = "sip9971.9-4-1-9";
     phones = {
       "office" = {
         mac = "F47F35A342D1";
         extension = "1000";
         displayName = "Cisco Phone";
         authPasswordFile = config.age.secrets.sip-password.path;
+        speedDials = [
+          {
+            label = "Michael";
+            number = "0402093606";
+          }
+          {
+            label = "Damien";
+            number = "0493047784";
+          }
+          {
+            label = "Mum";
+            number = "0451771305";
+          }
+        ];
       };
     };
   };
