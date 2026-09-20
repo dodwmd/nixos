@@ -78,6 +78,15 @@
   "Mod+Shift+Ctrl+Left".move-column-to-monitor-left = {};
   "Mod+Shift+Ctrl+Right".move-column-to-monitor-right = {};
   "Ctrl+Alt+BackSpace".spawn._args = ["${pkgs.systemd}/bin/systemctl" "--user" "restart" "niri"];
+  # Toggle the MSI monitor (HDMI-A-1) off/on, leaving only the ViewSonic (DP-1).
+  # Hit this before launching a fullscreen game (e.g. Helldivers 2) so the
+  # pointer is confined to a single output and can't slip onto the other
+  # screen; hit it again afterwards to bring HDMI-A-1 back.
+  "Mod+Shift+G".spawn._args = [
+    "sh"
+    "-c"
+    "if [ \"$(${pkgs.niri}/bin/niri msg -j outputs | ${pkgs.jq}/bin/jq -r '.\"HDMI-A-1\".logical')\" = null ]; then ${pkgs.niri}/bin/niri msg output HDMI-A-1 on; else ${pkgs.niri}/bin/niri msg output HDMI-A-1 off; fi"
+  ];
   # Extra keys above numpad - Spotify controls
   "XF86Tools" = {
     spawn._args = ["sh" "-c" "${pkgs.niri}/bin/niri msg -j windows | ${pkgs.jq}/bin/jq -re '[.[] | select(.app_id == \"brave-browser\")][0].id' | xargs -I{} ${pkgs.niri}/bin/niri msg action focus-window --id {}"];

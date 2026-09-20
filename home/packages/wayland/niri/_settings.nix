@@ -28,7 +28,13 @@ in {
     # started, so graphical auth prompts (mount, NetworkManager, etc.) had
     # nowhere to appear.
     ["${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"]
-    ["swayidle" "-w" "timeout" "600" "${pkgs.swaylock}/bin/swaylock -f -c 000000" "timeout" "1200" "niri msg action power-off-monitors" "before-sleep" "${pkgs.swaylock}/bin/swaylock -f -c 000000" "after-resume" "sleep 2; ${pkgs.swaylock}/bin/swaylock -f -c 000000"]
+    # Only lock before-sleep. An "after-resume" swaylock relaunch used to sit
+    # here too, but it races a second lock client against the one already
+    # locked from before-sleep — niri's session-lock protocol only allows one
+    # outstanding lock client, so the second request left one output with no
+    # lock surface (looked "off") and the other stuck with no password
+    # prompt, wedging input system-wide until a hard power cycle.
+    ["swayidle" "-w" "timeout" "600" "${pkgs.swaylock}/bin/swaylock -f -c 000000" "timeout" "1200" "niri msg action power-off-monitors" "before-sleep" "${pkgs.swaylock}/bin/swaylock -f -c 000000"]
     # xwayland-satellite is managed by systemd user service
   ];
 

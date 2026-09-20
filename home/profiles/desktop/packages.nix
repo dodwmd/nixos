@@ -22,7 +22,8 @@
     xournalpp     # PDF annotation and signing
     gsimplecal    # Calendar popup for waybar
     playerctl     # Media key bindings (niri) + CLI
-    
+    gnome-calculator # Graphical calculator
+
     # XWayland support for niri is managed via systemd service
     
     # Terminal tools

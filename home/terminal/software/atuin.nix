@@ -28,12 +28,11 @@ in {
     };
 
     "fish/conf.d/atuin.fish".source =
-      pkgs.runCommand "atuin-fish-init" {
-        XDG_CONFIG_HOME = "$PWD";
-        XDG_DATA_HOME = "$PWD";
-        ATUIN_CONFIG_DIR = "$PWD/atuin";
-      } ''
-        mkdir -p atuin
+      pkgs.runCommand "atuin-fish-init" {} ''
+        export HOME="$PWD"
+        export XDG_CONFIG_HOME="$PWD/.config"
+        export XDG_DATA_HOME="$PWD/.local/share"
+        mkdir -p "$XDG_CONFIG_HOME/atuin" "$XDG_DATA_HOME"
         ${pkgs.atuin}/bin/atuin init fish --disable-up-arrow > $out
       '';
   };
