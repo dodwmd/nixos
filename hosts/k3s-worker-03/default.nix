@@ -49,6 +49,23 @@
     flannelIface = "enp4s0"; # flannel auto-detects independently of nodeIP
   };
 
+  # RTP media for the fusionpbx pod (hostNetwork, pinned here via PVC
+  # affinity) - without this, this node's firewall silently dropped every
+  # inbound RTP packet before it ever reached FreeSWITCH's socket, while
+  # tcpdump on "any" still showed the packets arriving (netfilter INPUT
+  # DROP happens after tcpdump's capture point). Confirmed live: the
+  # phone's own streaming stats showed real Sender Packets/Octets leaving
+  # it but zero Rcvr Packets back, and `strace`'ing FreeSWITCH's bound RTP
+  # socket showed nothing but EAGAIN despite those same packets being
+  # visible on the wire - this was the actual root cause of "no audio"
+  # across the old Asterisk setup AND both the custom-compiled and
+  # official-package FreeSWITCH builds, none of which were ever the real
+  # problem. FreeSWITCH's rtp-start-port/rtp-end-port are pinned to this
+  # exact range in the fusionpbx image's switch.conf.xml to match.
+  networking.firewall.allowedUDPPortRanges = [
+    { from = 16384; to = 16584; }
+  ];
+
 
   # AMD GPU support (Rembrandt iGPU)
   hardware.graphics = {
