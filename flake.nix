@@ -83,5 +83,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    herdr-nix = {
+      url = "github:herdrdev/herdr-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

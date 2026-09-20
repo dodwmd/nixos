@@ -19,6 +19,13 @@
   # Allow unfree packages (needed for NVIDIA drivers)
   nixpkgs.config.allowUnfree = true;
 
+  # Herdr - background terminal server for hosting coding agents (Claude Code, Cursor, Codex)
+  # Prebuilt binary from herdr-nix flake; use their cachix to avoid rebuilding from source.
+  nix.settings = {
+    extra-substituters = ["https://herdr.cachix.org"];
+    extra-trusted-public-keys = ["herdr.cachix.org-1:3nH7IStRsS0ASfdonA0DCRR2ZrSCeWitZ7Kwew0cR4I="];
+  };
+
   # Two 1080p monitors side by side (HDMI left, DP right)
   homelab.niri.outputs = [
     {
@@ -406,6 +413,7 @@
     wine
     winetricks
     steam-run
+    inputs.herdr-nix.packages.${pkgs.system}.default
   ];
 
   # Gamemode for CPU/GPU performance boost during gaming
