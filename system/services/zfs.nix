@@ -53,18 +53,33 @@ with lib;
       };
     };
 
-    # Ensure ZFS datasets are mounted at boot
-    systemd.services."wait-for-zfs-mounts" = {
-      description = "Wait for ZFS datasets to mount";
-      after = [ "zfs-mount.service" ];
-      before = [ "multi-user.target" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStart = "${pkgs.coreutils}/bin/sleep 2";
-      };
-    };
+    # Ensure ZFS datasets are mounted at boot, and make sure every podman
+    # container waits for it. podman-*.service units are also
+    # wantedBy=multi-user.target, so without an explicit dependency systemd
+    # can start them in parallel with ZFS mounting. A container that wins
+    # that race bind-mounts whatever was in e.g. /tank/data *before* ZFS
+    # mounted over it (an empty root-owned dir), producing silent
+    # Access-Denied write failures until the next restart.
+    systemd.services =
+      {
+        "wait-for-zfs-mounts" = {
+          description = "Wait for ZFS datasets to mount";
+          after = [ "zfs-mount.service" ];
+          before = [ "multi-user.target" ];
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            ExecStart = "${pkgs.coreutils}/bin/sleep 2";
+          };
+        };
+      }
+      // (lib.mapAttrs' (name: _:
+        lib.nameValuePair "podman-${name}" {
+          after = [ "wait-for-zfs-mounts.service" ];
+          requires = [ "wait-for-zfs-mounts.service" ];
+        }
+      ) config.virtualisation.oci-containers.containers);
 
     # Install ZFS tools
     environment.systemPackages = with pkgs; [
