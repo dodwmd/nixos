@@ -66,6 +66,41 @@
     { from = 16384; to = 16584; }
   ];
 
+  # SNAT the fusionpbx internal sip_profile's outbound-initiated SIP
+  # signaling (inbound-call INVITEs, NOTIFYs) so LAN phones see it coming
+  # from the FusionPBX MetalLB VIP (192.168.1.202) instead of this node's
+  # real address. Confirmed live: the Cisco CP-9971 registers fine and
+  # answers calls it originates, but silently drops (zero response, not
+  # even a courtesy 100 Trying, despite `ping` and tcpdump both confirming
+  # the INVITE physically arrives) any FreeSWITCH-initiated INVITE sourced
+  # from 192.168.1.32 - the phone's SIP stack only accepts unsolicited
+  # requests from its configured registrar/proxy address, which is the
+  # VIP it registered against, not this node's real IP.
+  #
+  # Deliberately NOT pinning the VIP itself to this node (e.g. via a
+  # node-scoped L2Advertisement) - that would sacrifice MetalLB's failover
+  # for this one service. This SNAT only rewrites the source of packets
+  # this node itself originates toward the LAN; inbound routing to the
+  # VIP is completely untouched and keeps working through whichever node
+  # MetalLB currently elects, exactly like the phone's own REGISTER
+  # traffic already does today. Scoped to the LAN subnet only so it never
+  # touches the Superloop trunk leg, which already correctly sources from
+  # the public IP via vars.xml.
+  #
+  # Uses networking.firewall.extraCommands (plain iptables, run through
+  # the iptables-nft compat shim) rather than networking.nftables.tables -
+  # confirmed live via `nft list tables` that this node's actual firewall
+  # implementation is entirely the legacy iptables-based one (only
+  # "filter"/"mangle"/"nat" compat tables exist, no systemd unit for a
+  # native nftables ruleset at all), so a networking.nftables.tables entry
+  # would silently never get loaded.
+  networking.firewall.extraCommands = ''
+    iptables -t nat -A POSTROUTING -d 192.168.1.0/24 -p udp --dport 5060 -j SNAT --to-source 192.168.1.202
+  '';
+  networking.firewall.extraStopCommands = ''
+    iptables -t nat -D POSTROUTING -d 192.168.1.0/24 -p udp --dport 5060 -j SNAT --to-source 192.168.1.202 2>/dev/null || true
+  '';
+
 
   # AMD GPU support (Rembrandt iGPU)
   hardware.graphics = {
