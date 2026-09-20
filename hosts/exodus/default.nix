@@ -224,10 +224,21 @@
       ipv4 = {
         method = "auto";
         route-metric = 100;
+        # DHCP hands out "home.dodwell.us" as a search domain, and dodwell.us has a
+        # public wildcard (*.home.dodwell.us) for reaching homelab services from
+        # outside. A plain search domain makes glibc/systemd-resolved retry ANY
+        # externally-unresolvable name (e.g. steamcontent.com) as
+        # "<name>.home.dodwell.us", which the wildcard silently answers with our
+        # public IP instead of NXDOMAIN. The leading "~" marks it routing-only
+        # (systemd-resolved only, requires networkmanager.dns=systemd-resolved
+        # below) so it's used to route queries that already end in that suffix,
+        # never as a fallback suffix for unrelated failed lookups.
+        dns-search = "~home.dodwell.us;";
       };
       ipv6 = {
         method = "auto";
         route-metric = 100;
+        dns-search = "~home.dodwell.us;";
       };
     };
   };
@@ -243,9 +254,9 @@
 
   # Override keyboard and locale for Australia
   console.keyMap = lib.mkForce "us";
-  
+
   time.timeZone = lib.mkForce "Australia/Brisbane";
-  
+
   i18n.extraLocaleSettings = lib.mkForce {
     LC_ADDRESS = "en_AU.UTF-8";
     LC_IDENTIFICATION = "en_AU.UTF-8";
@@ -257,7 +268,7 @@
     LC_TELEPHONE = "en_AU.UTF-8";
     LC_TIME = "en_AU.UTF-8";
   };
-  
+
   # X11 and Wayland keyboard layout
   # Enable xserver for proper xwayland wrapping with NVIDIA, but don't start a display manager
   services.xserver = {
@@ -349,13 +360,18 @@
       mangohud
     ];
   };
-  
+
   # XWayland is provided by xwayland-satellite service (see home/services/wayland/xwayland-satellite.nix)
 
   # Enable NVIDIA driver
   services.xserver.videoDrivers = ["nvidia"];
-  
-  # Override xwayland to disable glamor (EGL) to prevent crashes
+
+  # Override xwayland to disable glamor (EGL) to prevent crashes.
+  # TEMP TEST (2026-09-14) had this disabled to check if NVIDIA 595.99.02 +
+  # current xwayland-satellite still needed it - confirmed still needed:
+  # without it Xwayland aborts on startup (SIGABRT in xwl_glamor_gbm_init_egl,
+  # "No provider of eglGetCurrentContext found") since EGL_PLATFORM=wayland
+  # leaves it with no usable EGL provider.
   nixpkgs.overlays = [
     (final: prev: {
       xwayland = prev.xwayland.overrideAttrs (old: {
@@ -366,18 +382,17 @@
     inputs.antigravity-nix.overlays.default
   ];
 
-
   # NVIDIA environment variables for Wayland
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSORS = "1";
-    
+
     # Force the Wayland EGL platform for native clients. XWayland itself never
     # touches EGL regardless of this var since it's built with -Dglamor=false
     # (see overlay below); leaving this unset let libEGL fall back to the X11
     # platform (because xwayland-satellite sets $DISPLAY globally), which has
     # no EGL provider and crashed native GTK4/EGL apps like Ghostty.
     EGL_PLATFORM = lib.mkForce "wayland";
-    
+
     # Gaming performance optimizations
     __GL_SHADER_DISK_CACHE = "1";
     __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
@@ -399,7 +414,7 @@
     # Ignore the MSI Optix fake USB CD-ROM device
     SUBSYSTEM=="block", ENV{ID_VENDOR_ID}=="1462", ENV{ID_MODEL_ID}=="3fa4", OPTIONS+="nowatch"
     SUBSYSTEM=="block", ENV{ID_VENDOR_ID}=="1462", ENV{ID_MODEL_ID}=="3fa4", ENV{UDISKS_IGNORE}="1"
-    
+
     # Ignore non-existent SATA devices to prevent boot delays
     SUBSYSTEM=="block", KERNEL=="sd[a-z]", ENV{ID_PATH}=="", OPTIONS+="nowatch"
     SUBSYSTEM=="block", KERNEL=="sd[a-z]", ENV{ID_PATH}=="", ENV{UDISKS_IGNORE}="1"

@@ -7,7 +7,12 @@
 
     networkmanager = {
       enable = true;
-      dns = "default";  # Let NetworkManager handle DNS from DHCP
+      # systemd-resolved lets per-connection search domains be marked "routing-only"
+      # (leading "~"), which plain resolv.conf (dns="default") can't express. Needed
+      # so home.dodwell.us's search domain doesn't hijack unrelated external lookups
+      # (e.g. steamcontent.com) via its public wildcard record. See exodus's Ethernet
+      # NM profile (hosts/exodus/default.nix) for the routing-only dns-search config.
+      dns = "systemd-resolved";
       wifi.powersave = false;
       plugins = with pkgs; [
         networkmanager-openvpn
@@ -19,6 +24,8 @@
   };
 
   services = {
+    resolved.enable = true;
+
     openssh = {
       enable = true;
       settings.UseDns = true;
