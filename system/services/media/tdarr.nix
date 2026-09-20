@@ -98,14 +98,9 @@ with lib;
       ];
     };
 
-    # Auto-update tdarr server image daily (synced with exodus tdarr-node)
-    systemd.timers.podman-auto-update = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "*-*-* 03:00:00";
-        Persistent = true;
-      };
-    };
+    # Image auto-update is handled centrally by homelab.media.autoUpdate
+    # (system/services/media/default.nix); this container carries the
+    # io.containers.autoupdate=registry label above.
 
     # Create transcode temp directory
     systemd.tmpfiles.rules = [

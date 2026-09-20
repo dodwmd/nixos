@@ -46,14 +46,6 @@
     })
 
     (mkMediaService {
-      name = "readarr";
-      description = "Readarr ebook management";
-      port = 8787;
-      image = "lscr.io/linuxserver/readarr:latest";
-      supportsPostgresql = true;
-    })
-
-    (mkMediaService {
       name = "bazarr";
       description = "Bazarr subtitle management";
       port = 6767;
@@ -65,9 +57,20 @@
       name = "jellyseerr";
       description = "Jellyseerr media request management";
       port = 5055;
-      image = "fallenbagel/jellyseerr:latest";
+      image = "docker.io/fallenbagel/jellyseerr:latest";
       configMountPath = "/app/config";
       supportsPostgresql = false; # Jellyseerr is SQLite only
+    })
+
+    (mkMediaService {
+      name = "cleanuparr";
+      description = "Cleanuparr download queue cleanup";
+      port = 11011;
+      image = "ghcr.io/cleanuparr/cleanuparr:latest";
+      # Cleanuparr supports Postgres, but via plain POSTGRES_HOST/USER/PASS/DB
+      # env vars rather than the SONARR__POSTGRES__* convention this generator
+      # produces, so leave it on its default SQLite instead of wiring that up.
+      supportsPostgresql = false;
     })
   ];
 in {

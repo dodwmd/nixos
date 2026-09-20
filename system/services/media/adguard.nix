@@ -33,9 +33,10 @@ with lib;
 
   config = mkIf config.homelab.media.adguard.enable {
     virtualisation.oci-containers.containers.adguard = {
-      image = "adguard/adguardhome:latest";
+      image = "docker.io/adguard/adguardhome:latest";
       autoStart = true;
-      
+      labels."io.containers.autoupdate" = "registry";
+
       environment = {
         TZ = config.time.timeZone;
       };

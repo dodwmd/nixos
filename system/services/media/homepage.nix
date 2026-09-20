@@ -41,7 +41,8 @@ with lib;
     virtualisation.oci-containers.containers.homepage = {
       image = "ghcr.io/gethomepage/homepage:latest";
       autoStart = true;
-      
+      labels."io.containers.autoupdate" = "registry";
+
       environment = {
         PUID = toString config.homelab.media.homepage.uid;
         PGID = toString config.homelab.media.homepage.gid;

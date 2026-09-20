@@ -1,6 +1,10 @@
-{ config, lib, pkgs, modulesPath, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}: let
   # Authelia forward-auth for nexus's standalone nginx (services.nginx, not
   # k8s ingress-nginx). nexus isn't part of the k3s cluster, so Authelia is
   # reached over its public hostname rather than an in-cluster service name.
@@ -45,8 +49,7 @@ let
       proxy_http_version 1.1;
     '';
   };
-in
-{
+in {
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
@@ -57,8 +60,8 @@ in
 
   # System identification
   networking.hostName = "nexus";
-  networking.hostId = "8425e349";  # Required for ZFS
-  
+  networking.hostId = "8425e349"; # Required for ZFS
+
   # Network configuration (using DHCP like original)
   networking = {
     networkmanager.enable = false;
@@ -84,7 +87,7 @@ in
   homelab.zfs = {
     enable = true;
     arcMaxGB = 4;
-    pools = [ "tank" ];
+    pools = ["tank"];
     autoScrub = true;
     scrubInterval = "monthly";
   };
@@ -119,51 +122,52 @@ in
   homelab.media.postgresql.enable = true;
 
   # Core *arr services with PostgreSQL (migrated)
-  # downloadsPath must match the corresponding aria2 container's download directory
-  # so that paths reported by aria2 resolve correctly inside the *arr container
+  # downloadsPath is left at its shared default (/tank/data/downloads) so it
+  # mounts to the exact same container path as qBittorrent's downloadsPath
+  # below - each app then filters to its own qBittorrent category (see
+  # homelab.media.qbittorrent) rather than being isolated by mount.
   homelab.media.sonarr = {
     enable = true;
     usePostgresql = true;
-    downloadsPath = "/tank/data/downloads/tv";
   };
   homelab.media.radarr = {
     enable = true;
     usePostgresql = true;
-    downloadsPath = "/tank/data/downloads/movies";
   };
 
   # Prowlarr stays on SQLite (doesn't support env var config)
   homelab.media.prowlarr.enable = true;
 
   # Other services on SQLite (can migrate later if needed)
-  homelab.media.lidarr = {
-    enable = true;
-    downloadsPath = "/tank/data/downloads/music";
-  };
-  homelab.media.readarr = {
-    enable = true;
-    downloadsPath = "/tank/data/downloads/books";
-  };
+  homelab.media.lidarr.enable = true;
   homelab.media.bazarr.enable = true;
-  
+
   homelab.media.jellyfin = {
     enable = true;
     publishedServerUrl = "https://jellyfin.home.dodwell.us";
     enableHardwareAccel = true;
   };
-  
+
   homelab.media.jellyseerr.enable = true;
-  
+
+  # Now that the download client is qBittorrent (a Cleanuparr-supported
+  # client), the download-client-dependent features - strike system,
+  # stalled/slow removal, seeding cleanup, orphaned-download detection - are
+  # usable too, in addition to the Arr-only features (failed-import cleanup,
+  # missing-item search, quality-upgrade search). Configure the qBittorrent
+  # connection in Cleanuparr's UI to enable them.
+  homelab.media.cleanuparr.enable = true;
+
   homelab.media.tdarr = {
     enable = true;
     transcodePath = "/mnt/nvme/tdarr-transcode";
     enableGPU = true;
   };
-  
-  homelab.media.aria2.enable = true;
-  
+
+  homelab.media.qbittorrent.enable = true;
+
   homelab.media.adguard.enable = true;
-  
+
   homelab.media.homepage = {
     enable = true;
     allowedHosts = "nexus.home.dodwell.us,localhost,127.0.0.1";
@@ -183,32 +187,36 @@ in
     email = "michael@dodwell.us";
     dnsProvider = "cloudflare";
     credentialFiles."CF_DNS_API_TOKEN_FILE" = "/var/lib/acme/cloudflare-dns-api-token";
-    
+
     virtualHosts = {
       "sonarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:8989";
-        extraConfig = ''
-          proxy_read_timeout 300s;
-          proxy_connect_timeout 300s;
-          proxy_send_timeout 300s;
-          proxy_buffers 16 256k;
-          proxy_buffer_size 256k;
-          proxy_busy_buffers_size 512k;
-          client_max_body_size 0;
-        '' + autheliaAuthRequestConfig;
+        extraConfig =
+          ''
+            proxy_read_timeout 300s;
+            proxy_connect_timeout 300s;
+            proxy_send_timeout 300s;
+            proxy_buffers 16 256k;
+            proxy_buffer_size 256k;
+            proxy_busy_buffers_size 512k;
+            client_max_body_size 0;
+          ''
+          + autheliaAuthRequestConfig;
         extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "radarr.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:7878";
-        extraConfig = ''
-          proxy_read_timeout 300s;
-          proxy_connect_timeout 300s;
-          proxy_send_timeout 300s;
-          proxy_buffers 16 256k;
-          proxy_buffer_size 256k;
-          proxy_busy_buffers_size 512k;
-          client_max_body_size 0;
-        '' + autheliaAuthRequestConfig;
+        extraConfig =
+          ''
+            proxy_read_timeout 300s;
+            proxy_connect_timeout 300s;
+            proxy_send_timeout 300s;
+            proxy_buffers 16 256k;
+            proxy_buffer_size 256k;
+            proxy_busy_buffers_size 512k;
+            client_max_body_size 0;
+          ''
+          + autheliaAuthRequestConfig;
         extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "prowlarr.home.dodwell.us" = {
@@ -221,13 +229,13 @@ in
         extraConfig = autheliaAuthRequestConfig;
         extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
-      "readarr.home.dodwell.us" = {
-        proxyPass = "http://127.0.0.1:8787";
+      "bazarr.home.dodwell.us" = {
+        proxyPass = "http://127.0.0.1:6767";
         extraConfig = autheliaAuthRequestConfig;
         extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
-      "bazarr.home.dodwell.us" = {
-        proxyPass = "http://127.0.0.1:6767";
+      "cleanuparr.home.dodwell.us" = {
+        proxyPass = "http://127.0.0.1:11011";
         extraConfig = autheliaAuthRequestConfig;
         extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
@@ -237,51 +245,26 @@ in
         extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "download.home.dodwell.us" = {
-        proxyPass = "http://127.0.0.1:6880";
-        # Pre-seed AriaNg's localStorage (on a browser's first visit only) with all
-        # 4 aria2 RPC backends, routed same-origin through the /jsonrpc/* locations
-        # below, so a fresh browser never needs the RPC settings entered by hand.
-        extraConfig = ''
-          proxy_set_header Accept-Encoding "";
-          sub_filter_types text/html;
-          sub_filter_once on;
-          sub_filter '<head>' '<head><script>(function(){try{if(localStorage.getItem("AriaNg.Options")){return;}var mk=function(id,alias,secret){return {rpcId:id,rpcAlias:alias,rpcHost:"download.home.dodwell.us",rpcPort:"443",rpcInterface:"jsonrpc/"+id,protocol:"https",httpMethod:"POST",rpcRequestHeaders:"",secret:btoa(secret)};};var servers=[mk("radarr","Radarr","aria2-radarr-secret"),mk("sonarr","Sonarr","aria2-sonarr-secret"),mk("lidarr","Lidarr","aria2-lidarr-secret"),mk("readarr","Readarr","aria2-readarr-secret")];var primary=servers[0];var options={rpcAlias:primary.rpcAlias,rpcHost:primary.rpcHost,rpcPort:primary.rpcPort,rpcInterface:primary.rpcInterface,protocol:primary.protocol,httpMethod:primary.httpMethod,rpcRequestHeaders:primary.rpcRequestHeaders,secret:primary.secret,extendRpcServers:servers.slice(1)};localStorage.setItem("AriaNg.Options",JSON.stringify(options));}catch(e){}})();</script>';
-        '' + autheliaAuthRequestConfig;
-        # Only the AriaNg UI itself ("/") is gated. /jsonrpc/* stays open so
-        # Radarr/Sonarr/etc's own programmatic RPC calls, and AriaNg's
-        # in-page RPC calls after login, don't get blocked by auth_request.
-        extraLocations = {
-          "/internal/authelia/authz" = autheliaInternalLocation;
-          "/jsonrpc/radarr" = {
-            proxyPass = "http://127.0.0.1:6800/jsonrpc";
-            proxyWebsockets = true;
-          };
-          "/jsonrpc/sonarr" = {
-            proxyPass = "http://127.0.0.1:6801/jsonrpc";
-            proxyWebsockets = true;
-          };
-          "/jsonrpc/lidarr" = {
-            proxyPass = "http://127.0.0.1:6802/jsonrpc";
-            proxyWebsockets = true;
-          };
-          "/jsonrpc/readarr" = {
-            proxyPass = "http://127.0.0.1:6803/jsonrpc";
-            proxyWebsockets = true;
-          };
-        };
+        proxyPass = "http://127.0.0.1:8090";
+        extraConfig =
+          ''
+            client_max_body_size 0;
+          ''
+          + autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "jellyfin.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:8096";
         extraConfig = ''
           proxy_buffering off;
           client_max_body_size 0;
-          
+
           # Jellyfin-specific headers
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto $scheme;
           proxy_set_header X-Forwarded-Host $host;
-          
+
           # Disable buffering for SSE
           proxy_set_header Connection "";
           chunked_transfer_encoding on;
@@ -320,7 +303,7 @@ in
     description = "Michael Dodwell";
   };
 
-  users.users.root.extraGroups = [ "wheel" ];
+  users.users.root.extraGroups = ["wheel"];
 
   # Allow wheel group to use sudo without password (matching original)
   security.sudo.wheelNeedsPassword = false;
@@ -328,7 +311,7 @@ in
   # Nix configuration (matching original)
   nix = {
     extraOptions = ''
-        experimental-features = nix-command flakes
+      experimental-features = nix-command flakes
     '';
   };
 

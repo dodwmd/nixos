@@ -82,6 +82,9 @@
         inherit image;
         autoStart = true;
 
+        # Picked up by `podman auto-update` (see system/services/media/default.nix)
+        labels."io.containers.autoupdate" = "registry";
+
         environment =
           {
             PUID = toString serviceCfg.uid;

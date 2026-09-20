@@ -65,7 +65,8 @@ with lib;
     virtualisation.oci-containers.containers.jellyfin = {
       image = "docker.io/jellyfin/jellyfin:latest";
       autoStart = true;
-      
+      labels."io.containers.autoupdate" = "registry";
+
       environment = {
         PUID = toString config.homelab.media.jellyfin.uid;
         PGID = toString config.homelab.media.jellyfin.gid;

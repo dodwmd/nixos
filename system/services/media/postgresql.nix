@@ -46,7 +46,6 @@ in {
         "radarr-main" "radarr-log"
         "sonarr-main" "sonarr-log"
         "lidarr-main" "lidarr-log"
-        "readarr-main" "readarr-log"
       ];
 
       ensureUsers = [{
@@ -76,7 +75,7 @@ in {
         RemainAfterExit = true;
       };
       script = ''
-        for db in radarr-main radarr-log sonarr-main sonarr-log lidarr-main lidarr-log readarr-main readarr-log; do
+        for db in radarr-main radarr-log sonarr-main sonarr-log lidarr-main lidarr-log; do
           ${cfg.package}/bin/psql -c "GRANT ALL PRIVILEGES ON DATABASE \"$db\" TO media;" 2>/dev/null || true
           ${cfg.package}/bin/psql -d "$db" -c "GRANT ALL ON SCHEMA public TO media;" 2>/dev/null || true
           ${cfg.package}/bin/psql -d "$db" -c "ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO media;" 2>/dev/null || true
