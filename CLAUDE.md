@@ -108,7 +108,7 @@ flake.nix                    # Root flake, imports hosts/ and pkgs/
 │           ├── services.nix     # Generated *arr services using mkMediaService
 │           ├── jellyfin.nix     # Complex service with hardware accel
 │           ├── tdarr.nix        # Media transcoding
-│           ├── aria2.nix        # Download manager
+│           ├── qbittorrent.nix  # Download client (shared by sonarr/radarr/lidarr/readarr)
 │           ├── adguard.nix      # DNS/ad-blocking
 │           └── homepage.nix     # Dashboard
 ├── home/                   # Home-Manager configurations
