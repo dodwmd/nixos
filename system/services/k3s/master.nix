@@ -1,5 +1,5 @@
 # K3s master node configuration module
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, self, ... }:
 
 with lib;
 
@@ -90,8 +90,12 @@ in
         let
           cfg' = config.age.secrets;
           tls = "/var/lib/rancher/k3s/server/tls";
+          # Skip empty secrets: the k3s-ca/*.age files are placeholders that
+          # decrypt to nothing, and installing them clobbers the live CA
+          # (k3s then refuses to start until the empty files are removed and
+          # it re-seeds them from the datastore).
           install = src: dest: mode:
-            "install -m ${mode} ${cfg'.${src}.path} ${tls}/${dest}";
+            "[ -s ${cfg'.${src}.path} ] && install -m ${mode} ${cfg'.${src}.path} ${tls}/${dest} || echo 'skipping empty ${src}'";
         in ''
           mkdir -p ${tls}/etcd
           ${install "k3s-server-ca-crt"         "server-ca.crt"              "0644"}

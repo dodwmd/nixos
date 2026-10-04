@@ -44,7 +44,7 @@ in {
       openFirewall = true;
       dhcpNoBind = true; # ProxyDHCP mode — MikroTik stays as DHCP server
       mode = "boot";
-      kernel = "${build.kernel}/${pkgs.stdenv.hostPlatform.linux-kernel.target}";
+      kernel = "${build.kernel}/${netbootSystem.config.system.boot.loader.kernelFile}";
       initrd = "${build.netbootRamdisk}/initrd";
       cmdLine = "init=${build.toplevel}/init loglevel=4";
     };
