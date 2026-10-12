@@ -55,8 +55,8 @@ in {
     ./disko.nix
   ];
 
-  # Use LTS kernel for ZFS compatibility
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
+  # Pin the 6.18 LTS series explicitly so ZFS compatibility does not drift with the nixpkgs default
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_18;
 
   # System identification
   networking.hostName = "nexus";
