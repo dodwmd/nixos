@@ -9,8 +9,14 @@ with lib; {
     # PostgreSQL for media services
     ./postgresql.nix
 
-    # Generated media services (*arr stack + jellyseerr)
-    ./services.nix
+    # Generated media services (one file each, built with mkMediaService)
+    ./sonarr.nix
+    ./radarr.nix
+    ./prowlarr.nix
+    ./lidarr.nix
+    ./bazarr.nix
+    ./jellyseerr.nix
+    ./cleanuparr.nix
 
     # Complex services with unique configuration
     ./jellyfin.nix
