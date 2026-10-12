@@ -85,7 +85,7 @@ flake.nix                    # Root flake, imports hosts/ and pkgs/
 │   ├── exodus/             # Desktop workstation config
 │   ├── k3s-master-01/02/   # K3s master nodes (minimal config using host-common)
 │   ├── k3s-worker-01/02/03/# K3s worker nodes (minimal config using host-common)
-│   └── nexus/              # Media server
+│   └── nexus/              # Media server (default.nix + dedicated nginx.nix, openssh.nix, sysstat.nix)
 ├── system/                  # NixOS system modules
 │   ├── default.nix         # Exports profile compositions (desktop, laptop, server, k3s-master, k3s-worker, media-server)
 │   ├── core/               # Base system config
@@ -105,7 +105,8 @@ flake.nix                    # Root flake, imports hosts/ and pkgs/
 │       │   ├── master.nix       # K3s master-specific config
 │       │   └── worker.nix       # K3s worker-specific config
 │       └── media/         # Media stack
-│           ├── services.nix     # Generated *arr services using mkMediaService
+│           ├── sonarr.nix, radarr.nix, prowlarr.nix, lidarr.nix,
+│           │   bazarr.nix, jellyseerr.nix, cleanuparr.nix  # One file per service, built with mkMediaService
 │           ├── jellyfin.nix     # Complex service with hardware accel
 │           ├── tdarr.nix        # Media transcoding
 │           ├── qbittorrent.nix  # Download client (shared by sonarr/radarr/lidarr/readarr)
@@ -158,7 +159,7 @@ Host configurations in `hosts/*/default.nix` select a profile and add host-speci
 - **system/nix/** - Nix daemon and flake configuration
 - **system/services/k3s/host-common.nix** - Common configuration shared by all K3s nodes (reduces duplication by 80%)
 - **system/services/k3s/** - K3s cluster configuration with HA setup
-- **system/services/media/services.nix** - Generated media services using mkMediaService function
+- **system/services/media/{sonarr,radarr,prowlarr,lidarr,bazarr,jellyseerr,cleanuparr}.nix** - One module per media service, each generated with mkMediaService
 - **lib/mk-media-service.nix** - Generator function for media services (reduces 700+ lines to ~100)
 - **home/profiles/desktop/** - Desktop machine profile (Wayland, GUI apps, editors)
 - **home/profiles/server/** - Server machine profile (minimal CLI tools)
@@ -272,14 +273,17 @@ All services configured in `system/services/media/`:
 ### Adding a New Service
 
 **For media services** (*arr-style applications):
-1. Add entry to `system/services/media/services.nix` using `mkMediaService`:
+1. Create `system/services/media/bazarr.nix` (one file per service) using `mkMediaService`, and import it in `system/services/media/default.nix`:
    ```nix
-   (mkMediaService {
-     name = "bazarr";
-     description = "Bazarr subtitle management";
-     port = 6767;
-     image = "lscr.io/linuxserver/bazarr:latest";
-   })
+   {config, lib, pkgs, ...}: let
+     inherit (import ../../../lib/mk-media-service.nix {inherit config lib pkgs;}) mkMediaService;
+   in
+     mkMediaService {
+       name = "bazarr";
+       description = "Bazarr subtitle management";
+       port = 6767;
+       image = "lscr.io/linuxserver/bazarr:latest";
+     }
    ```
 2. Enable on host: `homelab.media.bazarr.enable = true;`
 
@@ -348,7 +352,7 @@ Major code deduplication and standardization improvements:
 
 2. **Media Services** - Reduced from 700+ lines to ~100 lines
    - Created `lib/mk-media-service.nix` generator function
-   - Seven *arr services + jellyseerr now defined in single file (`system/services/media/services.nix`)
+   - Seven *arr services + jellyseerr were first defined in a single `services.nix`, since split into one file per service under `system/services/media/`
    - Old individual service files moved to `system/services/media/_old/`
 
 3. **User Management** - Consolidated from 4+ locations to 1
