@@ -22,7 +22,6 @@ in {
   spawn-at-startup = [
     # ["wl-paste" "--watch" "cliphist" "store"]  # Disabled - interferes with simple vim paste
     # ["wl-paste" "--type" "text" "--watch" "cliphist" "store"]  # Disabled - interferes with simple vim paste
-    ["${pkgs.wl-clip-persist}/bin/wl-clip-persist" "--clipboard" "primary"]
     ["${pkgs.waybar}/bin/waybar"]
     # Polkit auth agent: installed (polkit-agent.nix) but never previously
     # started, so graphical auth prompts (mount, NetworkManager, etc.) had
