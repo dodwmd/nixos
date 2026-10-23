@@ -378,6 +378,18 @@
         mesonFlags = (old.mesonFlags or []) ++ ["-Dglamor=false"];
       });
     })
+    # pyrate-limiter's test_factory_leak[create_sqlite_bucket] is flaky under
+    # build load (assert 1 == 0) and fails the whole system build via
+    # moddb -> lutris. The other 304 tests pass; skip the check phase.
+    (final: prev: {
+      pythonPackagesExtensions =
+        (prev.pythonPackagesExtensions or [])
+        ++ [
+          (pyFinal: pyPrev: {
+            pyrate-limiter = pyPrev.pyrate-limiter.overridePythonAttrs (_: {doCheck = false;});
+          })
+        ];
+    })
     (import ../../pkgs/ollama-overlay.nix)
     inputs.antigravity-nix.overlays.default
   ];
@@ -428,7 +440,7 @@
     wine
     winetricks
     steam-run
-    inputs.herdr-nix.packages.${pkgs.system}.default
+    inputs.herdr-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   # Gamemode for CPU/GPU performance boost during gaming
