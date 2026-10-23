@@ -1,0 +1,377 @@
+{
+  "_id": "efficientEnc4",
+  "name": "Efficient Encode v4 (bitrate-driven)",
+  "priority": 1,
+  "isUiLocked": false,
+  "flowPlugins": [
+    {
+      "name": "Input File",
+      "sourceRepo": "Community",
+      "pluginName": "inputFile",
+      "version": "1.0.0",
+      "inputsDB": {},
+      "fpEnabled": true,
+      "id": "input1",
+      "position": {
+        "x": 300,
+        "y": 0
+      }
+    },
+    {
+      "name": "Check if GPU Worker",
+      "sourceRepo": "Local",
+      "pluginName": "checkIsGPUWorker",
+      "version": "1.0.0",
+      "inputsDB": {},
+      "fpEnabled": true,
+      "id": "check_gpu",
+      "position": {
+        "x": 300,
+        "y": 100
+      }
+    },
+    {
+      "name": "Check if NVIDIA Node",
+      "sourceRepo": "Local",
+      "pluginName": "checkIsNvidiaNode",
+      "version": "2.0.0",
+      "inputsDB": {},
+      "fpEnabled": true,
+      "id": "check_nvidia",
+      "position": {
+        "x": 300,
+        "y": 200
+      }
+    },
+    {
+      "name": "Encode (NVENC)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Local:Custom_EfficientEncode",
+        "encoder": "nvenc"
+      },
+      "fpEnabled": true,
+      "id": "enc_nvenc",
+      "position": {
+        "x": 100,
+        "y": 300
+      }
+    },
+    {
+      "name": "Encode (VAAPI)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Local:Custom_EfficientEncode",
+        "encoder": "vaapi"
+      },
+      "fpEnabled": true,
+      "id": "enc_vaapi",
+      "position": {
+        "x": 300,
+        "y": 300
+      }
+    },
+    {
+      "name": "Encode (CPU)",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Local:Custom_EfficientEncode",
+        "encoder": "cpu"
+      },
+      "fpEnabled": true,
+      "id": "enc_cpu",
+      "position": {
+        "x": 500,
+        "y": 300
+      }
+    },
+    {
+      "name": "Remove Images",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_MC93_MigzImageRemoval"
+      },
+      "fpEnabled": true,
+      "id": "image_removal",
+      "position": {
+        "x": 300,
+        "y": 400
+      }
+    },
+    {
+      "name": "Clean Audio",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_MC93_Migz3CleanAudio"
+      },
+      "fpEnabled": true,
+      "id": "audio_clean",
+      "position": {
+        "x": 300,
+        "y": 500
+      }
+    },
+    {
+      "name": "Clean Subs",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_MC93_Migz4CleanSubs"
+      },
+      "fpEnabled": true,
+      "id": "subs_clean",
+      "position": {
+        "x": 300,
+        "y": 600
+      }
+    },
+    {
+      "name": "Reorder Streams",
+      "sourceRepo": "Community",
+      "pluginName": "runClassicTranscodePlugin",
+      "version": "2.0.0",
+      "inputsDB": {
+        "pluginSourceId": "Community:Tdarr_Plugin_lmg1_Reorder_Streams"
+      },
+      "fpEnabled": true,
+      "id": "reorder",
+      "position": {
+        "x": 300,
+        "y": 700
+      }
+    },
+    {
+      "name": "Check Size (12-105%)",
+      "sourceRepo": "Community",
+      "pluginName": "compareFileSizeRatio",
+      "version": "2.0.0",
+      "inputsDB": {
+        "greaterThan": "12",
+        "lessThan": "105"
+      },
+      "fpEnabled": true,
+      "id": "check_size",
+      "position": {
+        "x": 300,
+        "y": 800
+      }
+    },
+    {
+      "name": "Check Duration",
+      "sourceRepo": "Local",
+      "pluginName": "compareMediaDuration",
+      "version": "1.0.0",
+      "inputsDB": {
+        "greaterThan": "99.5",
+        "lessThan": "100.5"
+      },
+      "fpEnabled": true,
+      "id": "check_duration",
+      "position": {
+        "x": 300,
+        "y": 900
+      }
+    },
+    {
+      "name": "Keep Original (size out of range)",
+      "sourceRepo": "Community",
+      "pluginName": "setOriginalFile",
+      "version": "1.0.0",
+      "fpEnabled": true,
+      "id": "keep_original",
+      "position": {
+        "x": 600,
+        "y": 800
+      }
+    },
+    {
+      "name": "Fail: duration mismatch",
+      "sourceRepo": "Community",
+      "pluginName": "failFlow",
+      "version": "1.0.0",
+      "inputsDB": {},
+      "fpEnabled": true,
+      "id": "fail_duration",
+      "position": {
+        "x": 600,
+        "y": 900
+      }
+    },
+    {
+      "name": "Replace Original",
+      "sourceRepo": "Community",
+      "pluginName": "replaceOriginalFile",
+      "version": "1.0.0",
+      "inputsDB": {},
+      "fpEnabled": true,
+      "id": "replace1",
+      "position": {
+        "x": 300,
+        "y": 1000
+      }
+    }
+  ],
+  "flowEdges": [
+    {
+      "source": "input1",
+      "sourceHandle": "1",
+      "target": "check_gpu",
+      "id": "e_input1_1_check_gpu"
+    },
+    {
+      "source": "check_gpu",
+      "sourceHandle": "1",
+      "target": "check_nvidia",
+      "id": "e_check_gpu_1_check_nvidia"
+    },
+    {
+      "source": "check_gpu",
+      "sourceHandle": "2",
+      "target": "enc_cpu",
+      "id": "e_check_gpu_2_enc_cpu"
+    },
+    {
+      "source": "check_nvidia",
+      "sourceHandle": "1",
+      "target": "enc_nvenc",
+      "id": "e_check_nvidia_1_enc_nvenc"
+    },
+    {
+      "source": "check_nvidia",
+      "sourceHandle": "2",
+      "target": "enc_vaapi",
+      "id": "e_check_nvidia_2_enc_vaapi"
+    },
+    {
+      "source": "enc_nvenc",
+      "sourceHandle": "1",
+      "target": "image_removal",
+      "id": "e_enc_nvenc_1_image_removal"
+    },
+    {
+      "source": "enc_vaapi",
+      "sourceHandle": "1",
+      "target": "image_removal",
+      "id": "e_enc_vaapi_1_image_removal"
+    },
+    {
+      "source": "enc_cpu",
+      "sourceHandle": "1",
+      "target": "image_removal",
+      "id": "e_enc_cpu_1_image_removal"
+    },
+    {
+      "source": "image_removal",
+      "sourceHandle": "1",
+      "target": "audio_clean",
+      "id": "e_image_removal_1_audio_clean"
+    },
+    {
+      "source": "audio_clean",
+      "sourceHandle": "1",
+      "target": "subs_clean",
+      "id": "e_audio_clean_1_subs_clean"
+    },
+    {
+      "source": "audio_clean",
+      "sourceHandle": "2",
+      "target": "subs_clean",
+      "id": "e_audio_clean_2_subs_clean"
+    },
+    {
+      "source": "subs_clean",
+      "sourceHandle": "1",
+      "target": "reorder",
+      "id": "e_subs_clean_1_reorder"
+    },
+    {
+      "source": "subs_clean",
+      "sourceHandle": "2",
+      "target": "reorder",
+      "id": "e_subs_clean_2_reorder"
+    },
+    {
+      "source": "reorder",
+      "sourceHandle": "1",
+      "target": "check_size",
+      "id": "e_reorder_1_check_size"
+    },
+    {
+      "source": "reorder",
+      "sourceHandle": "2",
+      "target": "check_size",
+      "id": "e_reorder_2_check_size"
+    },
+    {
+      "source": "check_size",
+      "sourceHandle": "1",
+      "target": "check_duration",
+      "id": "e_check_size_1_check_duration"
+    },
+    {
+      "source": "check_size",
+      "sourceHandle": "2",
+      "target": "keep_original",
+      "id": "e_check_size_2_fail_size"
+    },
+    {
+      "source": "check_size",
+      "sourceHandle": "3",
+      "target": "keep_original",
+      "id": "e_check_size_3_fail_size"
+    },
+    {
+      "source": "check_duration",
+      "sourceHandle": "1",
+      "target": "replace1",
+      "id": "e_check_duration_1_replace1"
+    },
+    {
+      "source": "check_duration",
+      "sourceHandle": "2",
+      "target": "fail_duration",
+      "id": "e_check_duration_2_fail_duration"
+    },
+    {
+      "source": "check_duration",
+      "sourceHandle": "3",
+      "target": "fail_duration",
+      "id": "e_check_duration_3_fail_duration"
+    },
+    {
+      "source": "image_removal",
+      "sourceHandle": "2",
+      "target": "audio_clean",
+      "id": "e_image_removal_2_audio_clean"
+    },
+    {
+      "source": "enc_nvenc",
+      "sourceHandle": "2",
+      "target": "image_removal",
+      "id": "e_enc_nvenc_2_image_removal"
+    },
+    {
+      "source": "enc_vaapi",
+      "sourceHandle": "2",
+      "target": "image_removal",
+      "id": "e_enc_vaapi_2_image_removal"
+    },
+    {
+      "source": "enc_cpu",
+      "sourceHandle": "2",
+      "target": "image_removal",
+      "id": "e_enc_cpu_2_image_removal"
+    }
+  ]
+}

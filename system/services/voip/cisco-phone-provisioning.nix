@@ -368,13 +368,13 @@ in {
 
     timeZone = mkOption {
       type = types.str;
-      default = "AUS Eastern Standard/Daylight Time";
+      default = "E. Australia Standard/Daylight Time";
       description = "Phone display timezone";
     };
 
     ntpServer = mkOption {
       type = types.str;
-      default = "pool.ntp.org";
+      default = "au.pool.ntp.org";
       description = "NTP server for phone time sync";
     };
 
