@@ -138,12 +138,18 @@ in {
       };
       "adguard.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:8053";
+        extraConfig = autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "netdata.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:19999";
+        extraConfig = autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
       "nexus.home.dodwell.us" = {
         proxyPass = "http://127.0.0.1:3000";
+        extraConfig = autheliaAuthRequestConfig;
+        extraLocations."/internal/authelia/authz" = autheliaInternalLocation;
       };
     };
   };

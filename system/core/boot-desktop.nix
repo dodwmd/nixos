@@ -5,9 +5,6 @@
 }: {
   # Desktop boot configuration - quiet boot with plymouth
   boot = {
-    initrd = {
-      systemd.enable = true;
-    };
     supportedFilesystems = ["ntfs"];
 
     # use latest kernel

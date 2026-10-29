@@ -184,13 +184,11 @@
       root = {
         name = "root";
         device = "/dev/disk/by-uuid/3282c8a5-72fc-4793-92be-d44599051f4e";
-        preLVM = true;
         allowDiscards = true;
       };
       root2 = {
         name = "root2";
         device = "/dev/disk/by-uuid/bc6c5956-7ccd-42ce-8f05-0857002bdd56";
-        preLVM = true;
         allowDiscards = true;
       };
     };
