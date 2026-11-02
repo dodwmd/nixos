@@ -76,7 +76,6 @@
       "randomize_kstack_offset=on" # Randomize kernel stack offset on each syscall (mitigates some exploits)
       "vsyscall=none" # Disable vsyscall (removes legacy syscall interface, improves security)
       "slab_nomerge" # Disable merging of similar SLAB caches (hardens against some heap attacks)
-      "module.sig_enforce=1" # Only allow loading kernel modules with valid signatures (prevents unsigned modules)
       "lockdown=confidentiality" # Enable kernel lockdown in confidentiality mode (restricts kernel access even for root)
       "page_poison=1" # Fill freed memory pages with poison value (helps detect use-after-free bugs)
       "page_alloc.shuffle=1" # Randomize page allocator order (mitigates some memory corruption attacks)

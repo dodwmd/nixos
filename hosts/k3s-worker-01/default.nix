@@ -33,7 +33,15 @@
   };
 
   homelab.k3s-cluster = {
-    # nodeIP will be auto-detected from DHCP
+    # Pinned: Home Assistant's add-vip init container puts 192.168.1.206 on
+    # this interface, and auto-detection registered the VIP as the node/flannel
+    # IP, which broke cross-node pod traffic whenever HA moved.
+    # Do NOT set flannelIface here: flannel then uses the interface's first
+    # IPv4, which is the VIP, and --node-ip alone doesn't change flannel's
+    # public IP either (k3s picks it from the default-route interface). So
+    # flannel on this node still advertises the VIP: keep Home Assistant pinned
+    # to this node (k3s/apps/home-assistant/base/helm/values.yaml nodeSelector).
+    nodeIP = "192.168.1.30";
   };
 
   # Cisco IP phone TFTP provisioning

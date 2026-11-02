@@ -97,13 +97,7 @@
     virtualisation.containerd.settings.plugins."io.containerd.snapshotter.v1.overlayfs".root =
       "/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs";
 
-    # Auto-upgrade with staggered timing
-    system.autoUpgrade = {
-      enable = true;
-      allowReboot = config.homelab.k3s-host.allowReboot;
-      dates = config.homelab.k3s-host.upgradeTime;
-      flake = "github:dodwmd/nixos";
-    };
+    # Updates are handled by comin (system/core/comin.nix); system.autoUpgrade would conflict.
 
     # Disable nh cleanup to avoid conflict with manual nix.gc
     programs.nh.clean.enable = lib.mkForce false;

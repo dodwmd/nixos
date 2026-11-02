@@ -1,6 +1,7 @@
 {lib, ...}: {
   imports = [
     ./security.nix
+    ./comin.nix
     ./user-roles.nix
     ../nix
     ../programs/fish.nix

@@ -5,10 +5,6 @@
 }: {
   # Server boot configuration - verbose boot messages, no plymouth
   boot = {
-    initrd = {
-      systemd.enable = true;
-    };
-
     # use latest kernel
     kernelPackages = pkgs.linuxPackages_latest;
 

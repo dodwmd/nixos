@@ -129,6 +129,11 @@ in
     ++ (optional (cfg.enableGPU && cfg.gpuVendor == "nvidia") nvtop)
     ++ (optional (cfg.enableGPU && cfg.gpuVendor == "nvidia") nvidia-container-toolkit);
     
+    # Traefik relays go2rtc's WebRTC media (UDP 8555, gate video call). A camera
+    # keyframe burst overflows the 256 KiB default UDP receive buffer set in
+    # system/core/security.nix, dropping packets and freezing the picture.
+    boot.kernel.sysctl."net.core.rmem_default" = mkForce 4194304;
+
     # Higher limits for worker nodes
     systemd.services.k3s.serviceConfig = {
       LimitNOFILE = mkForce 2097152;
