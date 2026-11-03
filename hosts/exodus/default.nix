@@ -103,7 +103,6 @@
 
       "kernel.sysrq" = 0; # Disable magic SysRq key (prevents low-level system commands)
       "kernel.kptr_restrict" = 2; # Hide kernel pointers from unprivileged users (security)
-      "kernel.ftrace_enabled" = false; # Disable kernel function tracing (security, disables debugging)
       "kernel.dmesg_restrict" = 1; # Restrict access to dmesg for non-root users (security)
       "fs.protected_fifos" = 2; # Fully restrict writing to FIFOs not owned by the writer (security)
       "fs.protected_regular" = 2; # Fully restrict writing to regular files not owned by the writer (security)

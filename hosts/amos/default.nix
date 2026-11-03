@@ -39,13 +39,11 @@
       "randomize_kstack_offset=on"
       "vsyscall=none"
       "slab_nomerge"
-      "module.sig_enforce=1"
-      "lockdown=confidentiality"
       "page_poison=1"
       "page_alloc.shuffle=1"
       "sysrq_always_enabled=0"
       "rootflags=noatime"
-      "lsm=landlock,lockdown,yama,integrity,apparmor,bpf,tomoyo,selinux"
+      "lsm=landlock,yama,integrity,apparmor,bpf,tomoyo,selinux"
       "fbcon=nodefer"
       "init_on_alloc=1"
       "init_on_free=1"
@@ -59,7 +57,6 @@
       "kernel.nmi_watchdog" = 0;
       "kernel.sysrq" = 0;
       "kernel.kptr_restrict" = 2;
-      "kernel.ftrace_enabled" = false;
       "kernel.dmesg_restrict" = 1;
       "fs.protected_fifos" = 2;
       "fs.protected_regular" = 2;
