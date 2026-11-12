@@ -315,6 +315,14 @@
       enable = true;
       nssmdns4 = true;
     };
+
+    # Sunshine game-stream host (pair with Moonlight). Web UI: https://localhost:47990
+    sunshine = {
+      enable = true;
+      autoStart = true;
+      openFirewall = true;
+      capSysAdmin = true; # required for KMS/DRM capture under Wayland (niri)
+    };
   };
 
   # NFS filesystem support
