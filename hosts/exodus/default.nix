@@ -322,6 +322,9 @@
       autoStart = true;
       openFirewall = true;
       capSysAdmin = true; # required for KMS/DRM capture under Wayland (niri)
+      # Default wlr-screencopy capture fails on NVIDIA (EGL->CUDA import error); KMS works
+      # and Sunshine then picks the Vulkan hardware encoder.
+      settings.capture = "kms";
     };
   };
 
@@ -411,7 +414,9 @@
     # Gaming performance optimizations
     __GL_SHADER_DISK_CACHE = "1";
     __GL_SHADER_DISK_CACHE_SKIP_CLEANUP = "1";
-    __GL_THREADED_OPTIMIZATIONS = "1";
+    # NB: do NOT set __GL_THREADED_OPTIMIZATIONS=1 globally: the NVIDIA driver then
+    # pins every GL process (niri and all its children) to CPUs 0-11 (P-cores only).
+    # Set it per-game via Steam launch options if wanted.
     PROTON_ENABLE_NVAPI = "1";
     PROTON_HIDE_NVIDIA_GPU = "0"; # Required for NVAPI/DLSS to work
   };
@@ -448,6 +453,7 @@
 
   # Gamemode for CPU/GPU performance boost during gaming
   programs.gamemode.enable = true;
+
 
   # nix-index-database configuration
   programs = {
