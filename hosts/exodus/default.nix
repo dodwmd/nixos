@@ -454,6 +454,10 @@
   # Gamemode for CPU/GPU performance boost during gaming
   programs.gamemode.enable = true;
 
+  # By default systemd stops a whole unit when the kernel OOM-kills any process in it.
+  # App scopes (e.g. a foot terminal launched via fuzzel) then die with the one runaway
+  # child (flutter_tester). Keep the rest of the scope alive instead.
+  systemd.user.settings.Manager.DefaultOOMPolicy = "continue";
 
   # nix-index-database configuration
   programs = {

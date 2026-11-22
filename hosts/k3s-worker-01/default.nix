@@ -28,6 +28,7 @@
       "worker=true"
       "hardware=nuc"
       "storage=local-ssd"
+      "gpu=intel-xe" # i5-1240P iGPU (i915), used for VAAPI decode by Frigate
     ];
     maxPods = 110;
   };
