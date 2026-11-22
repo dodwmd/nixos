@@ -10,36 +10,40 @@
   # exodus has a graphical session up. exodus never connects here.
   # Receiving side: home/services/wayland/herdr-display-listener.nix on exodus.
   displayPush = pkgs.writeShellScript "herdr-display-push" ''
-    set -u
-    export PATH=${lib.makeBinPath [pkgs.bash pkgs.coreutils pkgs.socat pkgs.waypipe pkgs.foot herdr]}
-    target=exodus
-    port=6001
-    sock="$XDG_RUNTIME_DIR/herdr-display.sock"
+        set -u
+        export PATH=${lib.makeBinPath [pkgs.bash pkgs.coreutils pkgs.socat pkgs.waypipe pkgs.foot herdr]}
+        target=exodus
+        port=6001
+        sock="$XDG_RUNTIME_DIR/herdr-display.sock"
 
-    # exodus only listens on $port while someone is logged in.
-    session_up() {
-      timeout 3 bash -c "exec 3<>/dev/tcp/$target/$port" 2>/dev/null
-    }
+        # exodus only listens on $port while someone is logged in.
+        session_up() {
+          timeout 3 bash -c "exec 3<>/dev/tcp/$target/$port" 2>/dev/null
+        }
 
-    shown=0
-    while true; do
-      if session_up; then
-        if [ "$shown" = 0 ]; then
-          shown=1
-          rm -f "$sock"
-          # local unix socket for waypipe -> exodus's TCP bridge
-          socat UNIX-LISTEN:"$sock",fork TCP:"$target":"$port" &
-          hop=$!
-          sleep 1
-          waypipe --socket "$sock" --oneshot server -- foot --app-id=herdr-node -e herdr || true
-          kill "$hop" 2>/dev/null
-        fi
-      else
-        # logged out (or exodus away): re-arm for the next login
         shown=0
-      fi
-      sleep 10
-    done
+        while true; do
+          if session_up; then
+            if [ "$shown" = 0 ]; then
+              shown=1
+              started=$(date +%s)
+              rm -f "$sock"
+              # local unix socket for waypipe -> exodus's TCP bridge
+              socat UNIX-LISTEN:"$sock",fork TCP:"$target":"$port" &
+              hop=$!
+              sleep 1
+    waypipe --socket "$sock" --oneshot server -- foot --app-id=herdr-node -e herdr || true
+              kill "$hop" 2>/dev/null
+              # Died within seconds = connection/compositor error, not you closing the
+              # window: retry instead of waiting for the next login.
+              [ $(( $(date +%s) - started )) -lt 15 ] && shown=0
+            fi
+          else
+            # logged out (or exodus away): re-arm for the next login
+            shown=0
+          fi
+          sleep 10
+        done
   '';
 in {
   imports = [
@@ -79,6 +83,12 @@ in {
   # Keep dodwmd's user manager (and so herdr and the display push) alive without
   # a login, so sessions survive exodus logging out/rebooting.
   users.users.dodwmd.linger = true;
+
+  # GPU for waypipe's dmabuf path (Mesa/RADV for the AMD iGPU). Without this there
+  # is no Vulkan driver and waypipe aborts with "Failed to create Vulkan instance".
+  hardware.graphics.enable = true;
+  # open /dev/dri/renderD128 from the lingering user session (no seat to grant it)
+  users.users.dodwmd.extraGroups = ["render" "video"];
 
   systemd.user.services.herdr-server = {
     description = "herdr persistent session server";
