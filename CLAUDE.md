@@ -232,7 +232,6 @@ All services configured in `system/services/media/`:
 - **NFS Server** - Centralized storage
 - **Nginx Proxy** - Reverse proxy
 - **ZFS** - Advanced storage with snapshots
-- **Ollama** - Local LLM inference (on exodus)
 
 ## Common Workflows
 

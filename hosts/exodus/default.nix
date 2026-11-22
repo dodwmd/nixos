@@ -10,7 +10,6 @@
     ./virt.nix
     ./herdr-display-listener.nix
     ../../system/services/tdarr-node.nix
-    ../../system/services/ollama.nix
     ../../system/hardware/bluetooth.nix
     ../../home/profiles/desktop
     # niri itself comes from the blanket "${home}" module in hosts/default.nix
@@ -56,7 +55,6 @@
   homelab.users.desktopUser.enable = true;
 
   homelab.tdarrNode.enable = false;
-  homelab.ollama.enable = true;
 
   boot = {
     # load modules on boot
@@ -397,7 +395,6 @@
           })
         ];
     })
-    (import ../../pkgs/ollama-overlay.nix)
     inputs.antigravity-nix.overlays.default
   ];
 
