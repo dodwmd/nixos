@@ -120,7 +120,38 @@ in {
     [main]
     font=JetBrainsMono Nerd Font:size=14
     term=xterm-256color
+
+    # Solarized dark (herdr's theme = "terminal" follows this ANSI palette)
+    [colors-dark]
+    background=002b36
+    foreground=839496
+    selection-background=073642
+    selection-foreground=93a1a1
+    regular0=073642
+    regular1=dc322f
+    regular2=859900
+    regular3=b58900
+    regular4=268bd2
+    regular5=d33682
+    regular6=2aa198
+    regular7=eee8d5
+    bright0=002b36
+    bright1=cb4b16
+    bright2=586e75
+    bright3=657b83
+    bright4=839496
+    bright5=6c71c4
+    bright6=93a1a1
+    bright7=fdf6e3
   '';
+
+  # herdr follows foot's ANSI palette instead of its built-in catppuccin. `f` creates the
+  # file only if missing: herdr rewrites config.toml itself, so don't clobber it each boot.
+  systemd.tmpfiles.rules = [
+    "d /home/dodwmd/.config 0755 dodwmd users -"
+    "d /home/dodwmd/.config/herdr 0755 dodwmd users -"
+    "f /home/dodwmd/.config/herdr/config.toml 0644 dodwmd users - onboarding = false\\n[theme]\\nname = \"terminal\"\\n"
+  ];
 
   # Containers: rootless podman for dodwmd (subuid/subgid come with isNormalUser).
   # Enables podman + docker compat + podman-compose via system/core/podman.nix.
