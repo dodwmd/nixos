@@ -85,6 +85,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    claude-code-nix = {
+      url = "github:sadjow/claude-code-nix";
+    };
+
     herdr-nix = {
       url = "github:herdrdev/herdr-nix";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -103,6 +103,18 @@
         ];
     };
 
+    # Remote herdr session host (exodus opens a foot window attached to it at login)
+    herdr-node = nixosSystem {
+      inherit specialArgs;
+      modules =
+        server
+        ++ [
+          ./herdr-node
+          inputs.agenix.nixosModules.default
+          inputs.disko.nixosModules.disko
+        ];
+    };
+
     # Media server
     nexus = nixosSystem {
       inherit specialArgs;

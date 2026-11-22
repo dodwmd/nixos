@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ./virt.nix
+    ./herdr-display-listener.nix
     ../../system/services/tdarr-node.nix
     ../../system/services/ollama.nix
     ../../system/hardware/bluetooth.nix
