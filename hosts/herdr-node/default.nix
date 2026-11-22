@@ -51,6 +51,9 @@ in {
     hostName = "herdr-node";
     useDHCP = true;
     nameservers = ["192.168.1.1" "192.168.1.4"];
+    # DNS returns the wrong address for "exodus" (public IP / nothing), and the
+    # display push must reach exodus's LAN address. Keep exodus on a DHCP reservation.
+    hosts."192.168.1.153" = ["exodus"];
   };
 
   homelab.users.serverUser = {
