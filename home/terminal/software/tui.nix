@@ -40,7 +40,7 @@
       mynixpkgs = inputs.mynixpkgs.packages.${pkgs.stdenv.hostPlatform.system};
     in
       lib.filter (pkg: pkg != null) [
-        (mynixpkgs.bmm or null)
+        pkgs.bmm # nixpkgs copy (0.3.1, links sqlite); the mynixpkgs fork lacks sqlite in buildInputs and fails to link
         (mynixpkgs.dawn or null)
         (mynixpkgs.dfft or null)
         (mynixpkgs.lightview or null)

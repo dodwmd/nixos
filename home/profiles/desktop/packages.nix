@@ -13,7 +13,7 @@
     spotify
     thunderbird
     vscode
-    devin-desktop
+    # devin-desktop # disabled 2026-11-22: upstream tarball 404s (nixpkgs pins Devin 3.14.30819, removed from windsurf-stable CDN); re-enable once nixpkgs bumps it
     zoom-us
     
     # Essential tools missing from old config

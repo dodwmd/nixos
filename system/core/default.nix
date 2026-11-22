@@ -4,7 +4,6 @@
     ./comin.nix
     ./user-roles.nix
     ../nix
-    ../programs/fish.nix
   ];
 
   i18n = {

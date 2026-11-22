@@ -2,11 +2,14 @@
   options.homelab.pipewire.enable = lib.mkEnableOption "PipeWire audio" // { default = true; };
 
   config = lib.mkIf config.homelab.pipewire.enable {
+    # JACK apps: run them via `pw-jack <app>` (services.pipewire.jack.enable is
+    # deprecated: it sets a global LD_LIBRARY_PATH).
+    environment.systemPackages = [pkgs.pipewire.jack];
+
     services.pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
-      jack.enable = true;
       pulse.enable = true;
 
       wireplumber = {
